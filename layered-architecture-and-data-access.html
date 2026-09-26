@@ -1,0 +1,1969 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Step-by-Step Introduction to the [Flask] Web Framework">
+      
+      
+        <meta name="author" content="Serge Tahé">
+      
+      
+        <link rel="canonical" href="https://stahe.github.io/en-flask-sept-2026/layered-architecture-and-data-access.html">
+      
+      
+        <link rel="prev" href="authentication-and-authorization.html">
+      
+      
+        <link rel="next" href="interim-conclusion.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>9. Layered Architecture and Data Access - Step-by-Step Introduction to the [Flask] Web Framework</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="stylesheets/focus.css">
+    
+      <link rel="stylesheet" href="stylesheets/bidi.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-EBZC3JVJNR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    var siteName = "Step-by-Step Introduction to the [Flask] Web Framework";
+    gtag('config', 'G-EBZC3JVJNR', {
+        'page_title': siteName
+    });
+  </script>
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#9-layered-architecture-and-data-access" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="Step-by-Step Introduction to the [Flask] Web Framework" class="md-header__button md-logo" aria-label="Step-by-Step Introduction to the [Flask] Web Framework" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Step-by-Step Introduction to the [Flask] Web Framework
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              9. Layered Architecture and Data Access
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="purple"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://stahe.github.io/en-flask-sept-2026" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="Step-by-Step Introduction to the [Flask] Web Framework" class="md-nav__button md-logo" aria-label="Step-by-Step Introduction to the [Flask] Web Framework" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Step-by-Step Introduction to the [Flask] Web Framework
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://stahe.github.io/en-flask-sept-2026" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Welcome
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="introduction.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="actions-routing-responses.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Actions, Routing, Responses
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="the-action-template.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. The Action Template
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="the-view-and-its-model.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. The view and its model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="internationalization.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Internationalization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="data-scopes.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Data Scopes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="the-lifecycle-of-a-request.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. The Lifecycle of a Request
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="authentication-and-authorization.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Authentication and Authorization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Layered Architecture and Data Access
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="layered-architecture-and-data-access.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Layered Architecture and Data Access
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#91-example-28-a-three-tiered-personnel-management-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1. Example 28: A Three-Tiered Personnel Management System
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.1. Example 28: A Three-Tiered Personnel Management System">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#911-the-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1.1. The database
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#912-the-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1.2. The configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#913-the-person-entity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1.3. The Person Entity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#914-the-dao-layer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1.4. The DAO layer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#915-the-business-layer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1.5. The business layer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#916-the-web-layer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1.6. The Web Layer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#917-execution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1.7. Execution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#918-the-commands-sql" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1.8. The commands SQL
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="interim-conclusion.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Interim Conclusion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="case-study-the-rdvmedecins-application.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Case Study: The RdvMedecins Application
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="conclusion.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Conclusion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="appendices.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Appendices
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="9-layered-architecture-and-data-access">9. <span style="color: #2e74b5">Layered Architecture and Data Access</span></h1>
+<p>The previous examples kept their data in memory. A real application stores it in a database and is organized into <strong>layers</strong> (see the diagram in the introduction):</p>
+<ul>
+<li>the <strong>web</strong> layer (controllers, views): read the request, call the business layer, select the view;</li>
+<li>the <strong>business</strong> layer: business rules;</li>
+<li>the <strong>DAO</strong> layer (*Data Access Object*): database queries.</li>
+</ul>
+<p>Each layer is aware only of the layer below it, and as few of its details as possible: the web layer is unaware of SQL, and the business layer is unaware of HTML. This separation makes each layer easier to understand, test, and evolve. Example 28 applies this to managing a list of people: it is, on a smaller scale, the management of doctors and clients from the case study.</p>
+<p>In <em>[Python]</em>, database access is organized across several layers:</p>
+<ul>
+<li>The <strong>DB-API</strong> standard (PEP 249) defines the common interface for database <strong>drivers</strong>: open a connection, execute a SQL command, and read rows. For <em>[MySQL]</em> (and <em>[MariaDB]</em>), we use <em>[PyMySQL]</em>, a driver written entirely in <em>[Python]</em>, which installs without a compiler;</li>
+<li><em>[SQLAlchemy]</em> is the most widely used data access library in <em>[Python]</em>. It has two levels. Its <strong>core</strong> (*Core*) manages connections (including a <strong>connection pool</strong>, which keeps a few connections open and lends them to queries, since opening a connection is costly) and constructs SQL statements from <em>[Python]</em> expressions, regardless of the SGBD. Its <strong>ORM</strong> (*Object-Relational Mapper*) maps <em>[Python]</em> classes (the <strong>entities</strong>) to database tables and transforms the read rows into objects.</li>
+</ul>
+<p>This is equivalent to <em>[JDBC]</em>, <em>[JPA]</em> and <em>[Hibernate]</em> to <em>[Java]</em>, or <em>[Entity Framework Core]</em> to <em>[C#]</em>. The <em>[Flask-SQLAlchemy]</em> extension slightly simplifies the configuration of <em>[SQLAlchemy]</em> in a <em>[Flask]</em> application; we use <em>[SQLAlchemy]</em> directly, which demonstrates what is happening and keeps the business layers and DAO independent of <em>[Flask]</em>.</p>
+<p>The example requires a running <em>[MySQL]</em> (or <em>[MariaDB]</em>) server: the appendix explains how to install one using <em>[Laragon]</em>.</p>
+<h2 id="91-example-28-a-three-tiered-personnel-management-system">9.1. <span style="color: #2e74b5">Example 28: A Three-Tiered Personnel Management System</span></h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span>
+<span class="normal"><a href="#__codelineno-0-15">15</a></span>
+<span class="normal"><a href="#__codelineno-0-16">16</a></span>
+<span class="normal"><a href="#__codelineno-0-17">17</a></span>
+<span class="normal"><a href="#__codelineno-0-18">18</a></span>
+<span class="normal"><a href="#__codelineno-0-19">19</a></span>
+<span class="normal"><a href="#__codelineno-0-20">20</a></span>
+<span class="normal"><a href="#__codelineno-0-21">21</a></span>
+<span class="normal"><a href="#__codelineno-0-22">22</a></span>
+<span class="normal"><a href="#__codelineno-0-23">23</a></span>
+<span class="normal"><a href="#__codelineno-0-24">24</a></span>
+<span class="normal"><a href="#__codelineno-0-25">25</a></span>
+<span class="normal"><a href="#__codelineno-0-26">26</a></span>
+<span class="normal"><a href="#__codelineno-0-27">27</a></span>
+<span class="normal"><a href="#__codelineno-0-28">28</a></span>
+<span class="normal"><a href="#__codelineno-0-29">29</a></span>
+<span class="normal"><a href="#__codelineno-0-30">30</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>28-couches/
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>├── app.py
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>├── config.py
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>├── controllers/
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a>│   └── personnes.py
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a>├── dao/
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a>│   └── personnes_dao.py
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a>├── database/
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a>│   └── dbpersonnes.sql
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a>├── entities/
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a>│   └── personne.py
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a>├── metier/
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a>│   ├── donnees.py
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a>│   ├── exception.py
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a>│   └── personnes_metier.py
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a>├── models/
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a>│   └── formulaire_personne.py
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a>├── static/
+<a id="__codelineno-0-19" name="__codelineno-0-19"></a>│   ├── css/
+<a id="__codelineno-0-20" name="__codelineno-0-20"></a>│   │   └── styles.css
+<a id="__codelineno-0-21" name="__codelineno-0-21"></a>│   └── js/
+<a id="__codelineno-0-22" name="__codelineno-0-22"></a>│       └── app.js
+<a id="__codelineno-0-23" name="__codelineno-0-23"></a>└── templates/
+<a id="__codelineno-0-24" name="__codelineno-0-24"></a>    ├── fragments/
+<a id="__codelineno-0-25" name="__codelineno-0-25"></a>    │   ├── champ.html
+<a id="__codelineno-0-26" name="__codelineno-0-26"></a>    │   └── confirmation.html
+<a id="__codelineno-0-27" name="__codelineno-0-27"></a>    ├── layout.html
+<a id="__codelineno-0-28" name="__codelineno-0-28"></a>    └── personnes/
+<a id="__codelineno-0-29" name="__codelineno-0-29"></a>        ├── formulaire.html
+<a id="__codelineno-0-30" name="__codelineno-0-30"></a>        └── liste.html
+</code></pre></div></td></tr></table></div>
+<h3 id="911-the-database">9.1.1. <span style="color: #1f4d78">The database</span></h3>
+<p>The database <strong><em>[dbpersonnes]</em></strong> is created by the script SQL. Using <em>[Laragon]</em>, you can run it, for example, in the <em>[HeidiSQL]</em> tool (File menu / Run a SQL file), or from the command line, from the example folder:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>mysql -u root &lt; database/dbpersonnes.sql
+</code></pre></div></td></tr></table></div>
+<p>The <strong><em>[database/dbpersonnes.sql]</em></strong> file:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span>
+<span class="normal"><a href="#__codelineno-2-11">11</a></span>
+<span class="normal"><a href="#__codelineno-2-12">12</a></span>
+<span class="normal"><a href="#__codelineno-2-13">13</a></span>
+<span class="normal"><a href="#__codelineno-2-14">14</a></span>
+<span class="normal"><a href="#__codelineno-2-15">15</a></span>
+<span class="normal"><a href="#__codelineno-2-16">16</a></span>
+<span class="normal"><a href="#__codelineno-2-17">17</a></span>
+<span class="normal"><a href="#__codelineno-2-18">18</a></span>
+<span class="normal"><a href="#__codelineno-2-19">19</a></span>
+<span class="normal"><a href="#__codelineno-2-20">20</a></span>
+<span class="normal"><a href="#__codelineno-2-21">21</a></span>
+<span class="normal"><a href="#__codelineno-2-22">22</a></span>
+<span class="normal"><a href="#__codelineno-2-23">23</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="c1">-- Example 28 database: a single table, [personnes]</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="c1">-- The script is written in UTF-8</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="k">SET</span><span class="w"> </span><span class="k">NAMES</span><span class="w"> </span><span class="n">utf8mb4</span><span class="p">;</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="k">DROP</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">dbpersonnes</span><span class="p">;</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">dbpersonnes</span><span class="w"> </span><span class="nb">CHARACTER</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">utf8mb4</span><span class="w"> </span><span class="k">COLLATE</span><span class="w"> </span><span class="n">utf8mb4_unicode_ci</span><span class="p">;</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="n">USE</span><span class="w"> </span><span class="n">dbpersonnes</span><span class="p">;</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">personnes</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="n">AUTO_INCREMENT</span><span class="p">,</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="w">   </span><span class="c1">-- the row version, incremented by SQLAlchemy with each modification</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="w">  </span><span class="k">version</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12"></a><span class="w">  </span><span class="n">prenom</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="w">  </span><span class="n">nom</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14"></a><span class="w">  </span><span class="n">age</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15"></a><span class="w">  </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="p">),</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16"></a><span class="w">   </span><span class="c1">-- Two people cannot have the same first and last names</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17"></a><span class="w">  </span><span class="k">CONSTRAINT</span><span class="w"> </span><span class="n">unq_personnes_prenom_nom</span><span class="w"> </span><span class="k">UNIQUE</span><span class="w"> </span><span class="p">(</span><span class="n">prenom</span><span class="p">,</span><span class="w"> </span><span class="n">nom</span><span class="p">)</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18"></a><span class="p">)</span><span class="w"> </span><span class="n">ENGINE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">InnoDB</span><span class="p">;</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19"></a>
+<a id="__codelineno-2-20" name="__codelineno-2-20"></a><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">personnes</span><span class="w"> </span><span class="p">(</span><span class="n">prenom</span><span class="p">,</span><span class="w"> </span><span class="n">nom</span><span class="p">,</span><span class="w"> </span><span class="n">age</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21"></a><span class="w">  </span><span class="p">(</span><span class="s1">'Marie'</span><span class="p">,</span><span class="w"> </span><span class="s1">'Pélissier'</span><span class="p">,</span><span class="w"> </span><span class="mi">42</span><span class="p">),</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22"></a><span class="w">  </span><span class="p">(</span><span class="s1">'Jacques'</span><span class="p">,</span><span class="w"> </span><span class="s1">'Bromard'</span><span class="p">,</span><span class="w"> </span><span class="mi">35</span><span class="p">),</span>
+<a id="__codelineno-2-23" name="__codelineno-2-23"></a><span class="w">  </span><span class="p">(</span><span class="s1">'Philippe'</span><span class="p">,</span><span class="w"> </span><span class="s1">'Jandot'</span><span class="p">,</span><span class="w"> </span><span class="mi">58</span><span class="p">);</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Line 3: The script is written in <em>[UTF-8]</em>; this is specified to the server so that accents in the data (<strong><em>[Pélissier]</em></strong>) remain intact;</li>
+<li>line 5: the character set <strong><em>[utf8mb4]</em></strong> accepts all characters (accents, emojis, etc.). The <strong><em>[utf8mb4_unicode_ci]</em></strong> collation compares strings without distinguishing between uppercase and lowercase letters or accents: for <em>[MySQL]</em>, <strong><em>[pelissier]</em></strong>, and <strong><em>[Pélissier]</em></strong> are equal;</li>
+<li>line 11: a version number, incremented each time the line is modified (see “optimistic lock,” below);</li>
+<li>line 17: a <strong>named</strong> uniqueness constraint: the database does not allow two people with the same first and last names. The name will be used to identify the error.</li>
+</ul>
+<h3 id="912-the-configuration">9.1.2. <span style="color: #1f4d78">The configuration</span></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-3-10">10</a></span>
+<span class="normal"><a href="#__codelineno-3-11">11</a></span>
+<span class="normal"><a href="#__codelineno-3-12">12</a></span>
+<span class="normal"><a href="#__codelineno-3-13">13</a></span>
+<span class="normal"><a href="#__codelineno-3-14">14</a></span>
+<span class="normal"><a href="#__codelineno-3-15">15</a></span>
+<span class="normal"><a href="#__codelineno-3-16">16</a></span>
+<span class="normal"><a href="#__codelineno-3-17">17</a></span>
+<span class="normal"><a href="#__codelineno-3-18">18</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="c1"># config.py: the application configuration (see Example 25)</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="c1"># the secret key: it signs the session (flash messages) and anti-CSRF tokens</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="s2">"une-cle-secrete-pour-l-exemple-28"</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="c1"># error messages from WTForms are translated by WTForms itself (see Example 19)</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="n">WTF_I18N_ENABLED</span> <span class="o">=</span> <span class="kc">False</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="c1"># the database connection: a URL from SQLAlchemy.</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="c1">#    mysql+pymysql: the SGBD MySQL, via the PyMySQL driver</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a><span class="c1">#    root        : : the root user, without a password (as in Laragon);</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a><span class="c1">#                    with a password: root:monMotDePasse@...</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13"></a><span class="c1">#    localhost:3306/dbpersonnes: the server, its port, and the database</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14"></a><span class="c1">#    charset=utf8mb4: communication with the database is in UTF-8</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15"></a><span class="n">DATABASE_URL</span> <span class="o">=</span> <span class="s2">"mysql+pymysql://root:@localhost:3306/dbpersonnes?charset=utf8mb4"</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16"></a>
+<a id="__codelineno-3-17" name="__codelineno-3-17"></a><span class="c1"># True: SQL commands sent to the database are displayed in the console</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18"></a><span class="n">SQL_ECHO</span> <span class="o">=</span> <span class="kc">False</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Line 15: <em>[SQLAlchemy]</em> refers to a base identified by <strong>URL</strong>. <strong><em>[mysql+pymysql]</em></strong>: the dialect SQL (<em>[MySQL]</em>) and the driver (<em>[PyMySQL]</em>); then the user and their password (here, <strong><em>[root]</em></strong>; without a password, the configuration is <em>[Laragon]</em>), the server, its port, and the database; finally, the settings: <strong><em>[charset=utf8mb4]</em></strong> enables communication between the driver and the server at <em>[UTF-8]</em>. If your server has a password, modify this line, or set the environment variable <strong><em>[FLASK_DATABASE_URL]</em></strong> (example 25);</li>
+<li>Line 18: At <strong><em>[True]</em></strong>, <em>[SQLAlchemy]</em> displays in the console every SQL command sent to the database. This is very informative, and we’ll use it later on.</li>
+</ul>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-4-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-4-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-4-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-4-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-4-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-4-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-4-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-4-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-4-10">10</a></span>
+<span class="normal"><a href="#__codelineno-4-11">11</a></span>
+<span class="normal"><a href="#__codelineno-4-12">12</a></span>
+<span class="normal"><a href="#__codelineno-4-13">13</a></span>
+<span class="normal"><a href="#__codelineno-4-14">14</a></span>
+<span class="normal"><a href="#__codelineno-4-15">15</a></span>
+<span class="normal"><a href="#__codelineno-4-16">16</a></span>
+<span class="normal"><a href="#__codelineno-4-17">17</a></span>
+<span class="normal"><a href="#__codelineno-4-18">18</a></span>
+<span class="normal"><a href="#__codelineno-4-19">19</a></span>
+<span class="normal"><a href="#__codelineno-4-20">20</a></span>
+<span class="normal"><a href="#__codelineno-4-21">21</a></span>
+<span class="normal"><a href="#__codelineno-4-22">22</a></span>
+<span class="normal"><a href="#__codelineno-4-23">23</a></span>
+<span class="normal"><a href="#__codelineno-4-24">24</a></span>
+<span class="normal"><a href="#__codelineno-4-25">25</a></span>
+<span class="normal"><a href="#__codelineno-4-26">26</a></span>
+<span class="normal"><a href="#__codelineno-4-27">27</a></span>
+<span class="normal"><a href="#__codelineno-4-28">28</a></span>
+<span class="normal"><a href="#__codelineno-4-29">29</a></span>
+<span class="normal"><a href="#__codelineno-4-30">30</a></span>
+<span class="normal"><a href="#__codelineno-4-31">31</a></span>
+<span class="normal"><a href="#__codelineno-4-32">32</a></span>
+<span class="normal"><a href="#__codelineno-4-33">33</a></span>
+<span class="normal"><a href="#__codelineno-4-34">34</a></span>
+<span class="normal"><a href="#__codelineno-4-35">35</a></span>
+<span class="normal"><a href="#__codelineno-4-36">36</a></span>
+<span class="normal"><a href="#__codelineno-4-37">37</a></span>
+<span class="normal"><a href="#__codelineno-4-38">38</a></span>
+<span class="normal"><a href="#__codelineno-4-39">39</a></span>
+<span class="normal"><a href="#__codelineno-4-40">40</a></span>
+<span class="normal"><a href="#__codelineno-4-41">41</a></span>
+<span class="normal"><a href="#__codelineno-4-42">42</a></span>
+<span class="normal"><a href="#__codelineno-4-43">43</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="c1"># app.py: the application from Example 28; the integration of the three layers</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">flask</span><span class="w"> </span><span class="kn">import</span> <span class="n">Blueprint</span><span class="p">,</span> <span class="n">Flask</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">flask_wtf.csrf</span><span class="w"> </span><span class="kn">import</span> <span class="n">CSRFProtect</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_engine</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy.orm</span><span class="w"> </span><span class="kn">import</span> <span class="n">sessionmaker</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8"></a>
+<a id="__codelineno-4-9" name="__codelineno-4-9"></a><span class="kn">from</span><span class="w"> </span><span class="nn">controllers.personnes</span><span class="w"> </span><span class="kn">import</span> <span class="n">personnes</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dao.personnes_dao</span><span class="w"> </span><span class="kn">import</span> <span class="n">PersonnesDao</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11"></a><span class="kn">from</span><span class="w"> </span><span class="nn">metier.personnes_metier</span><span class="w"> </span><span class="kn">import</span> <span class="n">PersonnesMetier</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12"></a>
+<a id="__codelineno-4-13" name="__codelineno-4-13"></a><span class="n">BOOTSTRAP</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">"commun"</span> <span class="o">/</span> <span class="s2">"bootstrap"</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14"></a>
+<a id="__codelineno-4-15" name="__codelineno-4-15"></a>
+<a id="__codelineno-4-16" name="__codelineno-4-16"></a><span class="k">def</span><span class="w"> </span><span class="nf">create_app</span><span class="p">():</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17"></a>    <span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18"></a>    <span class="n">app</span><span class="o">.</span><span class="n">jinja_env</span><span class="o">.</span><span class="n">trim_blocks</span> <span class="o">=</span> <span class="kc">True</span>
+<a id="__codelineno-4-19" name="__codelineno-4-19"></a>    <span class="n">app</span><span class="o">.</span><span class="n">jinja_env</span><span class="o">.</span><span class="n">lstrip_blocks</span> <span class="o">=</span> <span class="kc">True</span>
+<a id="__codelineno-4-20" name="__codelineno-4-20"></a>    <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">from_pyfile</span><span class="p">(</span><span class="s2">"config.py"</span><span class="p">)</span>
+<a id="__codelineno-4-21" name="__codelineno-4-21"></a>    <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">from_prefixed_env</span><span class="p">()</span>
+<a id="__codelineno-4-22" name="__codelineno-4-22"></a>
+<a id="__codelineno-4-23" name="__codelineno-4-23"></a>     <span class="c1"># Database access: the "engine" of SQLAlchemy manages a POOL of connections</span>
+<a id="__codelineno-4-24" name="__codelineno-4-24"></a>     <span class="c1"># (connections opened once and then reused from one request to the next).</span>
+<a id="__codelineno-4-25" name="__codelineno-4-25"></a>     <span class="c1"># pool_pre_ping: a connection is tested before being reused</span>
+<a id="__codelineno-4-26" name="__codelineno-4-26"></a>    <span class="n">moteur</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"DATABASE_URL"</span><span class="p">],</span> <span class="n">echo</span><span class="o">=</span><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"SQL_ECHO"</span><span class="p">],</span>
+<a id="__codelineno-4-27" name="__codelineno-4-27"></a>                           <span class="n">pool_pre_ping</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-4-28" name="__codelineno-4-28"></a>     <span class="c1"># the session factory; expire_on_commit=False: the read objects remain</span>
+<a id="__codelineno-4-29" name="__codelineno-4-29"></a>     <span class="c1"># usable after the transaction ends (by the view, in particular)</span>
+<a id="__codelineno-4-30" name="__codelineno-4-30"></a>    <span class="n">sessions</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">moteur</span><span class="p">,</span> <span class="n">expire_on_commit</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<a id="__codelineno-4-31" name="__codelineno-4-31"></a>
+<a id="__codelineno-4-32" name="__codelineno-4-32"></a>     <span class="c1"># Layer assembly: DAO -&gt; business layer; the web layer only recognizes the business layer</span>
+<a id="__codelineno-4-33" name="__codelineno-4-33"></a>    <span class="n">app</span><span class="o">.</span><span class="n">extensions</span><span class="p">[</span><span class="s2">"metier"</span><span class="p">]</span> <span class="o">=</span> <span class="n">PersonnesMetier</span><span class="p">(</span><span class="n">sessions</span><span class="p">,</span> <span class="n">PersonnesDao</span><span class="p">())</span>
+<a id="__codelineno-4-34" name="__codelineno-4-34"></a>
+<a id="__codelineno-4-35" name="__codelineno-4-35"></a>    <span class="n">app</span><span class="o">.</span><span class="n">register_blueprint</span><span class="p">(</span><span class="n">Blueprint</span><span class="p">(</span><span class="s2">"bootstrap"</span><span class="p">,</span> <span class="vm">__name__</span><span class="p">,</span> <span class="n">static_folder</span><span class="o">=</span><span class="n">BOOTSTRAP</span><span class="p">,</span>
+<a id="__codelineno-4-36" name="__codelineno-4-36"></a>                                     <span class="n">static_url_path</span><span class="o">=</span><span class="s2">"/bootstrap"</span><span class="p">))</span>
+<a id="__codelineno-4-37" name="__codelineno-4-37"></a>    <span class="n">app</span><span class="o">.</span><span class="n">register_blueprint</span><span class="p">(</span><span class="n">personnes</span><span class="p">)</span>
+<a id="__codelineno-4-38" name="__codelineno-4-38"></a>    <span class="n">CSRFProtect</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+<a id="__codelineno-4-39" name="__codelineno-4-39"></a>    <span class="k">return</span> <span class="n">app</span>
+<a id="__codelineno-4-40" name="__codelineno-4-40"></a>
+<a id="__codelineno-4-41" name="__codelineno-4-41"></a>
+<a id="__codelineno-4-42" name="__codelineno-4-42"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+<a id="__codelineno-4-43" name="__codelineno-4-43"></a>    <span class="n">create_app</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Lines 26–27: <strong>The</strong> *engine* of <em>[SQLAlchemy]</em> is the object that manages connections to a database and the connection pool. It is created once, at startup; the first connection is opened only upon the first request. <strong><em>[pool_pre_ping=True]</em></strong> checks a connection from the pool before reusing it: a <em>[MySQL]</em> server closes connections that have been inactive for too long, and the application would otherwise receive an error;</li>
+<li>Line 30: A <strong>session</strong> of type ORM is the object used to read from and write to entities; it borrows a connection from the pool and tracks the entities it has read to detect changes to them. <strong><em>[sessionmaker]</em></strong> creates a session <strong>factory</strong>, each call to which will produce a session. By default, at the end of a transaction, the session “expires” the entities (it forgets their values, to read them again the next time they are used). <strong><em>[expire_on_commit=False]</em></strong> prevents this: the entities returned by the business layer remain usable after the transaction, by the view that displays them;</li>
+<li>line 33: assembling the layers: the business layer receives the session factory and the DAO layer. The web layer will only be aware of the business layer;</li>
+<li>line 38: Anti-CSRF protection for the entire application (Example 21).</li>
+</ul>
+<h3 id="913-the-person-entity">9.1.3. <span style="color: #1f4d78">The Person Entity</span></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-5-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-5-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-5-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-5-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-5-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-5-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-5-10">10</a></span>
+<span class="normal"><a href="#__codelineno-5-11">11</a></span>
+<span class="normal"><a href="#__codelineno-5-12">12</a></span>
+<span class="normal"><a href="#__codelineno-5-13">13</a></span>
+<span class="normal"><a href="#__codelineno-5-14">14</a></span>
+<span class="normal"><a href="#__codelineno-5-15">15</a></span>
+<span class="normal"><a href="#__codelineno-5-16">16</a></span>
+<span class="normal"><a href="#__codelineno-5-17">17</a></span>
+<span class="normal"><a href="#__codelineno-5-18">18</a></span>
+<span class="normal"><a href="#__codelineno-5-19">19</a></span>
+<span class="normal"><a href="#__codelineno-5-20">20</a></span>
+<span class="normal"><a href="#__codelineno-5-21">21</a></span>
+<span class="normal"><a href="#__codelineno-5-22">22</a></span>
+<span class="normal"><a href="#__codelineno-5-23">23</a></span>
+<span class="normal"><a href="#__codelineno-5-24">24</a></span>
+<span class="normal"><a href="#__codelineno-5-25">25</a></span>
+<span class="normal"><a href="#__codelineno-5-26">26</a></span>
+<span class="normal"><a href="#__codelineno-5-27">27</a></span>
+<span class="normal"><a href="#__codelineno-5-28">28</a></span>
+<span class="normal"><a href="#__codelineno-5-29">29</a></span>
+<span class="normal"><a href="#__codelineno-5-30">30</a></span>
+<span class="normal"><a href="#__codelineno-5-31">31</a></span>
+<span class="normal"><a href="#__codelineno-5-32">32</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="c1"># entities/personne.py: a row in the table [personnes]</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy</span><span class="w"> </span><span class="kn">import</span> <span class="n">String</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy.orm</span><span class="w"> </span><span class="kn">import</span> <span class="n">DeclarativeBase</span><span class="p">,</span> <span class="n">Mapped</span><span class="p">,</span> <span class="n">mapped_column</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a>
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a>
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="c1"># the parent class of all entities: SQLAlchemy stores the</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7"></a><span class="c1"># the class-to-table mapping for each of its child classes</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8"></a><span class="k">class</span><span class="w"> </span><span class="nc">Base</span><span class="p">(</span><span class="n">DeclarativeBase</span><span class="p">):</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9"></a>    <span class="k">pass</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10"></a>
+<a id="__codelineno-5-11" name="__codelineno-5-11"></a>
+<a id="__codelineno-5-12" name="__codelineno-5-12"></a><span class="k">class</span><span class="w"> </span><span class="nc">Personne</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13"></a>     <span class="c1"># the table name</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14"></a>    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">"personnes"</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15"></a>
+<a id="__codelineno-5-16" name="__codelineno-5-16"></a>     <span class="c1"># the primary key, generated by the database (AUTO_INCREMENT); SQLAlchemy re-reads</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17"></a>     <span class="c1"># its value after each INSERT. Mapped[int]: the Python type of the column</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18"></a>    <span class="nb">id</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-5-19" name="__codelineno-5-19"></a>     <span class="c1"># the optimistic lock: see __mapper_args__ below</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20"></a>    <span class="n">version</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">()</span>
+<a id="__codelineno-5-21" name="__codelineno-5-21"></a>    <span class="n">prenom</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">30</span><span class="p">))</span>
+<a id="__codelineno-5-22" name="__codelineno-5-22"></a>    <span class="n">nom</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">30</span><span class="p">))</span>
+<a id="__codelineno-5-23" name="__codelineno-5-23"></a>    <span class="n">age</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+<a id="__codelineno-5-24" name="__codelineno-5-24"></a>
+<a id="__codelineno-5-25" name="__codelineno-5-25"></a>     <span class="c1"># version_id_col: SQLAlchemy increments the version number with each UPDATE, and adds</span>
+<a id="__codelineno-5-26" name="__codelineno-5-26"></a>     <span class="c1"># the condition "AND version = &lt;read value&gt;"</span>
+<a id="__codelineno-5-27" name="__codelineno-5-27"></a>    <span class="n">__mapper_args__</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"version_id_col"</span><span class="p">:</span> <span class="n">version</span><span class="p">}</span>
+<a id="__codelineno-5-28" name="__codelineno-5-28"></a>
+<a id="__codelineno-5-29" name="__codelineno-5-29"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prenom</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">nom</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">age</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<a id="__codelineno-5-30" name="__codelineno-5-30"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">prenom</span> <span class="o">=</span> <span class="n">prenom</span>
+<a id="__codelineno-5-31" name="__codelineno-5-31"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">nom</span> <span class="o">=</span> <span class="n">nom</span>
+<a id="__codelineno-5-32" name="__codelineno-5-32"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">age</span> <span class="o">=</span> <span class="n">age</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>lines 8–9: All entities in an application inherit from the same base class, derived from <strong><em>[DeclarativeBase]</em></strong>. <em>[SQLAlchemy]</em> stores the description of each entity (its table, its columns) in this class: this is the <strong>declarative model</strong>;</li>
+<li>line 14: the table associated with the class;</li>
+<li>line 18: a column is declared by an attribute annotated with <strong><em>[Mapped[type]]</em></strong>: the column’s type, <em>[Python]</em>. <strong><em>[mapped_column]</em></strong> specifies its characteristics: in this case, the primary key. By default, an integer primary key is generated by the database (<strong><em>[AUTO_INCREMENT]</em></strong>): <em>[SQLAlchemy]</em> re-reads its value after each <strong><em>[INSERT]</em></strong>;</li>
+<li>Lines 21–23: <strong><em>[String(30)]</em></strong> specifies the column length (useful if <em>[SQLAlchemy]</em> were to create the table itself). A column with no special characteristics can simply use the annotation (<strong><em>[age]</em></strong>). The type <strong><em>[Mapped[str]]</em></strong> makes the column required (<strong><em>[NOT NULL]</em></strong>); <strong><em>[Mapped[str | None]]</em></strong> would make it optional;</li>
+<li>line 27: <strong><em>[version_id_col]</em></strong> designates the <strong>version</strong> column: <em>[SQLAlchemy]</em> increments it with each <strong><em>[UPDATE]</em></strong>, and adds the condition <strong><em>[AND version = &lt;la valeur lue&gt;]</em></strong> to it. If another query has modified the row in the meantime, its version has changed; <strong><em>[UPDATE]</em></strong> does not modify any rows, and <em>[SQLAlchemy]</em> throws a <strong><em>[StaleDataError]</em></strong> exception. This is an <strong>optimistic lock</strong>: nothing is blocked, but concurrent modifications are detected;</li>
+<li>Lines 29–32: a constructor to create a person in a single line.</li>
+</ul>
+<h3 id="914-the-dao-layer">9.1.4. <span style="color: #1f4d78">The DAO layer</span></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-6-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-6-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-6-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-6-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-6-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-6-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-6-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-6-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-6-10">10</a></span>
+<span class="normal"><a href="#__codelineno-6-11">11</a></span>
+<span class="normal"><a href="#__codelineno-6-12">12</a></span>
+<span class="normal"><a href="#__codelineno-6-13">13</a></span>
+<span class="normal"><a href="#__codelineno-6-14">14</a></span>
+<span class="normal"><a href="#__codelineno-6-15">15</a></span>
+<span class="normal"><a href="#__codelineno-6-16">16</a></span>
+<span class="normal"><a href="#__codelineno-6-17">17</a></span>
+<span class="normal"><a href="#__codelineno-6-18">18</a></span>
+<span class="normal"><a href="#__codelineno-6-19">19</a></span>
+<span class="normal"><a href="#__codelineno-6-20">20</a></span>
+<span class="normal"><a href="#__codelineno-6-21">21</a></span>
+<span class="normal"><a href="#__codelineno-6-22">22</a></span>
+<span class="normal"><a href="#__codelineno-6-23">23</a></span>
+<span class="normal"><a href="#__codelineno-6-24">24</a></span>
+<span class="normal"><a href="#__codelineno-6-25">25</a></span>
+<span class="normal"><a href="#__codelineno-6-26">26</a></span>
+<span class="normal"><a href="#__codelineno-6-27">27</a></span>
+<span class="normal"><a href="#__codelineno-6-28">28</a></span>
+<span class="normal"><a href="#__codelineno-6-29">29</a></span>
+<span class="normal"><a href="#__codelineno-6-30">30</a></span>
+<span class="normal"><a href="#__codelineno-6-31">31</a></span>
+<span class="normal"><a href="#__codelineno-6-32">32</a></span>
+<span class="normal"><a href="#__codelineno-6-33">33</a></span>
+<span class="normal"><a href="#__codelineno-6-34">34</a></span>
+<span class="normal"><a href="#__codelineno-6-35">35</a></span>
+<span class="normal"><a href="#__codelineno-6-36">36</a></span>
+<span class="normal"><a href="#__codelineno-6-37">37</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="o">#</span><span class="w"> </span><span class="n">dao</span><span class="o">/</span><span class="n">personnes_dao</span><span class="p">.</span><span class="n">py</span><span class="p">:</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">DAO</span><span class="w"> </span><span class="n">layer</span><span class="p">,</span><span class="w"> </span><span class="n">requests</span><span class="p">,</span><span class="w"> </span><span class="k">no</span><span class="w"> </span><span class="n">business</span><span class="w"> </span><span class="n">rules</span><span class="p">.</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="o">#</span><span class="w"> </span><span class="k">Each</span><span class="w"> </span><span class="k">method</span><span class="w"> </span><span class="n">receives</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="k">SESSION</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">SQLAlchemy</span><span class="p">,</span><span class="w"> </span><span class="n">opened</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">layer</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="o">#</span><span class="w"> </span><span class="n">business</span><span class="w"> </span><span class="n">layer</span><span class="p">:</span><span class="w"> </span><span class="k">all</span><span class="w"> </span><span class="n">requests</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">same</span><span class="w"> </span><span class="k">operation</span><span class="w"> </span><span class="n">thus</span><span class="w"> </span><span class="k">share</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">same</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="o">#</span><span class="w"> </span><span class="k">connection</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">same</span><span class="w"> </span><span class="k">transaction</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5"></a><span class="k">from</span><span class="w"> </span><span class="n">sqlalchemy</span><span class="w"> </span><span class="n">import</span><span class="w"> </span><span class="k">delete</span><span class="p">,</span><span class="w"> </span><span class="k">select</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="k">from</span><span class="w"> </span><span class="n">sqlalchemy</span><span class="p">.</span><span class="n">orm</span><span class="w"> </span><span class="n">import</span><span class="w"> </span><span class="k">Session</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7"></a>
+<a id="__codelineno-6-8" name="__codelineno-6-8"></a><span class="k">from</span><span class="w"> </span><span class="n">entities</span><span class="p">.</span><span class="n">personne</span><span class="w"> </span><span class="n">import</span><span class="w"> </span><span class="n">Personne</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9"></a>
+<a id="__codelineno-6-10" name="__codelineno-6-10"></a>
+<a id="__codelineno-6-11" name="__codelineno-6-11"></a><span class="k">class</span><span class="w"> </span><span class="n">PersonnesDao</span><span class="p">:</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12"></a>
+<a id="__codelineno-6-13" name="__codelineno-6-13"></a><span class="w">     </span><span class="o">#</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">people</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="k">last</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="k">first</span><span class="w"> </span><span class="n">name</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14"></a><span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">lister</span><span class="p">(</span><span class="k">self</span><span class="p">,</span><span class="w"> </span><span class="k">session</span><span class="p">:</span><span class="w"> </span><span class="k">Session</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">list</span><span class="p">[</span><span class="n">Personne</span><span class="p">]:</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">list</span><span class="p">(</span><span class="k">session</span><span class="p">.</span><span class="n">scalars</span><span class="p">(</span><span class="k">select</span><span class="p">(</span><span class="n">Personne</span><span class="p">).</span><span class="n">order_by</span><span class="p">(</span><span class="n">Personne</span><span class="p">.</span><span class="n">nom</span><span class="p">,</span><span class="w"> </span><span class="n">Personne</span><span class="p">.</span><span class="n">prenom</span><span class="p">)))</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16"></a>
+<a id="__codelineno-6-17" name="__codelineno-6-17"></a><span class="w">     </span><span class="o">#</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span><span class="p">;</span><span class="w"> </span><span class="k">None</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">person</span><span class="w"> </span><span class="n">does</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="n">exist</span>
+<a id="__codelineno-6-18" name="__codelineno-6-18"></a><span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">lire</span><span class="p">(</span><span class="k">self</span><span class="p">,</span><span class="w"> </span><span class="k">session</span><span class="p">:</span><span class="w"> </span><span class="k">Session</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">:</span><span class="w"> </span><span class="nb">int</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Personne</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">None</span><span class="p">:</span>
+<a id="__codelineno-6-19" name="__codelineno-6-19"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">session</span><span class="p">.</span><span class="k">get</span><span class="p">(</span><span class="n">Personne</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">)</span>
+<a id="__codelineno-6-20" name="__codelineno-6-20"></a>
+<a id="__codelineno-6-21" name="__codelineno-6-21"></a><span class="w">     </span><span class="o">#</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">person</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">same</span><span class="w"> </span><span class="k">first</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="k">last</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">other</span><span class="w"> </span><span class="k">than</span><span class="w"> </span><span class="p">[</span><span class="n">sauf_id</span><span class="p">]:</span>
+<a id="__codelineno-6-22" name="__codelineno-6-22"></a><span class="w">     </span><span class="o">#</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">first_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">last_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="k">LIMIT</span><span class="w"> </span><span class="mi">1</span>
+<a id="__codelineno-6-23" name="__codelineno-6-23"></a><span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">homonyme</span><span class="p">(</span><span class="k">self</span><span class="p">,</span><span class="w"> </span><span class="k">session</span><span class="p">:</span><span class="w"> </span><span class="k">Session</span><span class="p">,</span><span class="w"> </span><span class="n">prenom</span><span class="p">:</span><span class="w"> </span><span class="n">str</span><span class="p">,</span><span class="w"> </span><span class="n">nom</span><span class="p">:</span><span class="w"> </span><span class="n">str</span><span class="p">,</span><span class="w"> </span><span class="n">sauf_id</span><span class="p">:</span><span class="w"> </span><span class="nb">int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Personne</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">None</span><span class="p">:</span>
+<a id="__codelineno-6-24" name="__codelineno-6-24"></a><span class="w">        </span><span class="n">requete</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">select</span><span class="p">(</span><span class="n">Personne</span><span class="p">).</span><span class="k">where</span><span class="p">(</span><span class="n">Personne</span><span class="p">.</span><span class="n">prenom</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">prenom</span><span class="p">,</span><span class="w"> </span><span class="n">Personne</span><span class="p">.</span><span class="n">nom</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">nom</span><span class="p">,</span>
+<a id="__codelineno-6-25" name="__codelineno-6-25"></a><span class="w">                                         </span><span class="n">Personne</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">sauf_id</span><span class="p">).</span><span class="k">limit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-6-26" name="__codelineno-6-26"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">session</span><span class="p">.</span><span class="n">scalars</span><span class="p">(</span><span class="n">requete</span><span class="p">).</span><span class="k">first</span><span class="p">()</span>
+<a id="__codelineno-6-27" name="__codelineno-6-27"></a>
+<a id="__codelineno-6-28" name="__codelineno-6-28"></a><span class="w">     </span><span class="o">#</span><span class="w"> </span><span class="k">INSERT</span><span class="w"> </span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">person</span><span class="p">):</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">person</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">added</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="k">session</span><span class="p">,</span><span class="w"> </span><span class="k">and</span>
+<a id="__codelineno-6-29" name="__codelineno-6-29"></a><span class="w">     </span><span class="o">#</span><span class="w"> </span><span class="n">flush</span><span class="w"> </span><span class="n">sends</span><span class="w"> </span><span class="n">TOUT</span><span class="w"> </span><span class="n">DE</span><span class="w"> </span><span class="n">SUITE</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">command</span><span class="w"> </span><span class="k">SQL</span><span class="w"> </span><span class="p">(</span><span class="k">not</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="k">COMMIT</span><span class="p">)</span>
+<a id="__codelineno-6-30" name="__codelineno-6-30"></a><span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">ajouter</span><span class="p">(</span><span class="k">self</span><span class="p">,</span><span class="w"> </span><span class="k">session</span><span class="p">:</span><span class="w"> </span><span class="k">Session</span><span class="p">,</span><span class="w"> </span><span class="n">personne</span><span class="p">:</span><span class="w"> </span><span class="n">Personne</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Personne</span><span class="p">:</span>
+<a id="__codelineno-6-31" name="__codelineno-6-31"></a><span class="w">        </span><span class="k">session</span><span class="p">.</span><span class="k">add</span><span class="p">(</span><span class="n">personne</span><span class="p">)</span>
+<a id="__codelineno-6-32" name="__codelineno-6-32"></a><span class="w">        </span><span class="k">session</span><span class="p">.</span><span class="n">flush</span><span class="p">()</span>
+<a id="__codelineno-6-33" name="__codelineno-6-33"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">personne</span>
+<a id="__codelineno-6-34" name="__codelineno-6-34"></a>
+<a id="__codelineno-6-35" name="__codelineno-6-35"></a><span class="w">     </span><span class="o">#</span><span class="w"> </span><span class="k">DELETE</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">people</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span>
+<a id="__codelineno-6-36" name="__codelineno-6-36"></a><span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">supprimer</span><span class="p">(</span><span class="k">self</span><span class="p">,</span><span class="w"> </span><span class="k">session</span><span class="p">:</span><span class="w"> </span><span class="k">Session</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">:</span><span class="w"> </span><span class="nb">int</span><span class="p">):</span>
+<a id="__codelineno-6-37" name="__codelineno-6-37"></a><span class="w">        </span><span class="k">session</span><span class="p">.</span><span class="k">execute</span><span class="p">(</span><span class="k">delete</span><span class="p">(</span><span class="n">Personne</span><span class="p">).</span><span class="k">where</span><span class="p">(</span><span class="n">Personne</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">id</span><span class="p">))</span>
+</code></pre></div></td></tr></table></div>
+<p>The DAO layer contains only queries, with no business rules. Each method receives the session opened by the business layer: all queries for a single business operation thus share the same connection and the same <strong>transaction</strong>.</p>
+<ul>
+<li>Line 15: <strong><em>[select(Personne)]</em></strong> constructs a query (<strong><em>[SELECT])</em></strong> on the &quot;people&quot; table; <strong><em>[order_by]</em></strong> sorts it. The columns are written as attributes of the class (<strong><em>[Personne.nom]</em></strong>): the editor can verify their names, and no SQL is written by hand. <strong><em>[session.scalars(...)]</em></strong> executes the query and returns the entities constructed from the read rows;</li>
+<li>line 19: reading by primary key, or <strong><em>[None]</em></strong>;</li>
+<li>lines 23–26: <strong><em>[where]</em></strong> adds conditions, written using the operators from <em>[Python]</em> (<strong><em>[==]</em></strong>, <strong><em>[!=]</em></strong>): <em>[SQLAlchemy]</em> translates them into SQL, with <strong>parameters</strong> (the values are never copied into the text of the SQL command, which makes <strong>SQL injection</strong> impossible). <strong><em>[first()]</em></strong> returns the first entity, or <strong><em>[None]</em></strong>;</li>
+<li>lines 30–33: <strong><em>[session.add]</em></strong> assigns a new entity to the session; <strong><em>[flush]</em></strong> immediately sends <strong><em>[INSERT]</em></strong> to the database (without <strong><em>[flush]</em></strong>, it would go to <strong><em>[COMMIT]</em></strong>). The database then generates the ID, which <em>[SQLAlchemy]</em> stores in the entity;</li>
+<li>line 37: a <strong><em>[DELETE]</em></strong>, constructed in the same way.</li>
+</ul>
+<h3 id="915-the-business-layer">9.1.5. <span style="color: #1f4d78">The business layer</span></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
+<span class="normal"><a href="#__codelineno-7-2">2</a></span>
+<span class="normal"><a href="#__codelineno-7-3">3</a></span>
+<span class="normal"><a href="#__codelineno-7-4">4</a></span>
+<span class="normal"><a href="#__codelineno-7-5">5</a></span>
+<span class="normal"><a href="#__codelineno-7-6">6</a></span>
+<span class="normal"><a href="#__codelineno-7-7">7</a></span>
+<span class="normal"><a href="#__codelineno-7-8">8</a></span>
+<span class="normal"><a href="#__codelineno-7-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="c1"># occupation/donnees.py: a person’s data, as transmitted by the web layer</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a>
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a>
+<a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6"></a><span class="k">class</span><span class="w"> </span><span class="nc">DonneesPersonne</span><span class="p">:</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7"></a>    <span class="n">prenom</span><span class="p">:</span> <span class="nb">str</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8"></a>    <span class="n">nom</span><span class="p">:</span> <span class="nb">str</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9"></a>    <span class="n">age</span><span class="p">:</span> <span class="nb">int</span>
+</code></pre></div></td></tr></table></div>
+<p>A person’s data, as transmitted by the web layer to the business layer: a simple object, unrelated to <em>[Flask]</em>, <em>[WTForms],</em> or <em>[SQLAlchemy]</em>.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
+<span class="normal"><a href="#__codelineno-8-2">2</a></span>
+<span class="normal"><a href="#__codelineno-8-3">3</a></span>
+<span class="normal"><a href="#__codelineno-8-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="gh"># business/exception.py: a business rule rejects the operation; the message</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a><span class="gh"># is intended for the user</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a>class MetierException(Exception):
+<a id="__codelineno-8-4" name="__codelineno-8-4"></a>    pass
+</code></pre></div></td></tr></table></div>
+<p>An exception class specific to the business layer: a business rule rejects the operation, and the exception message is intended for the user.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-9-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-9-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-9-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-9-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-9-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-9-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-9-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-9-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-9-10">10</a></span>
+<span class="normal"><a href="#__codelineno-9-11">11</a></span>
+<span class="normal"><a href="#__codelineno-9-12">12</a></span>
+<span class="normal"><a href="#__codelineno-9-13">13</a></span>
+<span class="normal"><a href="#__codelineno-9-14">14</a></span>
+<span class="normal"><a href="#__codelineno-9-15">15</a></span>
+<span class="normal"><a href="#__codelineno-9-16">16</a></span>
+<span class="normal"><a href="#__codelineno-9-17">17</a></span>
+<span class="normal"><a href="#__codelineno-9-18">18</a></span>
+<span class="normal"><a href="#__codelineno-9-19">19</a></span>
+<span class="normal"><a href="#__codelineno-9-20">20</a></span>
+<span class="normal"><a href="#__codelineno-9-21">21</a></span>
+<span class="normal"><a href="#__codelineno-9-22">22</a></span>
+<span class="normal"><a href="#__codelineno-9-23">23</a></span>
+<span class="normal"><a href="#__codelineno-9-24">24</a></span>
+<span class="normal"><a href="#__codelineno-9-25">25</a></span>
+<span class="normal"><a href="#__codelineno-9-26">26</a></span>
+<span class="normal"><a href="#__codelineno-9-27">27</a></span>
+<span class="normal"><a href="#__codelineno-9-28">28</a></span>
+<span class="normal"><a href="#__codelineno-9-29">29</a></span>
+<span class="normal"><a href="#__codelineno-9-30">30</a></span>
+<span class="normal"><a href="#__codelineno-9-31">31</a></span>
+<span class="normal"><a href="#__codelineno-9-32">32</a></span>
+<span class="normal"><a href="#__codelineno-9-33">33</a></span>
+<span class="normal"><a href="#__codelineno-9-34">34</a></span>
+<span class="normal"><a href="#__codelineno-9-35">35</a></span>
+<span class="normal"><a href="#__codelineno-9-36">36</a></span>
+<span class="normal"><a href="#__codelineno-9-37">37</a></span>
+<span class="normal"><a href="#__codelineno-9-38">38</a></span>
+<span class="normal"><a href="#__codelineno-9-39">39</a></span>
+<span class="normal"><a href="#__codelineno-9-40">40</a></span>
+<span class="normal"><a href="#__codelineno-9-41">41</a></span>
+<span class="normal"><a href="#__codelineno-9-42">42</a></span>
+<span class="normal"><a href="#__codelineno-9-43">43</a></span>
+<span class="normal"><a href="#__codelineno-9-44">44</a></span>
+<span class="normal"><a href="#__codelineno-9-45">45</a></span>
+<span class="normal"><a href="#__codelineno-9-46">46</a></span>
+<span class="normal"><a href="#__codelineno-9-47">47</a></span>
+<span class="normal"><a href="#__codelineno-9-48">48</a></span>
+<span class="normal"><a href="#__codelineno-9-49">49</a></span>
+<span class="normal"><a href="#__codelineno-9-50">50</a></span>
+<span class="normal"><a href="#__codelineno-9-51">51</a></span>
+<span class="normal"><a href="#__codelineno-9-52">52</a></span>
+<span class="normal"><a href="#__codelineno-9-53">53</a></span>
+<span class="normal"><a href="#__codelineno-9-54">54</a></span>
+<span class="normal"><a href="#__codelineno-9-55">55</a></span>
+<span class="normal"><a href="#__codelineno-9-56">56</a></span>
+<span class="normal"><a href="#__codelineno-9-57">57</a></span>
+<span class="normal"><a href="#__codelineno-9-58">58</a></span>
+<span class="normal"><a href="#__codelineno-9-59">59</a></span>
+<span class="normal"><a href="#__codelineno-9-60">60</a></span>
+<span class="normal"><a href="#__codelineno-9-61">61</a></span>
+<span class="normal"><a href="#__codelineno-9-62">62</a></span>
+<span class="normal"><a href="#__codelineno-9-63">63</a></span>
+<span class="normal"><a href="#__codelineno-9-64">64</a></span>
+<span class="normal"><a href="#__codelineno-9-65">65</a></span>
+<span class="normal"><a href="#__codelineno-9-66">66</a></span>
+<span class="normal"><a href="#__codelineno-9-67">67</a></span>
+<span class="normal"><a href="#__codelineno-9-68">68</a></span>
+<span class="normal"><a href="#__codelineno-9-69">69</a></span>
+<span class="normal"><a href="#__codelineno-9-70">70</a></span>
+<span class="normal"><a href="#__codelineno-9-71">71</a></span>
+<span class="normal"><a href="#__codelineno-9-72">72</a></span>
+<span class="normal"><a href="#__codelineno-9-73">73</a></span>
+<span class="normal"><a href="#__codelineno-9-74">74</a></span>
+<span class="normal"><a href="#__codelineno-9-75">75</a></span>
+<span class="normal"><a href="#__codelineno-9-76">76</a></span>
+<span class="normal"><a href="#__codelineno-9-77">77</a></span>
+<span class="normal"><a href="#__codelineno-9-78">78</a></span>
+<span class="normal"><a href="#__codelineno-9-79">79</a></span>
+<span class="normal"><a href="#__codelineno-9-80">80</a></span>
+<span class="normal"><a href="#__codelineno-9-81">81</a></span>
+<span class="normal"><a href="#__codelineno-9-82">82</a></span>
+<span class="normal"><a href="#__codelineno-9-83">83</a></span>
+<span class="normal"><a href="#__codelineno-9-84">84</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="c1"># business/personnes_metier.py: the MÉTIER layer and the business rules—and only those.</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a><span class="c1"># Each method opens its own TRANSACTION: validated (COMMIT) at the end of the block</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3"></a><span class="c1"># with, rolled back (ROLLBACK) if an exception occurs</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy.exc</span><span class="w"> </span><span class="kn">import</span> <span class="n">IntegrityError</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy.orm</span><span class="w"> </span><span class="kn">import</span> <span class="n">sessionmaker</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy.orm.exc</span><span class="w"> </span><span class="kn">import</span> <span class="n">StaleDataError</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7"></a>
+<a id="__codelineno-9-8" name="__codelineno-9-8"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dao.personnes_dao</span><span class="w"> </span><span class="kn">import</span> <span class="n">PersonnesDao</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9"></a><span class="kn">from</span><span class="w"> </span><span class="nn">entities.personne</span><span class="w"> </span><span class="kn">import</span> <span class="n">Personne</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10"></a><span class="kn">from</span><span class="w"> </span><span class="nn">metier.donnees</span><span class="w"> </span><span class="kn">import</span> <span class="n">DonneesPersonne</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11"></a><span class="kn">from</span><span class="w"> </span><span class="nn">metier.exception</span><span class="w"> </span><span class="kn">import</span> <span class="n">MetierException</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12"></a>
+<a id="__codelineno-9-13" name="__codelineno-9-13"></a><span class="n">HOMONYME</span> <span class="o">=</span> <span class="s2">"Une personne porte déjà ces prénom et nom."</span>
+<a id="__codelineno-9-14" name="__codelineno-9-14"></a><span class="n">MODIFIEE</span> <span class="o">=</span> <span class="s2">"Cette fiche a été modifiée entre-temps : rechargez-la."</span>
+<a id="__codelineno-9-15" name="__codelineno-9-15"></a><span class="n">INCONNUE</span> <span class="o">=</span> <span class="s2">"Cette personne n'existe pas (ou plus)."</span>
+<a id="__codelineno-9-16" name="__codelineno-9-16"></a>
+<a id="__codelineno-9-17" name="__codelineno-9-17"></a>
+<a id="__codelineno-9-18" name="__codelineno-9-18"></a><span class="k">class</span><span class="w"> </span><span class="nc">PersonnesMetier</span><span class="p">:</span>
+<a id="__codelineno-9-19" name="__codelineno-9-19"></a>
+<a id="__codelineno-9-20" name="__codelineno-9-20"></a>     <span class="c1"># sessions: the session "factory" SQLAlchemy (see app.py)</span>
+<a id="__codelineno-9-21" name="__codelineno-9-21"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sessions</span><span class="p">:</span> <span class="n">sessionmaker</span><span class="p">,</span> <span class="n">dao</span><span class="p">:</span> <span class="n">PersonnesDao</span><span class="p">):</span>
+<a id="__codelineno-9-22" name="__codelineno-9-22"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_sessions</span> <span class="o">=</span> <span class="n">sessions</span>
+<a id="__codelineno-9-23" name="__codelineno-9-23"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_dao</span> <span class="o">=</span> <span class="n">dao</span>
+<a id="__codelineno-9-24" name="__codelineno-9-24"></a>
+<a id="__codelineno-9-25" name="__codelineno-9-25"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">lister</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Personne</span><span class="p">]:</span>
+<a id="__codelineno-9-26" name="__codelineno-9-26"></a>         <span class="c1"># sessions.begin(): a session ET commits its transaction; the `with` block closes them</span>
+<a id="__codelineno-9-27" name="__codelineno-9-27"></a>        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sessions</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+<a id="__codelineno-9-28" name="__codelineno-9-28"></a>            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dao</span><span class="o">.</span><span class="n">lister</span><span class="p">(</span><span class="n">session</span><span class="p">)</span>
+<a id="__codelineno-9-29" name="__codelineno-9-29"></a>
+<a id="__codelineno-9-30" name="__codelineno-9-30"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">lire</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Personne</span><span class="p">:</span>
+<a id="__codelineno-9-31" name="__codelineno-9-31"></a>        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sessions</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+<a id="__codelineno-9-32" name="__codelineno-9-32"></a>            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lire</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span>
+<a id="__codelineno-9-33" name="__codelineno-9-33"></a>
+<a id="__codelineno-9-34" name="__codelineno-9-34"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">ajouter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">donnees</span><span class="p">:</span> <span class="n">DonneesPersonne</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Personne</span><span class="p">:</span>
+<a id="__codelineno-9-35" name="__codelineno-9-35"></a>        <span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-9-36" name="__codelineno-9-36"></a>            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sessions</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+<a id="__codelineno-9-37" name="__codelineno-9-37"></a>                 <span class="c1"># Rule 1: No two people can have the same first and last names</span>
+<a id="__codelineno-9-38" name="__codelineno-9-38"></a>                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dao</span><span class="o">.</span><span class="n">homonyme</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">donnees</span><span class="o">.</span><span class="n">prenom</span><span class="p">,</span> <span class="n">donnees</span><span class="o">.</span><span class="n">nom</span><span class="p">):</span>
+<a id="__codelineno-9-39" name="__codelineno-9-39"></a>                    <span class="k">raise</span> <span class="n">MetierException</span><span class="p">(</span><span class="n">HOMONYME</span><span class="p">)</span>
+<a id="__codelineno-9-40" name="__codelineno-9-40"></a>                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dao</span><span class="o">.</span><span class="n">ajouter</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">Personne</span><span class="p">(</span><span class="n">donnees</span><span class="o">.</span><span class="n">prenom</span><span class="p">,</span> <span class="n">donnees</span><span class="o">.</span><span class="n">nom</span><span class="p">,</span> <span class="n">donnees</span><span class="o">.</span><span class="n">age</span><span class="p">))</span>
+<a id="__codelineno-9-41" name="__codelineno-9-41"></a>        <span class="k">except</span> <span class="n">IntegrityError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<a id="__codelineno-9-42" name="__codelineno-9-42"></a>            <span class="k">raise</span> <span class="bp">self</span><span class="o">.</span><span class="n">_traduire</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+<a id="__codelineno-9-43" name="__codelineno-9-43"></a>
+<a id="__codelineno-9-44" name="__codelineno-9-44"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">modifier</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="n">donnees</span><span class="p">:</span> <span class="n">DonneesPersonne</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Personne</span><span class="p">:</span>
+<a id="__codelineno-9-45" name="__codelineno-9-45"></a>        <span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-9-46" name="__codelineno-9-46"></a>            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sessions</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+<a id="__codelineno-9-47" name="__codelineno-9-47"></a>                <span class="n">personne</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lire</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span>
+<a id="__codelineno-9-48" name="__codelineno-9-48"></a>                 <span class="c1"># Rule 2: Do not modify a record that has been modified in the meantime by someone else</span>
+<a id="__codelineno-9-49" name="__codelineno-9-49"></a>                <span class="k">if</span> <span class="n">personne</span><span class="o">.</span><span class="n">version</span> <span class="o">!=</span> <span class="n">version</span><span class="p">:</span>
+<a id="__codelineno-9-50" name="__codelineno-9-50"></a>                    <span class="k">raise</span> <span class="n">MetierException</span><span class="p">(</span><span class="n">MODIFIEE</span><span class="p">)</span>
+<a id="__codelineno-9-51" name="__codelineno-9-51"></a>                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dao</span><span class="o">.</span><span class="n">homonyme</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">donnees</span><span class="o">.</span><span class="n">prenom</span><span class="p">,</span> <span class="n">donnees</span><span class="o">.</span><span class="n">nom</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+<a id="__codelineno-9-52" name="__codelineno-9-52"></a>                    <span class="k">raise</span> <span class="n">MetierException</span><span class="p">(</span><span class="n">HOMONYME</span><span class="p">)</span>
+<a id="__codelineno-9-53" name="__codelineno-9-53"></a>                 <span class="c1"># The entity being read is “tracked” by the session: simply</span>
+<a id="__codelineno-9-54" name="__codelineno-9-54"></a>                 <span class="c1"># modify it; `flush` sends the UPDATE immediately</span>
+<a id="__codelineno-9-55" name="__codelineno-9-55"></a>                <span class="n">personne</span><span class="o">.</span><span class="n">prenom</span> <span class="o">=</span> <span class="n">donnees</span><span class="o">.</span><span class="n">prenom</span>
+<a id="__codelineno-9-56" name="__codelineno-9-56"></a>                <span class="n">personne</span><span class="o">.</span><span class="n">nom</span> <span class="o">=</span> <span class="n">donnees</span><span class="o">.</span><span class="n">nom</span>
+<a id="__codelineno-9-57" name="__codelineno-9-57"></a>                <span class="n">personne</span><span class="o">.</span><span class="n">age</span> <span class="o">=</span> <span class="n">donnees</span><span class="o">.</span><span class="n">age</span>
+<a id="__codelineno-9-58" name="__codelineno-9-58"></a>                <span class="n">session</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+<a id="__codelineno-9-59" name="__codelineno-9-59"></a>                <span class="k">return</span> <span class="n">personne</span>
+<a id="__codelineno-9-60" name="__codelineno-9-60"></a>        <span class="k">except</span> <span class="n">StaleDataError</span><span class="p">:</span>
+<a id="__codelineno-9-61" name="__codelineno-9-61"></a>             <span class="c1"># the UPDATE "WHERE id = ... AND version = ..." did not modify any rows</span>
+<a id="__codelineno-9-62" name="__codelineno-9-62"></a>            <span class="k">raise</span> <span class="n">MetierException</span><span class="p">(</span><span class="n">MODIFIEE</span><span class="p">)</span>
+<a id="__codelineno-9-63" name="__codelineno-9-63"></a>        <span class="k">except</span> <span class="n">IntegrityError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<a id="__codelineno-9-64" name="__codelineno-9-64"></a>            <span class="k">raise</span> <span class="bp">self</span><span class="o">.</span><span class="n">_traduire</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+<a id="__codelineno-9-65" name="__codelineno-9-65"></a>
+<a id="__codelineno-9-66" name="__codelineno-9-66"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">supprimer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Personne</span><span class="p">:</span>
+<a id="__codelineno-9-67" name="__codelineno-9-67"></a>        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sessions</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+<a id="__codelineno-9-68" name="__codelineno-9-68"></a>            <span class="n">personne</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lire</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span>
+<a id="__codelineno-9-69" name="__codelineno-9-69"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_dao</span><span class="o">.</span><span class="n">supprimer</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span>
+<a id="__codelineno-9-70" name="__codelineno-9-70"></a>            <span class="k">return</span> <span class="n">personne</span>
+<a id="__codelineno-9-71" name="__codelineno-9-71"></a>
+<a id="__codelineno-9-72" name="__codelineno-9-72"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_lire</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Personne</span><span class="p">:</span>
+<a id="__codelineno-9-73" name="__codelineno-9-73"></a>        <span class="n">personne</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dao</span><span class="o">.</span><span class="n">lire</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span>
+<a id="__codelineno-9-74" name="__codelineno-9-74"></a>        <span class="k">if</span> <span class="n">personne</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-9-75" name="__codelineno-9-75"></a>            <span class="k">raise</span> <span class="n">MetierException</span><span class="p">(</span><span class="n">INCONNUE</span><span class="p">)</span>
+<a id="__codelineno-9-76" name="__codelineno-9-76"></a>        <span class="k">return</span> <span class="n">personne</span>
+<a id="__codelineno-9-77" name="__codelineno-9-77"></a>
+<a id="__codelineno-9-78" name="__codelineno-9-78"></a>     <span class="c1"># two simultaneous insertions: the database’s uniqueness constraint rejected the</span>
+<a id="__codelineno-9-79" name="__codelineno-9-79"></a>     <span class="c1"># second one; e.orig: the original error, the one from the driver PyMySQL</span>
+<a id="__codelineno-9-80" name="__codelineno-9-80"></a>    <span class="nd">@staticmethod</span>
+<a id="__codelineno-9-81" name="__codelineno-9-81"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_traduire</span><span class="p">(</span><span class="n">e</span><span class="p">:</span> <span class="n">IntegrityError</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="ne">Exception</span><span class="p">:</span>
+<a id="__codelineno-9-82" name="__codelineno-9-82"></a>        <span class="k">if</span> <span class="s2">"unq_personnes_prenom_nom"</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">orig</span><span class="p">):</span>
+<a id="__codelineno-9-83" name="__codelineno-9-83"></a>            <span class="k">return</span> <span class="n">MetierException</span><span class="p">(</span><span class="n">HOMONYME</span><span class="p">)</span>
+<a id="__codelineno-9-84" name="__codelineno-9-84"></a>        <span class="k">return</span> <span class="n">e</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Line 27: Each method opens its own session and <strong>transaction</strong>: <strong><em>[sessions.begin()]</em></strong> returns a session with a transaction that has been started. At the end of the <strong><em>[with]</em></strong> block, the transaction is <strong>committed</strong> (<strong><em>[COMMIT]</em></strong>) and the session is closed; if an exception occurs within the block, the transaction is <strong>rolled back</strong> (<strong><em>[ROLLBACK]</em></strong>): none of the changes made within the block are retained. The business layer thus determines the scope of transactions: one business operation equals one transaction;</li>
+<li>lines 34–42: Rule No. 1: No two people may have the same first and last names. The business layer checks this rule <strong>before</strong> writing to the database and raises a <strong><em>[MetierException]</em></strong> if it is not met. But this check is not sufficient: two simultaneous requests could both verify that there are no namesakes, and then both proceed to insert the data. The database’s uniqueness constraint then rejects the second <strong><em>[INSERT]</em></strong>, and <em>[SQLAlchemy]</em> triggers a <strong><em>[IntegrityError]</em></strong>, which the <strong><em>[_traduire]</em></strong> method transforms into the same <strong><em>[MetierException]</em></strong>. The database is the last line of defense;</li>
+<li>lines 44–64: Rule No. 2: Do not modify a record that has been modified in the meantime by someone else. The update form carries the version of the record that was read (in a hidden field); if it differs from the current version, the record has changed since it was displayed. Here again, the database (via the optimistic lock) detects cases where a concurrent modification occurs <strong>between</strong> the read and <strong><em>the [UPDATE]</em></strong>: this is the <strong><em>[StaleDataError]</em></strong> exception. Note that the modification is performed simply by changing the attributes of the read entity: the session <strong>tracks</strong> this, and <strong><em>[flush]</em></strong> sends a <strong><em>[UPDATE]</em></strong> containing only the modified columns;</li>
+<li>lines 66–70: Deleting a person results in the confirmation message;</li>
+<li>lines 72–76: A nonexistent person is a business error;</li>
+<li>lines 80–84: A <strong>static method</strong> does not accept either an object or a class; it is simply a function defined within the class. <strong><em>[e.orig]</em></strong> is the original exception, that of the driver <em>[PyMySQL]</em>, whose message contains the name of the violated constraint. Another integrity error is reported as-is: this is not a business error, but a programming error.</li>
+</ul>
+<h3 id="916-the-web-layer">9.1.6. <span style="color: #1f4d78">The Web Layer</span></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-10-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-10-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-10-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-10-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-10-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-10-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-10-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-10-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-10-10">10</a></span>
+<span class="normal"><a href="#__codelineno-10-11">11</a></span>
+<span class="normal"><a href="#__codelineno-10-12">12</a></span>
+<span class="normal"><a href="#__codelineno-10-13">13</a></span>
+<span class="normal"><a href="#__codelineno-10-14">14</a></span>
+<span class="normal"><a href="#__codelineno-10-15">15</a></span>
+<span class="normal"><a href="#__codelineno-10-16">16</a></span>
+<span class="normal"><a href="#__codelineno-10-17">17</a></span>
+<span class="normal"><a href="#__codelineno-10-18">18</a></span>
+<span class="normal"><a href="#__codelineno-10-19">19</a></span>
+<span class="normal"><a href="#__codelineno-10-20">20</a></span>
+<span class="normal"><a href="#__codelineno-10-21">21</a></span>
+<span class="normal"><a href="#__codelineno-10-22">22</a></span>
+<span class="normal"><a href="#__codelineno-10-23">23</a></span>
+<span class="normal"><a href="#__codelineno-10-24">24</a></span>
+<span class="normal"><a href="#__codelineno-10-25">25</a></span>
+<span class="normal"><a href="#__codelineno-10-26">26</a></span>
+<span class="normal"><a href="#__codelineno-10-27">27</a></span>
+<span class="normal"><a href="#__codelineno-10-28">28</a></span>
+<span class="normal"><a href="#__codelineno-10-29">29</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="c1"># models/formulaire_personne.py: the form fields and their constraints (see Example 19)</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">flask_wtf</span><span class="w"> </span><span class="kn">import</span> <span class="n">FlaskForm</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">wtforms</span><span class="w"> </span><span class="kn">import</span> <span class="n">HiddenField</span><span class="p">,</span> <span class="n">IntegerField</span><span class="p">,</span> <span class="n">StringField</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">wtforms.validators</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataRequired</span><span class="p">,</span> <span class="n">InputRequired</span><span class="p">,</span> <span class="n">Length</span><span class="p">,</span> <span class="n">NumberRange</span><span class="p">,</span> <span class="n">Optional</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5"></a>
+<a id="__codelineno-10-6" name="__codelineno-10-6"></a>
+<a id="__codelineno-10-7" name="__codelineno-10-7"></a><span class="k">def</span><span class="w"> </span><span class="nf">nettoyer</span><span class="p">(</span><span class="n">valeur</span><span class="p">):</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8"></a>    <span class="k">return</span> <span class="n">valeur</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">valeur</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="n">valeur</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9"></a>
+<a id="__codelineno-10-10" name="__codelineno-10-10"></a>
+<a id="__codelineno-10-11" name="__codelineno-10-11"></a><span class="c1"># a version: an integer, or None if the field is empty (add form)</span>
+<a id="__codelineno-10-12" name="__codelineno-10-12"></a><span class="k">def</span><span class="w"> </span><span class="nf">entier_ou_none</span><span class="p">(</span><span class="n">valeur</span><span class="p">):</span>
+<a id="__codelineno-10-13" name="__codelineno-10-13"></a>    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">valeur</span><span class="p">)</span> <span class="k">if</span> <span class="n">valeur</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
+<a id="__codelineno-10-14" name="__codelineno-10-14"></a>
+<a id="__codelineno-10-15" name="__codelineno-10-15"></a>
+<a id="__codelineno-10-16" name="__codelineno-10-16"></a><span class="k">class</span><span class="w"> </span><span class="nc">PersonneForm</span><span class="p">(</span><span class="n">FlaskForm</span><span class="p">):</span>
+<a id="__codelineno-10-17" name="__codelineno-10-17"></a>
+<a id="__codelineno-10-18" name="__codelineno-10-18"></a>    <span class="k">class</span><span class="w"> </span><span class="nc">Meta</span><span class="p">:</span>
+<a id="__codelineno-10-19" name="__codelineno-10-19"></a>        <span class="n">locales</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"fr"</span><span class="p">]</span>
+<a id="__codelineno-10-20" name="__codelineno-10-20"></a>
+<a id="__codelineno-10-21" name="__codelineno-10-21"></a>    <span class="n">prenom</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">(</span><span class="s2">"Prénom"</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="p">[</span><span class="n">nettoyer</span><span class="p">],</span> <span class="n">validators</span><span class="o">=</span><span class="p">[</span>
+<a id="__codelineno-10-22" name="__codelineno-10-22"></a>        <span class="n">DataRequired</span><span class="p">(</span><span class="s2">"Le prénom est obligatoire."</span><span class="p">),</span> <span class="n">Length</span><span class="p">(</span><span class="nb">max</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">"30 caractères au plus."</span><span class="p">)])</span>
+<a id="__codelineno-10-23" name="__codelineno-10-23"></a>    <span class="n">nom</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">(</span><span class="s2">"Nom"</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="p">[</span><span class="n">nettoyer</span><span class="p">],</span> <span class="n">validators</span><span class="o">=</span><span class="p">[</span>
+<a id="__codelineno-10-24" name="__codelineno-10-24"></a>        <span class="n">DataRequired</span><span class="p">(</span><span class="s2">"Le nom est obligatoire."</span><span class="p">),</span> <span class="n">Length</span><span class="p">(</span><span class="nb">max</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">"30 caractères au plus."</span><span class="p">)])</span>
+<a id="__codelineno-10-25" name="__codelineno-10-25"></a>    <span class="n">age</span> <span class="o">=</span> <span class="n">IntegerField</span><span class="p">(</span><span class="s2">"Âge"</span><span class="p">,</span> <span class="n">validators</span><span class="o">=</span><span class="p">[</span>
+<a id="__codelineno-10-26" name="__codelineno-10-26"></a>        <span class="n">InputRequired</span><span class="p">(</span><span class="s2">"L'âge est obligatoire."</span><span class="p">),</span>
+<a id="__codelineno-10-27" name="__codelineno-10-27"></a>        <span class="n">NumberRange</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">"L'âge doit être compris entre 0 et 150."</span><span class="p">)])</span>
+<a id="__codelineno-10-28" name="__codelineno-10-28"></a>     <span class="c1"># the record’s version, carried by a hidden field (update only)</span>
+<a id="__codelineno-10-29" name="__codelineno-10-29"></a>    <span class="n">version</span> <span class="o">=</span> <span class="n">HiddenField</span><span class="p">(</span><span class="n">filters</span><span class="o">=</span><span class="p">[</span><span class="n">entier_ou_none</span><span class="p">])</span>
+</code></pre></div></td></tr></table></div>
+<p>The form <em>[WTForms]</em> (Example 19). The hidden field <strong><em>[version]</em></strong> has a filter that converts it to an integer, or to <strong><em>[None]</em></strong> if it is empty (add form).</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-11-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-11-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-11-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-11-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-11-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-11-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-11-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-11-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-11-10">10</a></span>
+<span class="normal"><a href="#__codelineno-11-11">11</a></span>
+<span class="normal"><a href="#__codelineno-11-12">12</a></span>
+<span class="normal"><a href="#__codelineno-11-13">13</a></span>
+<span class="normal"><a href="#__codelineno-11-14">14</a></span>
+<span class="normal"><a href="#__codelineno-11-15">15</a></span>
+<span class="normal"><a href="#__codelineno-11-16">16</a></span>
+<span class="normal"><a href="#__codelineno-11-17">17</a></span>
+<span class="normal"><a href="#__codelineno-11-18">18</a></span>
+<span class="normal"><a href="#__codelineno-11-19">19</a></span>
+<span class="normal"><a href="#__codelineno-11-20">20</a></span>
+<span class="normal"><a href="#__codelineno-11-21">21</a></span>
+<span class="normal"><a href="#__codelineno-11-22">22</a></span>
+<span class="normal"><a href="#__codelineno-11-23">23</a></span>
+<span class="normal"><a href="#__codelineno-11-24">24</a></span>
+<span class="normal"><a href="#__codelineno-11-25">25</a></span>
+<span class="normal"><a href="#__codelineno-11-26">26</a></span>
+<span class="normal"><a href="#__codelineno-11-27">27</a></span>
+<span class="normal"><a href="#__codelineno-11-28">28</a></span>
+<span class="normal"><a href="#__codelineno-11-29">29</a></span>
+<span class="normal"><a href="#__codelineno-11-30">30</a></span>
+<span class="normal"><a href="#__codelineno-11-31">31</a></span>
+<span class="normal"><a href="#__codelineno-11-32">32</a></span>
+<span class="normal"><a href="#__codelineno-11-33">33</a></span>
+<span class="normal"><a href="#__codelineno-11-34">34</a></span>
+<span class="normal"><a href="#__codelineno-11-35">35</a></span>
+<span class="normal"><a href="#__codelineno-11-36">36</a></span>
+<span class="normal"><a href="#__codelineno-11-37">37</a></span>
+<span class="normal"><a href="#__codelineno-11-38">38</a></span>
+<span class="normal"><a href="#__codelineno-11-39">39</a></span>
+<span class="normal"><a href="#__codelineno-11-40">40</a></span>
+<span class="normal"><a href="#__codelineno-11-41">41</a></span>
+<span class="normal"><a href="#__codelineno-11-42">42</a></span>
+<span class="normal"><a href="#__codelineno-11-43">43</a></span>
+<span class="normal"><a href="#__codelineno-11-44">44</a></span>
+<span class="normal"><a href="#__codelineno-11-45">45</a></span>
+<span class="normal"><a href="#__codelineno-11-46">46</a></span>
+<span class="normal"><a href="#__codelineno-11-47">47</a></span>
+<span class="normal"><a href="#__codelineno-11-48">48</a></span>
+<span class="normal"><a href="#__codelineno-11-49">49</a></span>
+<span class="normal"><a href="#__codelineno-11-50">50</a></span>
+<span class="normal"><a href="#__codelineno-11-51">51</a></span>
+<span class="normal"><a href="#__codelineno-11-52">52</a></span>
+<span class="normal"><a href="#__codelineno-11-53">53</a></span>
+<span class="normal"><a href="#__codelineno-11-54">54</a></span>
+<span class="normal"><a href="#__codelineno-11-55">55</a></span>
+<span class="normal"><a href="#__codelineno-11-56">56</a></span>
+<span class="normal"><a href="#__codelineno-11-57">57</a></span>
+<span class="normal"><a href="#__codelineno-11-58">58</a></span>
+<span class="normal"><a href="#__codelineno-11-59">59</a></span>
+<span class="normal"><a href="#__codelineno-11-60">60</a></span>
+<span class="normal"><a href="#__codelineno-11-61">61</a></span>
+<span class="normal"><a href="#__codelineno-11-62">62</a></span>
+<span class="normal"><a href="#__codelineno-11-63">63</a></span>
+<span class="normal"><a href="#__codelineno-11-64">64</a></span>
+<span class="normal"><a href="#__codelineno-11-65">65</a></span>
+<span class="normal"><a href="#__codelineno-11-66">66</a></span>
+<span class="normal"><a href="#__codelineno-11-67">67</a></span>
+<span class="normal"><a href="#__codelineno-11-68">68</a></span>
+<span class="normal"><a href="#__codelineno-11-69">69</a></span>
+<span class="normal"><a href="#__codelineno-11-70">70</a></span>
+<span class="normal"><a href="#__codelineno-11-71">71</a></span>
+<span class="normal"><a href="#__codelineno-11-72">72</a></span>
+<span class="normal"><a href="#__codelineno-11-73">73</a></span>
+<span class="normal"><a href="#__codelineno-11-74">74</a></span>
+<span class="normal"><a href="#__codelineno-11-75">75</a></span>
+<span class="normal"><a href="#__codelineno-11-76">76</a></span>
+<span class="normal"><a href="#__codelineno-11-77">77</a></span>
+<span class="normal"><a href="#__codelineno-11-78">78</a></span>
+<span class="normal"><a href="#__codelineno-11-79">79</a></span>
+<span class="normal"><a href="#__codelineno-11-80">80</a></span>
+<span class="normal"><a href="#__codelineno-11-81">81</a></span>
+<span class="normal"><a href="#__codelineno-11-82">82</a></span>
+<span class="normal"><a href="#__codelineno-11-83">83</a></span>
+<span class="normal"><a href="#__codelineno-11-84">84</a></span>
+<span class="normal"><a href="#__codelineno-11-85">85</a></span>
+<span class="normal"><a href="#__codelineno-11-86">86</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="c1"># controllers/personnes.py: the WEB layer; it only interacts with the business layer</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">flask</span><span class="w"> </span><span class="kn">import</span> <span class="n">Blueprint</span><span class="p">,</span> <span class="n">current_app</span><span class="p">,</span> <span class="n">flash</span><span class="p">,</span> <span class="n">redirect</span><span class="p">,</span> <span class="n">render_template</span><span class="p">,</span> <span class="n">url_for</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3"></a>
+<a id="__codelineno-11-4" name="__codelineno-11-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">metier.donnees</span><span class="w"> </span><span class="kn">import</span> <span class="n">DonneesPersonne</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">metier.exception</span><span class="w"> </span><span class="kn">import</span> <span class="n">MetierException</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6"></a><span class="kn">from</span><span class="w"> </span><span class="nn">metier.personnes_metier</span><span class="w"> </span><span class="kn">import</span> <span class="n">PersonnesMetier</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7"></a><span class="kn">from</span><span class="w"> </span><span class="nn">models.formulaire_personne</span><span class="w"> </span><span class="kn">import</span> <span class="n">PersonneForm</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8"></a>
+<a id="__codelineno-11-9" name="__codelineno-11-9"></a><span class="n">personnes</span> <span class="o">=</span> <span class="n">Blueprint</span><span class="p">(</span><span class="s2">"personnes"</span><span class="p">,</span> <span class="vm">__name__</span><span class="p">)</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10"></a>
+<a id="__codelineno-11-11" name="__codelineno-11-11"></a>
+<a id="__codelineno-11-12" name="__codelineno-11-12"></a><span class="k">def</span><span class="w"> </span><span class="nf">metier</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">PersonnesMetier</span><span class="p">:</span>
+<a id="__codelineno-11-13" name="__codelineno-11-13"></a>    <span class="k">return</span> <span class="n">current_app</span><span class="o">.</span><span class="n">extensions</span><span class="p">[</span><span class="s2">"metier"</span><span class="p">]</span>
+<a id="__codelineno-11-14" name="__codelineno-11-14"></a>
+<a id="__codelineno-11-15" name="__codelineno-11-15"></a>
+<a id="__codelineno-11-16" name="__codelineno-11-16"></a><span class="nd">@personnes</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"/"</span><span class="p">)</span>
+<a id="__codelineno-11-17" name="__codelineno-11-17"></a><span class="k">def</span><span class="w"> </span><span class="nf">accueil</span><span class="p">():</span>
+<a id="__codelineno-11-18" name="__codelineno-11-18"></a>    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">"personnes.liste"</span><span class="p">))</span>
+<a id="__codelineno-11-19" name="__codelineno-11-19"></a>
+<a id="__codelineno-11-20" name="__codelineno-11-20"></a>
+<a id="__codelineno-11-21" name="__codelineno-11-21"></a><span class="nd">@personnes</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"/personnes"</span><span class="p">)</span>
+<a id="__codelineno-11-22" name="__codelineno-11-22"></a><span class="k">def</span><span class="w"> </span><span class="nf">liste</span><span class="p">():</span>
+<a id="__codelineno-11-23" name="__codelineno-11-23"></a>    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s2">"personnes/liste.html"</span><span class="p">,</span> <span class="n">personnes</span><span class="o">=</span><span class="n">metier</span><span class="p">()</span><span class="o">.</span><span class="n">lister</span><span class="p">())</span>
+<a id="__codelineno-11-24" name="__codelineno-11-24"></a>
+<a id="__codelineno-11-25" name="__codelineno-11-25"></a>
+<a id="__codelineno-11-26" name="__codelineno-11-26"></a><span class="nd">@personnes</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"/personnes/ajout"</span><span class="p">)</span>
+<a id="__codelineno-11-27" name="__codelineno-11-27"></a><span class="k">def</span><span class="w"> </span><span class="nf">ajout</span><span class="p">():</span>
+<a id="__codelineno-11-28" name="__codelineno-11-28"></a>    <span class="k">return</span> <span class="n">formulaire</span><span class="p">(</span><span class="s2">"Ajouter une personne"</span><span class="p">,</span> <span class="n">url_for</span><span class="p">(</span><span class="s2">"personnes.ajouter"</span><span class="p">),</span> <span class="n">PersonneForm</span><span class="p">())</span>
+<a id="__codelineno-11-29" name="__codelineno-11-29"></a>
+<a id="__codelineno-11-30" name="__codelineno-11-30"></a>
+<a id="__codelineno-11-31" name="__codelineno-11-31"></a><span class="nd">@personnes</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">"/personnes/ajout"</span><span class="p">)</span>
+<a id="__codelineno-11-32" name="__codelineno-11-32"></a><span class="k">def</span><span class="w"> </span><span class="nf">ajouter</span><span class="p">():</span>
+<a id="__codelineno-11-33" name="__codelineno-11-33"></a>    <span class="n">form</span> <span class="o">=</span> <span class="n">PersonneForm</span><span class="p">()</span>
+<a id="__codelineno-11-34" name="__codelineno-11-34"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">form</span><span class="o">.</span><span class="n">validate</span><span class="p">():</span>
+<a id="__codelineno-11-35" name="__codelineno-11-35"></a>        <span class="k">return</span> <span class="n">formulaire</span><span class="p">(</span><span class="s2">"Ajouter une personne"</span><span class="p">,</span> <span class="n">url_for</span><span class="p">(</span><span class="s2">"personnes.ajouter"</span><span class="p">),</span> <span class="n">form</span><span class="p">)</span>
+<a id="__codelineno-11-36" name="__codelineno-11-36"></a>    <span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-11-37" name="__codelineno-11-37"></a>        <span class="n">p</span> <span class="o">=</span> <span class="n">metier</span><span class="p">()</span><span class="o">.</span><span class="n">ajouter</span><span class="p">(</span><span class="n">DonneesPersonne</span><span class="p">(</span><span class="n">form</span><span class="o">.</span><span class="n">prenom</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">form</span><span class="o">.</span><span class="n">nom</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">form</span><span class="o">.</span><span class="n">age</span><span class="o">.</span><span class="n">data</span><span class="p">))</span>
+<a id="__codelineno-11-38" name="__codelineno-11-38"></a>    <span class="k">except</span> <span class="n">MetierException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<a id="__codelineno-11-39" name="__codelineno-11-39"></a>         <span class="c1"># A business rule rejects the data: the form is redisplayed, along with the message at the bottom of the page</span>
+<a id="__codelineno-11-40" name="__codelineno-11-40"></a>        <span class="k">return</span> <span class="n">formulaire</span><span class="p">(</span><span class="s2">"Ajouter une personne"</span><span class="p">,</span> <span class="n">url_for</span><span class="p">(</span><span class="s2">"personnes.ajouter"</span><span class="p">),</span> <span class="n">form</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+<a id="__codelineno-11-41" name="__codelineno-11-41"></a>    <span class="n">flash</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">p</span><span class="o">.</span><span class="n">prenom</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">p</span><span class="o">.</span><span class="n">nom</span><span class="si">}</span><span class="s2"> a été ajouté(e)."</span><span class="p">,</span> <span class="s2">"succes"</span><span class="p">)</span>
+<a id="__codelineno-11-42" name="__codelineno-11-42"></a>    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">"personnes.liste"</span><span class="p">))</span>
+<a id="__codelineno-11-43" name="__codelineno-11-43"></a>
+<a id="__codelineno-11-44" name="__codelineno-11-44"></a>
+<a id="__codelineno-11-45" name="__codelineno-11-45"></a><span class="nd">@personnes</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"/personnes/&lt;int:id&gt;/modification"</span><span class="p">)</span>
+<a id="__codelineno-11-46" name="__codelineno-11-46"></a><span class="k">def</span><span class="w"> </span><span class="nf">modification</span><span class="p">(</span><span class="nb">id</span><span class="p">):</span>
+<a id="__codelineno-11-47" name="__codelineno-11-47"></a>    <span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-11-48" name="__codelineno-11-48"></a>        <span class="n">p</span> <span class="o">=</span> <span class="n">metier</span><span class="p">()</span><span class="o">.</span><span class="n">lire</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+<a id="__codelineno-11-49" name="__codelineno-11-49"></a>    <span class="k">except</span> <span class="n">MetierException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<a id="__codelineno-11-50" name="__codelineno-11-50"></a>        <span class="n">flash</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">),</span> <span class="s2">"erreur"</span><span class="p">)</span>
+<a id="__codelineno-11-51" name="__codelineno-11-51"></a>        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">"personnes.liste"</span><span class="p">))</span>
+<a id="__codelineno-11-52" name="__codelineno-11-52"></a>     <span class="c1"># obj=p: the form fields are populated with the attributes of the same name as those in p</span>
+<a id="__codelineno-11-53" name="__codelineno-11-53"></a>    <span class="k">return</span> <span class="n">formulaire</span><span class="p">(</span><span class="s2">"Modifier une personne"</span><span class="p">,</span> <span class="n">url_for</span><span class="p">(</span><span class="s2">"personnes.modifier"</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">),</span>
+<a id="__codelineno-11-54" name="__codelineno-11-54"></a>                      <span class="n">PersonneForm</span><span class="p">(</span><span class="n">obj</span><span class="o">=</span><span class="n">p</span><span class="p">))</span>
+<a id="__codelineno-11-55" name="__codelineno-11-55"></a>
+<a id="__codelineno-11-56" name="__codelineno-11-56"></a>
+<a id="__codelineno-11-57" name="__codelineno-11-57"></a><span class="nd">@personnes</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">"/personnes/&lt;int:id&gt;/modification"</span><span class="p">)</span>
+<a id="__codelineno-11-58" name="__codelineno-11-58"></a><span class="k">def</span><span class="w"> </span><span class="nf">modifier</span><span class="p">(</span><span class="nb">id</span><span class="p">):</span>
+<a id="__codelineno-11-59" name="__codelineno-11-59"></a>    <span class="n">action</span> <span class="o">=</span> <span class="n">url_for</span><span class="p">(</span><span class="s2">"personnes.modifier"</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
+<a id="__codelineno-11-60" name="__codelineno-11-60"></a>    <span class="n">form</span> <span class="o">=</span> <span class="n">PersonneForm</span><span class="p">()</span>
+<a id="__codelineno-11-61" name="__codelineno-11-61"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">form</span><span class="o">.</span><span class="n">validate</span><span class="p">():</span>
+<a id="__codelineno-11-62" name="__codelineno-11-62"></a>        <span class="k">return</span> <span class="n">formulaire</span><span class="p">(</span><span class="s2">"Modifier une personne"</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">form</span><span class="p">)</span>
+<a id="__codelineno-11-63" name="__codelineno-11-63"></a>    <span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-11-64" name="__codelineno-11-64"></a>        <span class="n">donnees</span> <span class="o">=</span> <span class="n">DonneesPersonne</span><span class="p">(</span><span class="n">form</span><span class="o">.</span><span class="n">prenom</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">form</span><span class="o">.</span><span class="n">nom</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">form</span><span class="o">.</span><span class="n">age</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+<a id="__codelineno-11-65" name="__codelineno-11-65"></a>        <span class="n">p</span> <span class="o">=</span> <span class="n">metier</span><span class="p">()</span><span class="o">.</span><span class="n">modifier</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">form</span><span class="o">.</span><span class="n">version</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">donnees</span><span class="p">)</span>
+<a id="__codelineno-11-66" name="__codelineno-11-66"></a>    <span class="k">except</span> <span class="n">MetierException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<a id="__codelineno-11-67" name="__codelineno-11-67"></a>        <span class="k">return</span> <span class="n">formulaire</span><span class="p">(</span><span class="s2">"Modifier une personne"</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">form</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+<a id="__codelineno-11-68" name="__codelineno-11-68"></a>    <span class="n">flash</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">p</span><span class="o">.</span><span class="n">prenom</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">p</span><span class="o">.</span><span class="n">nom</span><span class="si">}</span><span class="s2"> a été modifié(e)."</span><span class="p">,</span> <span class="s2">"succes"</span><span class="p">)</span>
+<a id="__codelineno-11-69" name="__codelineno-11-69"></a>    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">"personnes.liste"</span><span class="p">))</span>
+<a id="__codelineno-11-70" name="__codelineno-11-70"></a>
+<a id="__codelineno-11-71" name="__codelineno-11-71"></a>
+<a id="__codelineno-11-72" name="__codelineno-11-72"></a><span class="nd">@personnes</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">"/personnes/&lt;int:id&gt;/suppression"</span><span class="p">)</span>
+<a id="__codelineno-11-73" name="__codelineno-11-73"></a><span class="k">def</span><span class="w"> </span><span class="nf">supprimer</span><span class="p">(</span><span class="nb">id</span><span class="p">):</span>
+<a id="__codelineno-11-74" name="__codelineno-11-74"></a>    <span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-11-75" name="__codelineno-11-75"></a>        <span class="n">p</span> <span class="o">=</span> <span class="n">metier</span><span class="p">()</span><span class="o">.</span><span class="n">supprimer</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+<a id="__codelineno-11-76" name="__codelineno-11-76"></a>        <span class="n">flash</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">p</span><span class="o">.</span><span class="n">prenom</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">p</span><span class="o">.</span><span class="n">nom</span><span class="si">}</span><span class="s2"> a été supprimé(e)."</span><span class="p">,</span> <span class="s2">"succes"</span><span class="p">)</span>
+<a id="__codelineno-11-77" name="__codelineno-11-77"></a>    <span class="k">except</span> <span class="n">MetierException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<a id="__codelineno-11-78" name="__codelineno-11-78"></a>         <span class="c1"># no form to redisplay: the error is also displayed as a flash message</span>
+<a id="__codelineno-11-79" name="__codelineno-11-79"></a>        <span class="n">flash</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">),</span> <span class="s2">"erreur"</span><span class="p">)</span>
+<a id="__codelineno-11-80" name="__codelineno-11-80"></a>    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">"personnes.liste"</span><span class="p">))</span>
+<a id="__codelineno-11-81" name="__codelineno-11-81"></a>
+<a id="__codelineno-11-82" name="__codelineno-11-82"></a>
+<a id="__codelineno-11-83" name="__codelineno-11-83"></a><span class="c1"># the form page: title, shipping address, form, global error</span>
+<a id="__codelineno-11-84" name="__codelineno-11-84"></a><span class="k">def</span><span class="w"> </span><span class="nf">formulaire</span><span class="p">(</span><span class="n">titre</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">form</span><span class="p">:</span> <span class="n">PersonneForm</span><span class="p">,</span> <span class="n">erreur</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<a id="__codelineno-11-85" name="__codelineno-11-85"></a>    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s2">"personnes/formulaire.html"</span><span class="p">,</span> <span class="n">titre</span><span class="o">=</span><span class="n">titre</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="n">action</span><span class="p">,</span>
+<a id="__codelineno-11-86" name="__codelineno-11-86"></a>                           <span class="n">form</span><span class="o">=</span><span class="n">form</span><span class="p">,</span> <span class="n">erreur</span><span class="o">=</span><span class="n">erreur</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>lines 12–13: the business layer, the only layer known to the controller;</li>
+<li>lines 32–18: the add operation, in three steps: form validation (input errors), calling the business layer (business rules), then the PRG schema. A <strong><em>[MetierException]</em></strong> re-displays the form, along with its footer message. <strong><em>[flash]</em></strong> receives a <strong>category</strong> as its second parameter (<strong><em>[&quot;succes&quot;]</em></strong>), which the template uses to select the message’s presentation;</li>
+<li>lines 46–54: the edit form, pre-filled: the parameter <strong><em>[obj]</em></strong> fills the form fields with the object’s attributes of the same name, including the version. A nonexistent person redirects to the list, with a flashing error message;</li>
+<li>lines 58–42: the edit, following the same pattern as the add operation;</li>
+<li>lines 73–51: deletion. There is no form to redisplay: any error is also displayed in a pop-up message, of category <strong><em>[&quot;erreur&quot;]</em></strong>.</li>
+</ul>
+<p>The web layer contains neither SQL nor any business rules: it translates the request into a call to the business layer and the result into a page.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-12-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-12-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-12-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-12-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-12-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-12-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-12-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-12-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-12-10">10</a></span>
+<span class="normal"><a href="#__codelineno-12-11">11</a></span>
+<span class="normal"><a href="#__codelineno-12-12">12</a></span>
+<span class="normal"><a href="#__codelineno-12-13">13</a></span>
+<span class="normal"><a href="#__codelineno-12-14">14</a></span>
+<span class="normal"><a href="#__codelineno-12-15">15</a></span>
+<span class="normal"><a href="#__codelineno-12-16">16</a></span>
+<span class="normal"><a href="#__codelineno-12-17">17</a></span>
+<span class="normal"><a href="#__codelineno-12-18">18</a></span>
+<span class="normal"><a href="#__codelineno-12-19">19</a></span>
+<span class="normal"><a href="#__codelineno-12-20">20</a></span>
+<span class="normal"><a href="#__codelineno-12-21">21</a></span>
+<span class="normal"><a href="#__codelineno-12-22">22</a></span>
+<span class="normal"><a href="#__codelineno-12-23">23</a></span>
+<span class="normal"><a href="#__codelineno-12-24">24</a></span>
+<span class="normal"><a href="#__codelineno-12-25">25</a></span>
+<span class="normal"><a href="#__codelineno-12-26">26</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="cp">&lt;!doctype html&gt;</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2"></a><span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">"fr"</span><span class="p">&gt;</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3"></a><span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4"></a>  <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">"utf-8"</span><span class="p">&gt;</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5"></a>  <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Personnes<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6"></a>  <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">"stylesheet"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{{ url_for('bootstrap.static', filename='css/bootstrap.min.css') }}"</span><span class="p">&gt;</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7"></a>  <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">"stylesheet"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{{ url_for('static', filename='css/styles.css') }}"</span><span class="p">&gt;</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8"></a><span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<a id="__codelineno-12-9" name="__codelineno-12-9"></a><span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<a id="__codelineno-12-10" name="__codelineno-12-10"></a>  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"container py-3"</span> <span class="na">style</span><span class="o">=</span><span class="s">"max-width: 40rem"</span><span class="p">&gt;</span>
+<a id="__codelineno-12-11" name="__codelineno-12-11"></a>    {# success messages (flash messages in the "success" category): at the top #}
+<a id="__codelineno-12-12" name="__codelineno-12-12"></a>    {% for message in get_flashed_messages(category_filter=["succes"]) %}
+<a id="__codelineno-12-13" name="__codelineno-12-13"></a>    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"alert alert-success"</span> <span class="na">role</span><span class="o">=</span><span class="s">"status"</span><span class="p">&gt;</span>{{ message }}<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a id="__codelineno-12-14" name="__codelineno-12-14"></a>    {% endfor %}
+<a id="__codelineno-12-15" name="__codelineno-12-15"></a>    <span class="p">&lt;</span><span class="nt">main</span><span class="p">&gt;</span>
+<a id="__codelineno-12-16" name="__codelineno-12-16"></a>      {% block contenu %}{% endblock %}
+<a id="__codelineno-12-17" name="__codelineno-12-17"></a>    <span class="p">&lt;/</span><span class="nt">main</span><span class="p">&gt;</span>
+<a id="__codelineno-12-18" name="__codelineno-12-18"></a>    {# the error: from the current request, or from before the redirect (flash message) #}
+<a id="__codelineno-12-19" name="__codelineno-12-19"></a>    {% for message in get_flashed_messages(category_filter=["erreur"]) + ([erreur] if erreur else []) %}
+<a id="__codelineno-12-20" name="__codelineno-12-20"></a>    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"zone-erreur"</span> <span class="na">role</span><span class="o">=</span><span class="s">"alert"</span><span class="p">&gt;</span>{{ message }}<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a id="__codelineno-12-21" name="__codelineno-12-21"></a>    {% endfor %}
+<a id="__codelineno-12-22" name="__codelineno-12-22"></a>  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a id="__codelineno-12-23" name="__codelineno-12-23"></a>  {% include "fragments/confirmation.html" %}
+<a id="__codelineno-12-24" name="__codelineno-12-24"></a>  <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">"{{ url_for('static', filename='js/app.js') }}"</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<a id="__codelineno-12-25" name="__codelineno-12-25"></a><span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<a id="__codelineno-12-26" name="__codelineno-12-26"></a><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>lines 12–14: <strong><em>[category_filter]</em></strong> renders only the flash messages of the specified categories: success messages, at the top of the page;</li>
+<li>lines 19–21: errors, at the bottom of the page: those occurring before a redirect (flash messages), followed by the error from the current request (variable <strong><em>[erreur]</em></strong>). The operator <strong><em>[+]</em></strong> concatenates two lists.</li>
+</ul>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-13-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-13-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-13-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-13-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-13-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-13-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-13-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-13-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-13-10">10</a></span>
+<span class="normal"><a href="#__codelineno-13-11">11</a></span>
+<span class="normal"><a href="#__codelineno-13-12">12</a></span>
+<span class="normal"><a href="#__codelineno-13-13">13</a></span>
+<span class="normal"><a href="#__codelineno-13-14">14</a></span>
+<span class="normal"><a href="#__codelineno-13-15">15</a></span>
+<span class="normal"><a href="#__codelineno-13-16">16</a></span>
+<span class="normal"><a href="#__codelineno-13-17">17</a></span>
+<span class="normal"><a href="#__codelineno-13-18">18</a></span>
+<span class="normal"><a href="#__codelineno-13-19">19</a></span>
+<span class="normal"><a href="#__codelineno-13-20">20</a></span>
+<span class="normal"><a href="#__codelineno-13-21">21</a></span>
+<span class="normal"><a href="#__codelineno-13-22">22</a></span>
+<span class="normal"><a href="#__codelineno-13-23">23</a></span>
+<span class="normal"><a href="#__codelineno-13-24">24</a></span>
+<span class="normal"><a href="#__codelineno-13-25">25</a></span>
+<span class="normal"><a href="#__codelineno-13-26">26</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a>{% extends "layout.html" %}
+<a id="__codelineno-13-2" name="__codelineno-13-2"></a>
+<a id="__codelineno-13-3" name="__codelineno-13-3"></a>{% block contenu %}
+<a id="__codelineno-13-4" name="__codelineno-13-4"></a>  <span class="p">&lt;</span><span class="nt">h1</span> <span class="na">class</span><span class="o">=</span><span class="s">"h3"</span><span class="p">&gt;</span>Personnes<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5"></a>  <span class="p">&lt;</span><span class="nt">table</span> <span class="na">class</span><span class="o">=</span><span class="s">"table align-middle"</span><span class="p">&gt;</span>
+<a id="__codelineno-13-6" name="__codelineno-13-6"></a>    <span class="p">&lt;</span><span class="nt">thead</span><span class="p">&gt;&lt;</span><span class="nt">tr</span><span class="p">&gt;&lt;</span><span class="nt">th</span><span class="p">&gt;</span>Prénom<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;&lt;</span><span class="nt">th</span><span class="p">&gt;</span>Nom<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;&lt;</span><span class="nt">th</span><span class="p">&gt;</span>Âge<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;&lt;</span><span class="nt">th</span><span class="p">&gt;&lt;/</span><span class="nt">th</span><span class="p">&gt;&lt;/</span><span class="nt">tr</span><span class="p">&gt;&lt;/</span><span class="nt">thead</span><span class="p">&gt;</span>
+<a id="__codelineno-13-7" name="__codelineno-13-7"></a>    <span class="p">&lt;</span><span class="nt">tbody</span><span class="p">&gt;</span>
+<a id="__codelineno-13-8" name="__codelineno-13-8"></a>      {% for p in personnes %}
+<a id="__codelineno-13-9" name="__codelineno-13-9"></a>      <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+<a id="__codelineno-13-10" name="__codelineno-13-10"></a>        <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ p.prenom }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+<a id="__codelineno-13-11" name="__codelineno-13-11"></a>        <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ p.nom }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+<a id="__codelineno-13-12" name="__codelineno-13-12"></a>        <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ p.age }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+<a id="__codelineno-13-13" name="__codelineno-13-13"></a>        <span class="p">&lt;</span><span class="nt">td</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-end"</span><span class="p">&gt;</span>
+<a id="__codelineno-13-14" name="__codelineno-13-14"></a>          <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-sm btn-outline-primary"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{{ url_for('personnes.modification', id=p.id) }}"</span><span class="p">&gt;</span>Modifier<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<a id="__codelineno-13-15" name="__codelineno-13-15"></a>          <span class="p">&lt;</span><span class="nt">form</span> <span class="na">method</span><span class="o">=</span><span class="s">"post"</span> <span class="na">class</span><span class="o">=</span><span class="s">"d-inline"</span> <span class="na">action</span><span class="o">=</span><span class="s">"{{ url_for('personnes.supprimer', id=p.id) }}"</span>
+<a id="__codelineno-13-16" name="__codelineno-13-16"></a>                <span class="na">data-confirmation</span><span class="o">=</span><span class="s">"Supprimer {{ p.prenom }} {{ p.nom }} ?"</span><span class="p">&gt;</span>
+<a id="__codelineno-13-17" name="__codelineno-13-17"></a>            <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">"hidden"</span> <span class="na">name</span><span class="o">=</span><span class="s">"csrf_token"</span> <span class="na">value</span><span class="o">=</span><span class="s">"{{ csrf_token() }}"</span><span class="p">&gt;</span>
+<a id="__codelineno-13-18" name="__codelineno-13-18"></a>            <span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-sm btn-outline-danger"</span> <span class="na">type</span><span class="o">=</span><span class="s">"submit"</span><span class="p">&gt;</span>Supprimer<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<a id="__codelineno-13-19" name="__codelineno-13-19"></a>          <span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+<a id="__codelineno-13-20" name="__codelineno-13-20"></a>        <span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+<a id="__codelineno-13-21" name="__codelineno-13-21"></a>      <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+<a id="__codelineno-13-22" name="__codelineno-13-22"></a>      {% endfor %}
+<a id="__codelineno-13-23" name="__codelineno-13-23"></a>    <span class="p">&lt;/</span><span class="nt">tbody</span><span class="p">&gt;</span>
+<a id="__codelineno-13-24" name="__codelineno-13-24"></a>  <span class="p">&lt;/</span><span class="nt">table</span><span class="p">&gt;</span>
+<a id="__codelineno-13-25" name="__codelineno-13-25"></a>  <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-primary"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{{ url_for('personnes.ajout') }}"</span><span class="p">&gt;</span>Ajouter une personne<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<a id="__codelineno-13-26" name="__codelineno-13-26"></a>{% endblock %}
+</code></pre></div></td></tr></table></div>
+<p>The list includes the links and buttons from Example 21, along with its confirmation window (the files <strong><em>[fragments/confirmation.html]</em></strong> and <strong><em>[static/js/app.js]</em></strong> are those from Example 21).</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-14-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-14-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-14-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-14-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-14-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-14-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-14-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-14-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-14-10">10</a></span>
+<span class="normal"><a href="#__codelineno-14-11">11</a></span>
+<span class="normal"><a href="#__codelineno-14-12">12</a></span>
+<span class="normal"><a href="#__codelineno-14-13">13</a></span>
+<span class="normal"><a href="#__codelineno-14-14">14</a></span>
+<span class="normal"><a href="#__codelineno-14-15">15</a></span>
+<span class="normal"><a href="#__codelineno-14-16">16</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a>{% extends "layout.html" %}
+<a id="__codelineno-14-2" name="__codelineno-14-2"></a>{% from "fragments/champ.html" import champ %}
+<a id="__codelineno-14-3" name="__codelineno-14-3"></a>
+<a id="__codelineno-14-4" name="__codelineno-14-4"></a>{% block contenu %}
+<a id="__codelineno-14-5" name="__codelineno-14-5"></a>  <span class="p">&lt;</span><span class="nt">h1</span> <span class="na">class</span><span class="o">=</span><span class="s">"h3"</span><span class="p">&gt;</span>{{ titre }}<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<a id="__codelineno-14-6" name="__codelineno-14-6"></a>  <span class="p">&lt;</span><span class="nt">form</span> <span class="na">method</span><span class="o">=</span><span class="s">"post"</span> <span class="na">action</span><span class="o">=</span><span class="s">"{{ action }}"</span> <span class="na">novalidate</span><span class="p">&gt;</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7"></a>    {{ form.csrf_token }}
+<a id="__codelineno-14-8" name="__codelineno-14-8"></a>    {# the version of the record read: it will be returned with the form #}
+<a id="__codelineno-14-9" name="__codelineno-14-9"></a>    {{ form.version }}
+<a id="__codelineno-14-10" name="__codelineno-14-10"></a>    {{ champ(form.prenom) }}
+<a id="__codelineno-14-11" name="__codelineno-14-11"></a>    {{ champ(form.nom) }}
+<a id="__codelineno-14-12" name="__codelineno-14-12"></a>    {{ champ(form.age) }}
+<a id="__codelineno-14-13" name="__codelineno-14-13"></a>    <span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-primary"</span> <span class="na">type</span><span class="o">=</span><span class="s">"submit"</span><span class="p">&gt;</span>Enregistrer<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<a id="__codelineno-14-14" name="__codelineno-14-14"></a>    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-link"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{{ url_for('personnes.liste') }}"</span><span class="p">&gt;</span>Annuler<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<a id="__codelineno-14-15" name="__codelineno-14-15"></a>  <span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+<a id="__codelineno-14-16" name="__codelineno-14-16"></a>{% endblock %}
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>line 9: the hidden field that carries the version of the record being read;</li>
+<li>Lines 10–12: the macro from Example 19.</li>
+</ul>
+<h3 id="917-execution">9.1.7. <span style="color: #1f4d78">Execution</span></h3>
+<p>The list of people:</p>
+<p><img src="images/10000000000002BE0000015FAF222414.png" width="428" height="214" style="width:11.322cm;height:5.66cm;" alt="Image" class="odt-zoomable" data-zoom-src="images/10000000000002BE0000015FAF222414.png" /></p>
+<p>An incorrectly filled-out add form: data entry errors are detected by the web layer.</p>
+<p><img src="images/10000000000002BE000001B2B2F1BACD.png" width="428" height="265" style="width:11.322cm;height:7.001cm;" alt="Image" class="odt-zoomable" data-zoom-src="images/10000000000002BE000001B2B2F1BACD.png" /></p>
+<p>A homonym: the entry is correct, but the business layer rejects the addition. Since the comparison is performed by the database, it ignores both uppercase letters and accents: <strong><em>[marie pelissier]</em></strong> would also be a homonym of <strong><em>[Marie Pélissier]</em></strong>.</p>
+<p><img src="images/10000000000002BE000001CAF88C5EC2.png" width="428" height="279" style="width:11.322cm;height:7.387cm;" alt="Image" class="odt-zoomable" data-zoom-src="images/10000000000002BE000001CAF88C5EC2.png" /></p>
+<p>A successful addition:</p>
+<p><img src="images/10000000000002BE000001D94261D91F.png" width="428" height="288" style="width:11.322cm;height:7.629cm;" alt="Image" class="odt-zoomable" data-zoom-src="images/10000000000002BE000001D94261D91F.png" /></p>
+<p>To test Rule #2, let’s open the same record in two tabs. In the first tab, let’s change the age and save. In the second tab, which still displays the old version, let’s also modify the record:</p>
+<p><img src="images/10000000000002BE000001CAF4483168.png" width="428" height="279" style="width:11.322cm;height:7.387cm;" alt="Image" class="odt-zoomable" data-zoom-src="images/10000000000002BE000001CAF4483168.png" /></p>
+<p>The deletion, with its confirmation:</p>
+<p><img src="images/10000000000002BE000001A6FEAD2065.png" width="428" height="257" style="width:11.322cm;height:6.807cm;" alt="Image" class="odt-zoomable" data-zoom-src="images/10000000000002BE000001A6FEAD2065.png" /></p>
+<p><img src="images/10000000000002BE000001A992ABF21C.png" width="428" height="259" style="width:11.322cm;height:6.854cm;" alt="Image" class="odt-zoomable" data-zoom-src="images/10000000000002BE000001A992ABF21C.png" /></p>
+<h3 id="918-the-commands-sql">9.1.8. <span style="color: #1f4d78">The commands SQL</span></h3>
+<p>Let’s restart the application with the environment variable <strong><em>[FLASK_SQL_ECHO=true]</em></strong> (under <em>[Windows]</em>: <strong><em>[$env:FLASK_SQL_ECHO=&quot;true&quot;]</em></strong>), and monitor the SQL commands for a modification in the console. The display of the change form for person No. 1:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1">1</a></span>
+<span class="normal"><a href="#__codelineno-15-2">2</a></span>
+<span class="normal"><a href="#__codelineno-15-3">3</a></span>
+<span class="normal"><a href="#__codelineno-15-4">4</a></span>
+<span class="normal"><a href="#__codelineno-15-5">5</a></span>
+<span class="normal"><a href="#__codelineno-15-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a><span class="n">INFO</span><span class="w"> </span><span class="n">sqlalchemy</span><span class="p">.</span><span class="n">engine</span><span class="p">.</span><span class="n">Engine</span><span class="w"> </span><span class="k">BEGIN</span><span class="w"> </span><span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2"></a><span class="n">INFO</span><span class="w"> </span><span class="n">sqlalchemy</span><span class="p">.</span><span class="n">engine</span><span class="p">.</span><span class="n">Engine</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="n">personnes</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">personnes</span><span class="p">.</span><span class="k">version</span><span class="p">,</span><span class="w"> </span><span class="n">personnes</span><span class="p">.</span><span class="n">prenom</span><span class="p">,</span><span class="w"> </span><span class="n">personnes</span><span class="p">.</span><span class="n">nom</span><span class="p">,</span><span class="w"> </span><span class="n">personnes</span><span class="p">.</span><span class="n">age</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3"></a><span class="k">FROM</span><span class="w"> </span><span class="n">personnes</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4"></a><span class="k">WHERE</span><span class="w"> </span><span class="n">personnes</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">%</span><span class="p">(</span><span class="n">pk_1</span><span class="p">)</span><span class="n">s</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5"></a><span class="n">INFO</span><span class="w"> </span><span class="n">sqlalchemy</span><span class="p">.</span><span class="n">engine</span><span class="p">.</span><span class="n">Engine</span><span class="w"> </span><span class="p">[</span><span class="k">generated</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">0</span><span class="p">.</span><span class="mi">00017</span><span class="n">s</span><span class="p">]</span><span class="w"> </span><span class="err">{</span><span class="s1">'pk_1'</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="err">}</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6"></a><span class="n">INFO</span><span class="w"> </span><span class="n">sqlalchemy</span><span class="p">.</span><span class="n">engine</span><span class="p">.</span><span class="n">Engine</span><span class="w"> </span><span class="k">COMMIT</span>
+</code></pre></div></td></tr></table></div>
+<p>A transaction, <strong><em>[SELECT]</em></strong>, per primary key, whose value is passed as a parameter (<strong><em>[%(pk_1)s]</em></strong>; see the parameter syntax for <em>[PyMySQL]</em>). Saving the master record with a new age:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-16-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-16-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-16-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-16-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-16-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-16-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-16-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-16-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-16-10">10</a></span>
+<span class="normal"><a href="#__codelineno-16-11">11</a></span>
+<span class="normal"><a href="#__codelineno-16-12">12</a></span>
+<span class="normal"><a href="#__codelineno-16-13">13</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1"></a><span class="n">INFO</span><span class="w"> </span><span class="n">sqlalchemy</span><span class="p">.</span><span class="n">engine</span><span class="p">.</span><span class="n">Engine</span><span class="w"> </span><span class="k">BEGIN</span><span class="w"> </span><span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2"></a><span class="n">INFO</span><span class="w"> </span><span class="n">sqlalchemy</span><span class="p">.</span><span class="n">engine</span><span class="p">.</span><span class="n">Engine</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="n">personnes</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">personnes</span><span class="p">.</span><span class="k">version</span><span class="p">,</span><span class="w"> </span><span class="n">personnes</span><span class="p">.</span><span class="n">prenom</span><span class="p">,</span><span class="w"> </span><span class="n">personnes</span><span class="p">.</span><span class="n">nom</span><span class="p">,</span><span class="w"> </span><span class="n">personnes</span><span class="p">.</span><span class="n">age</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3"></a><span class="k">FROM</span><span class="w"> </span><span class="n">personnes</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4"></a><span class="k">WHERE</span><span class="w"> </span><span class="n">personnes</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">%</span><span class="p">(</span><span class="n">pk_1</span><span class="p">)</span><span class="n">s</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5"></a><span class="n">INFO</span><span class="w"> </span><span class="n">sqlalchemy</span><span class="p">.</span><span class="n">engine</span><span class="p">.</span><span class="n">Engine</span><span class="w"> </span><span class="p">[</span><span class="n">cached</span><span class="w"> </span><span class="n">since</span><span class="w"> </span><span class="mi">0</span><span class="p">.</span><span class="mi">05972</span><span class="n">s</span><span class="w"> </span><span class="n">ago</span><span class="p">]</span><span class="w"> </span><span class="err">{</span><span class="s1">'pk_1'</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="err">}</span>
+<a id="__codelineno-16-6" name="__codelineno-16-6"></a><span class="n">INFO</span><span class="w"> </span><span class="n">sqlalchemy</span><span class="p">.</span><span class="n">engine</span><span class="p">.</span><span class="n">Engine</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="n">personnes</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">personnes</span><span class="p">.</span><span class="k">version</span><span class="p">,</span><span class="w"> </span><span class="n">personnes</span><span class="p">.</span><span class="n">prenom</span><span class="p">,</span><span class="w"> </span><span class="n">personnes</span><span class="p">.</span><span class="n">nom</span><span class="p">,</span><span class="w"> </span><span class="n">personnes</span><span class="p">.</span><span class="n">age</span>
+<a id="__codelineno-16-7" name="__codelineno-16-7"></a><span class="k">FROM</span><span class="w"> </span><span class="n">personnes</span>
+<a id="__codelineno-16-8" name="__codelineno-16-8"></a><span class="k">WHERE</span><span class="w"> </span><span class="n">personnes</span><span class="p">.</span><span class="n">prenom</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">%</span><span class="p">(</span><span class="n">prenom_1</span><span class="p">)</span><span class="n">s</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">personnes</span><span class="p">.</span><span class="n">nom</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">%</span><span class="p">(</span><span class="n">nom_1</span><span class="p">)</span><span class="n">s</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">personnes</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="o">%</span><span class="p">(</span><span class="n">id_1</span><span class="p">)</span><span class="n">s</span>
+<a id="__codelineno-16-9" name="__codelineno-16-9"></a><span class="w"> </span><span class="k">LIMIT</span><span class="w"> </span><span class="o">%</span><span class="p">(</span><span class="n">param_1</span><span class="p">)</span><span class="n">s</span>
+<a id="__codelineno-16-10" name="__codelineno-16-10"></a><span class="n">INFO</span><span class="w"> </span><span class="n">sqlalchemy</span><span class="p">.</span><span class="n">engine</span><span class="p">.</span><span class="n">Engine</span><span class="w"> </span><span class="p">[</span><span class="k">generated</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">0</span><span class="p">.</span><span class="mi">00016</span><span class="n">s</span><span class="p">]</span><span class="w"> </span><span class="err">{</span><span class="s1">'prenom_1'</span><span class="p">:</span><span class="w"> </span><span class="s1">'Marie'</span><span class="p">,</span><span class="w"> </span><span class="s1">'nom_1'</span><span class="p">:</span><span class="w"> </span><span class="s1">'Pélissier'</span><span class="p">,</span><span class="w"> </span><span class="s1">'id_1'</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">'param_1'</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="err">}</span>
+<a id="__codelineno-16-11" name="__codelineno-16-11"></a><span class="n">INFO</span><span class="w"> </span><span class="n">sqlalchemy</span><span class="p">.</span><span class="n">engine</span><span class="p">.</span><span class="n">Engine</span><span class="w"> </span><span class="k">UPDATE</span><span class="w"> </span><span class="n">personnes</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="k">version</span><span class="o">=%</span><span class="p">(</span><span class="k">version</span><span class="p">)</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">age</span><span class="o">=%</span><span class="p">(</span><span class="n">age</span><span class="p">)</span><span class="n">s</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">personnes</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">%</span><span class="p">(</span><span class="n">personnes_id</span><span class="p">)</span><span class="n">s</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">personnes</span><span class="p">.</span><span class="k">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">%</span><span class="p">(</span><span class="n">personnes_version</span><span class="p">)</span><span class="n">s</span>
+<a id="__codelineno-16-12" name="__codelineno-16-12"></a><span class="n">INFO</span><span class="w"> </span><span class="n">sqlalchemy</span><span class="p">.</span><span class="n">engine</span><span class="p">.</span><span class="n">Engine</span><span class="w"> </span><span class="p">[</span><span class="k">generated</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">0</span><span class="p">.</span><span class="mi">00015</span><span class="n">s</span><span class="p">]</span><span class="w"> </span><span class="err">{</span><span class="s1">'version'</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">'age'</span><span class="p">:</span><span class="w"> </span><span class="mi">43</span><span class="p">,</span><span class="w"> </span><span class="s1">'personnes_id'</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">'personnes_version'</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="err">}</span>
+<a id="__codelineno-16-13" name="__codelineno-16-13"></a><span class="n">INFO</span><span class="w"> </span><span class="n">sqlalchemy</span><span class="p">.</span><span class="n">engine</span><span class="p">.</span><span class="n">Engine</span><span class="w"> </span><span class="k">COMMIT</span>
+</code></pre></div></td></tr></table></div>
+<p>In a single transaction, we can see the following: reading the record, searching for a namesake, and then <strong><em>the [UPDATE]</em></strong>. This transaction modifies only the changed column (<strong><em>[age]</em></strong>), increments the version (from 0 to 1), and sets the optimistic lock condition (<strong><em>[AND personnes.version = 0]</em></strong>). The entry <strong><em>[cached since]</em></strong> indicates that <em>[SQLAlchemy]</em> reused the translation in SQL from a previously constructed request. Now let’s submit the same form a second time, still with version 0:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-17-1">1</a></span>
+<span class="normal"><a href="#__codelineno-17-2">2</a></span>
+<span class="normal"><a href="#__codelineno-17-3">3</a></span>
+<span class="normal"><a href="#__codelineno-17-4">4</a></span>
+<span class="normal"><a href="#__codelineno-17-5">5</a></span>
+<span class="normal"><a href="#__codelineno-17-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1"></a><span class="n">INFO</span><span class="w"> </span><span class="n">sqlalchemy</span><span class="p">.</span><span class="n">engine</span><span class="p">.</span><span class="n">Engine</span><span class="w"> </span><span class="k">BEGIN</span><span class="w"> </span><span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2"></a><span class="n">INFO</span><span class="w"> </span><span class="n">sqlalchemy</span><span class="p">.</span><span class="n">engine</span><span class="p">.</span><span class="n">Engine</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="n">personnes</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">personnes</span><span class="p">.</span><span class="k">version</span><span class="p">,</span><span class="w"> </span><span class="n">personnes</span><span class="p">.</span><span class="n">prenom</span><span class="p">,</span><span class="w"> </span><span class="n">personnes</span><span class="p">.</span><span class="n">nom</span><span class="p">,</span><span class="w"> </span><span class="n">personnes</span><span class="p">.</span><span class="n">age</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3"></a><span class="k">FROM</span><span class="w"> </span><span class="n">personnes</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4"></a><span class="k">WHERE</span><span class="w"> </span><span class="n">personnes</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">%</span><span class="p">(</span><span class="n">pk_1</span><span class="p">)</span><span class="n">s</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5"></a><span class="n">INFO</span><span class="w"> </span><span class="n">sqlalchemy</span><span class="p">.</span><span class="n">engine</span><span class="p">.</span><span class="n">Engine</span><span class="w"> </span><span class="p">[</span><span class="n">cached</span><span class="w"> </span><span class="n">since</span><span class="w"> </span><span class="mi">0</span><span class="p">.</span><span class="mi">09593</span><span class="n">s</span><span class="w"> </span><span class="n">ago</span><span class="p">]</span><span class="w"> </span><span class="err">{</span><span class="s1">'pk_1'</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="err">}</span>
+<a id="__codelineno-17-6" name="__codelineno-17-6"></a><span class="n">INFO</span><span class="w"> </span><span class="n">sqlalchemy</span><span class="p">.</span><span class="n">engine</span><span class="p">.</span><span class="n">Engine</span><span class="w"> </span><span class="k">ROLLBACK</span>
+</code></pre></div></td></tr></table></div>
+<p>The version being read (1) is not the same as the form’s version (0): the business layer raised a <strong><em>[MetierException]</em></strong>, which rolled back the transaction (<strong><em>[ROLLBACK]</em></strong>), and the page displays “This record has been modified in the meantime: please reload it.” Similarly, the process of adding a namesake stops after the namesake search, without <strong><em>a [INSERT]</em></strong>.</p>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner">
+
+      <div>
+        <a href="https://stahe.github.io" target="_blank">
+          https://stahe.github.io
+        </a>
+        <br>
+        This tutorial, written by Anthropic's AI <strong>Claude</strong> at the request of <strong>Serge Tahé</strong>, is made available to the public under the terms of the
+        <em>Creative Commons Attribution–NonCommercial–
+        ShareAlike 3.0 Unported</em>.
+
+      </div>
+
+    </div>
+  </div>
+
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.sections", "navigation.indexes", "navigation.expand", "toc.integrate", "navigation.top"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="javascripts/focus.js"></script>
+      
+    
+  </body>
+</html>
