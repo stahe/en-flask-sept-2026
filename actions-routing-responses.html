@@ -1058,7 +1058,7 @@
 <span class="normal"><a href="#__codelineno-7-5">5</a></span>
 <span class="normal"><a href="#__codelineno-7-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>02-routage/
 <a id="__codelineno-7-2" name="__codelineno-7-2"></a>├── controllers/
-<a id="__codelineno-7-3" name="__codelineno-7-3"></a>│   ├── <span class="gs">__init__</span>.py
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a>│   ├── __init__.py
 <a id="__codelineno-7-4" name="__codelineno-7-4"></a>│   ├── accueil.py
 <a id="__codelineno-7-5" name="__codelineno-7-5"></a>│   └── premier.py
 <a id="__codelineno-7-6" name="__codelineno-7-6"></a>└── app.py
@@ -1330,11 +1330,11 @@
 <a id="__codelineno-20-3" name="__codelineno-20-3"></a>Allow: OPTIONS, POST, GET, HEAD
 <a id="__codelineno-20-4" name="__codelineno-20-4"></a>Content-Length: 153
 <a id="__codelineno-20-5" name="__codelineno-20-5"></a>
-<a id="__codelineno-20-6" name="__codelineno-20-6"></a><span class="cp">&lt;!doctype html&gt;</span>
-<a id="__codelineno-20-7" name="__codelineno-20-7"></a><span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">en</span><span class="p">&gt;</span>
-<a id="__codelineno-20-8" name="__codelineno-20-8"></a><span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>405 Method Not Allowed<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
-<a id="__codelineno-20-9" name="__codelineno-20-9"></a><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Method Not Allowed<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-<a id="__codelineno-20-10" name="__codelineno-20-10"></a><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>The method is not allowed for the requested URL.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<a id="__codelineno-20-6" name="__codelineno-20-6"></a>&lt;!doctype html&gt;
+<a id="__codelineno-20-7" name="__codelineno-20-7"></a>&lt;html lang=en&gt;
+<a id="__codelineno-20-8" name="__codelineno-20-8"></a>&lt;title&gt;405 Method Not Allowed&lt;/title&gt;
+<a id="__codelineno-20-9" name="__codelineno-20-9"></a>&lt;h1&gt;Method Not Allowed&lt;/h1&gt;
+<a id="__codelineno-20-10" name="__codelineno-20-10"></a>&lt;p&gt;The method is not allowed for the requested URL.&lt;/p&gt;
 </code></pre></div></td></tr></table></div>
 <p>Finally, a URL that no route handles results in a 404 error. This is also the case for an identifier that is not an integer: no route matches <strong><em>[/premier/produits/abc]</em></strong>.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-21-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1"></a>curl -i http://localhost:5000/first/products/abc
@@ -1351,11 +1351,11 @@
 <a id="__codelineno-22-2" name="__codelineno-22-2"></a>Content-Type: text/html; charset=utf-8
 <a id="__codelineno-22-3" name="__codelineno-22-3"></a>Content-Length: 207
 <a id="__codelineno-22-4" name="__codelineno-22-4"></a>
-<a id="__codelineno-22-5" name="__codelineno-22-5"></a><span class="cp">&lt;!doctype html&gt;</span>
-<a id="__codelineno-22-6" name="__codelineno-22-6"></a><span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">en</span><span class="p">&gt;</span>
-<a id="__codelineno-22-7" name="__codelineno-22-7"></a><span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>404 Not Found<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
-<a id="__codelineno-22-8" name="__codelineno-22-8"></a><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Not Found<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-<a id="__codelineno-22-9" name="__codelineno-22-9"></a><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<a id="__codelineno-22-5" name="__codelineno-22-5"></a>&lt;!doctype html&gt;
+<a id="__codelineno-22-6" name="__codelineno-22-6"></a>&lt;html lang=en&gt;
+<a id="__codelineno-22-7" name="__codelineno-22-7"></a>&lt;title&gt;404 Not Found&lt;/title&gt;
+<a id="__codelineno-22-8" name="__codelineno-22-8"></a>&lt;h1&gt;Not Found&lt;/h1&gt;
+<a id="__codelineno-22-9" name="__codelineno-22-9"></a>&lt;p&gt;The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.&lt;/p&gt;
 </code></pre></div></td></tr></table></div>
 <p>The error responses for <em>[Flask]</em> (actually, for <em>[Werkzeug]</em>) are short pages named HTML, in English. In a browser:</p>
 <p><img src="images/10000000000002BE000000AE44EEB682.png" width="428" height="106" style="width:11.322cm;height:2.806cm;" alt="Image" class="odt-zoomable" data-zoom-src="images/10000000000002BE000000AE44EEB682.png" /></p>
@@ -1725,11 +1725,11 @@
 <a id="__codelineno-40-2" name="__codelineno-40-2"></a>Content-Type: text/html; charset=utf-8
 <a id="__codelineno-40-3" name="__codelineno-40-3"></a>Content-Length: 128
 <a id="__codelineno-40-4" name="__codelineno-40-4"></a>
-<a id="__codelineno-40-5" name="__codelineno-40-5"></a><span class="cp">&lt;!doctype html&gt;</span>
-<a id="__codelineno-40-6" name="__codelineno-40-6"></a><span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">en</span><span class="p">&gt;</span>
-<a id="__codelineno-40-7" name="__codelineno-40-7"></a><span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>404 Not Found<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
-<a id="__codelineno-40-8" name="__codelineno-40-8"></a><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Not Found<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-<a id="__codelineno-40-9" name="__codelineno-40-9"></a><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Cette ressource n<span class="ni">&amp;#39;</span>does not exist either<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<a id="__codelineno-40-5" name="__codelineno-40-5"></a>&lt;!doctype html&gt;
+<a id="__codelineno-40-6" name="__codelineno-40-6"></a>&lt;html lang=en&gt;
+<a id="__codelineno-40-7" name="__codelineno-40-7"></a>&lt;title&gt;404 Not Found&lt;/title&gt;
+<a id="__codelineno-40-8" name="__codelineno-40-8"></a>&lt;h1&gt;Not Found&lt;/h1&gt;
+<a id="__codelineno-40-9" name="__codelineno-40-9"></a>&lt;p&gt;Cette ressource n&amp;#39;does not exist either&lt;/p&gt;
 </code></pre></div></td></tr></table></div>
 <p>The response from <strong><em>[abort]</em></strong> is the standard error page for <em>[Werkzeug]</em>, with our message (its apostrophe was <strong>escaped</strong> in <strong><em>[&amp;#39;]</em></strong>: text inserted into HTML must not be able to introduce tags there; we’ll come back to this).</p>
 <p>That leaves the unhandled exception. In debug mode, the browser displays the <em>[Werkzeug]</em> <strong>debugger</strong> page: the exception type and message, followed by the <strong>call stack</strong> (the list of functions that were executing at the time of the error), from oldest to most recent, with the relevant line of code for each:</p>
@@ -1853,11 +1853,11 @@
 <a id="__codelineno-44-3" name="__codelineno-44-3"></a>Content-Length: 205
 <a id="__codelineno-44-4" name="__codelineno-44-4"></a>Location: /nouvelle
 <a id="__codelineno-44-5" name="__codelineno-44-5"></a>
-<a id="__codelineno-44-6" name="__codelineno-44-6"></a><span class="cp">&lt;!doctype html&gt;</span>
-<a id="__codelineno-44-7" name="__codelineno-44-7"></a><span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">en</span><span class="p">&gt;</span>
-<a id="__codelineno-44-8" name="__codelineno-44-8"></a><span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Redirecting...<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
-<a id="__codelineno-44-9" name="__codelineno-44-9"></a><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Redirecting...<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-<a id="__codelineno-44-10" name="__codelineno-44-10"></a><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>You should be redirected automatically to the target URL: <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">"/nouvelle"</span><span class="p">&gt;</span>/nouvelle<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>. If not, click the link.
+<a id="__codelineno-44-6" name="__codelineno-44-6"></a>&lt;!doctype html&gt;
+<a id="__codelineno-44-7" name="__codelineno-44-7"></a>&lt;html lang=en&gt;
+<a id="__codelineno-44-8" name="__codelineno-44-8"></a>&lt;title&gt;Redirecting...&lt;/title&gt;
+<a id="__codelineno-44-9" name="__codelineno-44-9"></a>&lt;h1&gt;Redirecting...&lt;/h1&gt;
+<a id="__codelineno-44-10" name="__codelineno-44-10"></a>&lt;p&gt;You should be redirected automatically to the target URL: &lt;a href="/nouvelle"&gt;/nouvelle&lt;/a&gt;. If not, click the link.
 </code></pre></div></td></tr></table></div>
 <p>The response also includes a small body, HTML, for a client that would not follow redirects. The <strong><em>[-L]</em></strong> option of <em>[curl]</em> follows the redirect, just as a browser would:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-45-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1"></a>curl -L http://localhost:5000/old
@@ -2098,10 +2098,10 @@
 <span class="normal"><a href="#__codelineno-63-10">10</a></span>
 <span class="normal"><a href="#__codelineno-63-11">11</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-63-1" name="__codelineno-63-1"></a>06-services/
 <a id="__codelineno-63-2" name="__codelineno-63-2"></a>├── clients/
-<a id="__codelineno-63-3" name="__codelineno-63-3"></a>│   ├── <span class="gs">__init__</span>.py
+<a id="__codelineno-63-3" name="__codelineno-63-3"></a>│   ├── __init__.py
 <a id="__codelineno-63-4" name="__codelineno-63-4"></a>│   └── controller.py
 <a id="__codelineno-63-5" name="__codelineno-63-5"></a>├── produits/
-<a id="__codelineno-63-6" name="__codelineno-63-6"></a>│   ├── <span class="gs">__init__</span>.py
+<a id="__codelineno-63-6" name="__codelineno-63-6"></a>│   ├── __init__.py
 <a id="__codelineno-63-7" name="__codelineno-63-7"></a>│   ├── controller.py
 <a id="__codelineno-63-8" name="__codelineno-63-8"></a>│   ├── produit.py
 <a id="__codelineno-63-9" name="__codelineno-63-9"></a>│   ├── service.py

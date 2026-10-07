@@ -855,7 +855,7 @@
 <li>Once the environment is activated, the terminal prompt begins with <strong><em>[(.venv)]</em></strong>, and the commands <strong><em>[python]</em></strong> and <strong><em>[pip]</em></strong> are those of the environment. Under <em>[Windows]</em>, the <em>[PowerShell]</em> terminal sometimes refuses to run the activation script (message: “Script execution is disabled on this system”): The command <strong><em>[Set-ExecutionPolicy -Scope CurrentUser RemoteSigned]</em></strong>, entered once and for all, enables it. <em>[Visual Studio Code]</em> detects the environment and offers to use it for the project: you must accept (you can also select it using the Python command: Select Interpreter, Ctrl-Shift-P); terminals opened afterward activate it automatically;</li>
 <li><strong>Install the</strong> application’s <strong>libraries</strong> in the virtual environment:</li>
 </ul>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="x">pip install -r requirements.txt</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>pip install -r requirements.txt
 </code></pre></div></td></tr></table></div>
 <ul>
 <li><strong>Verify the connection to the database</strong>. The application connects to <em>[MySQL]</em> on <strong><em>[localhost]</em></strong>, port 3306, using the user <strong><em>[root]</em></strong> <strong>without a password</strong> (the default settings for <em>[Laragon]</em>). If your <strong><em>[root]</em></strong> account has a password, enter it in the application’s <strong><em>[config.py]</em></strong> file, on the <strong><em>[DB_PASSWORD = &quot;&quot;]</em></strong> line (for example, <strong><em>[DB_PASSWORD = &quot;monMotDePasse&quot;]</em></strong>). To avoid writing a password to a project file, you can also specify it in the environment variable <strong><em>[FLASK_DB_PASSWORD]</em></strong>, which takes precedence over the file: <strong><em>[set FLASK_DB_PASSWORD=monMotDePasse]</em></strong> over <em>[Windows]</em> (command prompt), <strong><em>[$env:FLASK_DB_PASSWORD=&quot;monMotDePasse&quot;]</em></strong> takes precedence over <em>[PowerShell]</em>, <strong><em>[export FLASK_DB_PASSWORD=monMotDePasse]</em></strong> takes precedence over <em>[Linux]</em>, and <em>[macOS]</em>;</li>
@@ -880,21 +880,21 @@
 <span class="normal"><a href="#__codelineno-6-12">12</a></span>
 <span class="normal"><a href="#__codelineno-6-13">13</a></span>
 <span class="normal"><a href="#__codelineno-6-14">14</a></span>
-<span class="normal"><a href="#__codelineno-6-15">15</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="p">...</span><span class="w"> </span><span class="n">INFO</span><span class="w"> </span><span class="n">sqlalchemy</span><span class="p">.</span><span class="n">engine</span><span class="p">.</span><span class="n">Engine</span><span class="w"> </span><span class="k">BEGIN</span><span class="w"> </span><span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="p">...</span><span class="w"> </span><span class="n">INFO</span><span class="w"> </span><span class="n">sqlalchemy</span><span class="p">.</span><span class="n">engine</span><span class="p">.</span><span class="n">Engine</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="n">medecins</span><span class="p">.</span><span class="n">titre</span><span class="p">,</span><span class="w"> </span><span class="n">medecins</span><span class="p">.</span><span class="n">nom</span><span class="p">,</span><span class="w"> </span><span class="n">medecins</span><span class="p">.</span><span class="n">prenom</span><span class="p">,</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">medecins</span><span class="w"> </span><span class="k">LEFT</span><span class="w"> </span><span class="k">OUTER</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">users_1</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">users_1</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">medecins</span><span class="p">.</span><span class="k">user</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">medecins</span><span class="p">.</span><span class="n">nom</span><span class="p">,</span><span class="w"> </span><span class="n">medecins</span><span class="p">.</span><span class="n">prenom</span>
-<a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="p">...</span><span class="w"> </span><span class="n">INFO</span><span class="w"> </span><span class="n">sqlalchemy</span><span class="p">.</span><span class="n">engine</span><span class="p">.</span><span class="n">Engine</span><span class="w"> </span><span class="k">ROLLBACK</span>
-<a id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="p">...</span><span class="w"> </span><span class="n">INFO</span><span class="w"> </span><span class="n">sqlalchemy</span><span class="p">.</span><span class="n">engine</span><span class="p">.</span><span class="n">Engine</span><span class="w"> </span><span class="k">BEGIN</span><span class="w"> </span><span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
-<a id="__codelineno-6-5" name="__codelineno-6-5"></a><span class="p">...</span><span class="w"> </span><span class="n">INFO</span><span class="w"> </span><span class="n">sqlalchemy</span><span class="p">.</span><span class="n">engine</span><span class="p">.</span><span class="n">Engine</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="n">clients</span><span class="p">.</span><span class="n">titre</span><span class="p">,</span><span class="w"> </span><span class="n">clients</span><span class="p">.</span><span class="n">nom</span><span class="p">,</span><span class="w"> </span><span class="n">clients</span><span class="p">.</span><span class="n">prenom</span><span class="p">,</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">clients</span><span class="w"> </span><span class="k">LEFT</span><span class="w"> </span><span class="k">OUTER</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">users_1</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">users_1</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">clients</span><span class="p">.</span><span class="k">user</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">clients</span><span class="p">.</span><span class="n">nom</span><span class="p">,</span><span class="w"> </span><span class="n">clients</span><span class="p">.</span><span class="n">prenom</span>
-<a id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="p">...</span><span class="w"> </span><span class="n">INFO</span><span class="w"> </span><span class="n">sqlalchemy</span><span class="p">.</span><span class="n">engine</span><span class="p">.</span><span class="n">Engine</span><span class="w"> </span><span class="k">ROLLBACK</span>
-<a id="__codelineno-6-7" name="__codelineno-6-7"></a><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Serving</span><span class="w"> </span><span class="n">Flask</span><span class="w"> </span><span class="n">app</span><span class="w"> </span><span class="s1">'rdvmedecins'</span>
-<a id="__codelineno-6-8" name="__codelineno-6-8"></a><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Debug</span><span class="w"> </span><span class="k">mode</span><span class="p">:</span><span class="w"> </span><span class="k">on</span>
-<a id="__codelineno-6-9" name="__codelineno-6-9"></a><span class="n">WARNING</span><span class="p">:</span><span class="w"> </span><span class="n">This</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">development</span><span class="w"> </span><span class="n">server</span><span class="p">.</span><span class="w"> </span><span class="k">Do</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="n">use</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">production</span><span class="w"> </span><span class="n">deployment</span><span class="p">.</span><span class="w"> </span><span class="n">Use</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">production</span><span class="w"> </span><span class="n">WSGI</span><span class="w"> </span><span class="n">server</span><span class="w"> </span><span class="k">instead</span><span class="p">.</span>
-<a id="__codelineno-6-10" name="__codelineno-6-10"></a><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Running</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mi">127</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">1</span><span class="p">:</span><span class="mi">8081</span>
-<a id="__codelineno-6-11" name="__codelineno-6-11"></a><span class="n">Press</span><span class="w"> </span><span class="n">CTRL</span><span class="o">+</span><span class="k">C</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">quit</span>
-<a id="__codelineno-6-12" name="__codelineno-6-12"></a><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Restarting</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n">stat</span>
-<a id="__codelineno-6-13" name="__codelineno-6-13"></a><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">(</span><span class="n">les</span><span class="w"> </span><span class="n">mêmes</span><span class="w"> </span><span class="n">ordres</span><span class="w"> </span><span class="k">SQL</span><span class="p">)</span>
-<a id="__codelineno-6-14" name="__codelineno-6-14"></a><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Debugger</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">active</span><span class="o">!</span>
-<a id="__codelineno-6-15" name="__codelineno-6-15"></a><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Debugger</span><span class="w"> </span><span class="n">PIN</span><span class="p">:</span><span class="w"> </span><span class="mi">332</span><span class="o">-</span><span class="mi">612</span><span class="o">-</span><span class="mi">699</span>
+<span class="normal"><a href="#__codelineno-6-15">15</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>... INFO sqlalchemy.engine.Engine BEGIN (implicit)
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a>... INFO sqlalchemy.engine.Engine SELECT medecins.titre, medecins.nom, medecins.prenom, ... FROM medecins LEFT OUTER JOIN users AS users_1 ON users_1.id = medecins.user ORDER BY medecins.nom, medecins.prenom
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a>... INFO sqlalchemy.engine.Engine ROLLBACK
+<a id="__codelineno-6-4" name="__codelineno-6-4"></a>... INFO sqlalchemy.engine.Engine BEGIN (implicit)
+<a id="__codelineno-6-5" name="__codelineno-6-5"></a>... INFO sqlalchemy.engine.Engine SELECT clients.titre, clients.nom, clients.prenom, ... FROM clients LEFT OUTER JOIN users AS users_1 ON users_1.id = clients.user ORDER BY clients.nom, clients.prenom
+<a id="__codelineno-6-6" name="__codelineno-6-6"></a>... INFO sqlalchemy.engine.Engine ROLLBACK
+<a id="__codelineno-6-7" name="__codelineno-6-7"></a> * Serving Flask app 'rdvmedecins'
+<a id="__codelineno-6-8" name="__codelineno-6-8"></a> * Debug mode: on
+<a id="__codelineno-6-9" name="__codelineno-6-9"></a>WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+<a id="__codelineno-6-10" name="__codelineno-6-10"></a> * Running on http://127.0.0.1:8081
+<a id="__codelineno-6-11" name="__codelineno-6-11"></a>Press CTRL+C to quit
+<a id="__codelineno-6-12" name="__codelineno-6-12"></a> * Restarting with stat
+<a id="__codelineno-6-13" name="__codelineno-6-13"></a> ... (les mêmes ordres SQL)
+<a id="__codelineno-6-14" name="__codelineno-6-14"></a> * Debugger is active!
+<a id="__codelineno-6-15" name="__codelineno-6-15"></a> * Debugger PIN: 332-612-699
 </code></pre></div></td></tr></table></div>
 <p>Each line of <em>[SQLAlchemy]</em> begins with the date and time (replaced here by <strong><em>[...]</em></strong>). It shows that the application has read the list of doctors and clients (the two requests SQL), that the server is listening on port 8081 at the address <strong><em>[127.0.0.1]</em></strong> (i.e., <strong><em>[localhost]</em></strong>), and that it is running in <strong>debug</strong> mode: the application restarts automatically whenever a <em>[Python]</em> file is modified (<strong><em>[Restarting with stat]</em></strong>: the process monitoring the files restarts the application, which re-reads the database), and an unexpected error displays a debug page (the “PIN” hides this page from the console). The warning reminds you that this server is intended for development, not for production (the case study explains how to use a production server);</p>
 <ul>
@@ -915,14 +915,14 @@
 <span class="normal"><a href="#__codelineno-7-5">5</a></span>
 <span class="normal"><a href="#__codelineno-7-6">6</a></span>
 <span class="normal"><a href="#__codelineno-7-7">7</a></span>
-<span class="normal"><a href="#__codelineno-7-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="x">exemples/</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="x">├── 01-structure/</span>
-<a id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="x">├── 02-routage/</span>
-<a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="x">├── ...</span>
-<a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="x">├── 28-couches/</span>
-<a id="__codelineno-7-6" name="__codelineno-7-6"></a><span class="x">├── commun/</span>
-<a id="__codelineno-7-7" name="__codelineno-7-7"></a><span class="x">│   └── bootstrap/</span>
-<a id="__codelineno-7-8" name="__codelineno-7-8"></a><span class="x">└── requirements.txt</span>
+<span class="normal"><a href="#__codelineno-7-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>exemples/
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a>├── 01-structure/
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a>├── 02-routage/
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a>├── ...
+<a id="__codelineno-7-5" name="__codelineno-7-5"></a>├── 28-couches/
+<a id="__codelineno-7-6" name="__codelineno-7-6"></a>├── commun/
+<a id="__codelineno-7-7" name="__codelineno-7-7"></a>│   └── bootstrap/
+<a id="__codelineno-7-8" name="__codelineno-7-8"></a>└── requirements.txt
 </code></pre></div></td></tr></table></div>
 <p>Each example is a small application (<em>[Flask]</em>) that runs on its own. All examples use the same libraries, described in the file <strong><em>[exemples/requirements.txt]</em></strong>:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1"> 1</a></span>
@@ -935,17 +935,17 @@
 <span class="normal"><a href="#__codelineno-8-8"> 8</a></span>
 <span class="normal"><a href="#__codelineno-8-9"> 9</a></span>
 <span class="normal"><a href="#__codelineno-8-10">10</a></span>
-<span class="normal"><a href="#__codelineno-8-11">11</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="err">#</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">example</span><span class="w"> </span><span class="nx">libraries</span><span class="o">:</span><span class="w"> </span><span class="nx">pip</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="o">-</span><span class="nx">r</span><span class="w"> </span><span class="nx">requirements</span><span class="p">.</span><span class="nx">txt</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2"></a><span class="err">#</span><span class="w"> </span><span class="p">(</span><span class="nx">the</span><span class="w"> </span><span class="nx">versions</span><span class="w"> </span><span class="nx">used</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">write</span><span class="w"> </span><span class="nx">and</span><span class="w"> </span><span class="nx">test</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">examples</span><span class="p">)</span>
-<a id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="nx">Flask</span><span class="p">[</span><span class="k">async</span><span class="p">]</span><span class="o">==</span><span class="mf">3.1.3</span>
-<a id="__codelineno-8-4" name="__codelineno-8-4"></a><span class="nx">Flask</span><span class="o">-</span><span class="nx">WTF</span><span class="o">==</span><span class="mf">1.3.0</span>
-<a id="__codelineno-8-5" name="__codelineno-8-5"></a><span class="nx">email</span><span class="o">-</span><span class="nx">validator</span><span class="o">==</span><span class="mf">2.3.0</span>
-<a id="__codelineno-8-6" name="__codelineno-8-6"></a><span class="nx">pydantic</span><span class="o">==</span><span class="mf">2.13.5</span>
-<a id="__codelineno-8-7" name="__codelineno-8-7"></a><span class="nx">Babel</span><span class="o">==</span><span class="mf">2.18.0</span>
-<a id="__codelineno-8-8" name="__codelineno-8-8"></a><span class="nx">PyJWT</span><span class="o">==</span><span class="mf">2.15.0</span>
-<a id="__codelineno-8-9" name="__codelineno-8-9"></a><span class="nx">bcrypt</span><span class="o">==</span><span class="mf">5.0.0</span>
-<a id="__codelineno-8-10" name="__codelineno-8-10"></a><span class="nx">SQLAlchemy</span><span class="o">==</span><span class="mf">2.1.1</span>
-<a id="__codelineno-8-11" name="__codelineno-8-11"></a><span class="nx">PyMySQL</span><span class="p">[</span><span class="nx">rsa</span><span class="p">]</span><span class="o">==</span><span class="mf">1.2.3</span>
+<span class="normal"><a href="#__codelineno-8-11">11</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a># the example libraries: pip install -r requirements.txt
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a># (the versions used to write and test the examples)
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a>Flask[async]==3.1.3
+<a id="__codelineno-8-4" name="__codelineno-8-4"></a>Flask-WTF==1.3.0
+<a id="__codelineno-8-5" name="__codelineno-8-5"></a>email-validator==2.3.0
+<a id="__codelineno-8-6" name="__codelineno-8-6"></a>pydantic==2.13.5
+<a id="__codelineno-8-7" name="__codelineno-8-7"></a>Babel==2.18.0
+<a id="__codelineno-8-8" name="__codelineno-8-8"></a>PyJWT==2.15.0
+<a id="__codelineno-8-9" name="__codelineno-8-9"></a>bcrypt==5.0.0
+<a id="__codelineno-8-10" name="__codelineno-8-10"></a>SQLAlchemy==2.1.1
+<a id="__codelineno-8-11" name="__codelineno-8-11"></a>PyMySQL[rsa]==1.2.3
 </code></pre></div></td></tr></table></div>
 <ul>
 <li>line 3: <em>[Flask]</em>, and what is needed to write asynchronous actions (<strong>the additional</strong> <strong><em>[[async]]</em></strong>, which adds the <em>[asgiref]</em> library; see example 03);</li>
@@ -957,9 +957,9 @@
 <p>To run the examples, first create the virtual environment for the examples once and for all in the <strong><em>[exemples]</em></strong> folder (see the case study for details):</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span>
 <span class="normal"><a href="#__codelineno-9-2">2</a></span>
-<span class="normal"><a href="#__codelineno-9-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="x">python -m venv .venv</span>
-<a id="__codelineno-9-2" name="__codelineno-9-2"></a><span class="x">.venv\Scripts\activate</span>
-<a id="__codelineno-9-3" name="__codelineno-9-3"></a><span class="x">pip install -r requirements.txt</span>
+<span class="normal"><a href="#__codelineno-9-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a>python -m venv .venv
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a>.venv\Scripts\activate
+<a id="__codelineno-9-3" name="__codelineno-9-3"></a>pip install -r requirements.txt
 </code></pre></div></td></tr></table></div>
 <p>(<strong><em>[source .venv/bin/activate]</em></strong> under <em>[Linux]</em> and <em>[macOS]</em>). The <strong><em>[commun/bootstrap]</em></strong> folder contains the CSS and <em>[Bootstrap]</em> frameworks, shared by the examples that format their pages (starting with Example 15).</p>
 <p>Almost all of the examples have the same structure. For example, the one in Example 13:</p>
@@ -976,10 +976,10 @@
 <span class="normal"><a href="#__codelineno-10-11">11</a></span>
 <span class="normal"><a href="#__codelineno-10-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a>13-premiere-vue/
 <a id="__codelineno-10-2" name="__codelineno-10-2"></a>├── controllers/
-<a id="__codelineno-10-3" name="__codelineno-10-3"></a>│   ├── <span class="gs">__init__</span>.py
+<a id="__codelineno-10-3" name="__codelineno-10-3"></a>│   ├── __init__.py
 <a id="__codelineno-10-4" name="__codelineno-10-4"></a>│   └── vues.py
 <a id="__codelineno-10-5" name="__codelineno-10-5"></a>├── models/
-<a id="__codelineno-10-6" name="__codelineno-10-6"></a>│   ├── <span class="gs">__init__</span>.py
+<a id="__codelineno-10-6" name="__codelineno-10-6"></a>│   ├── __init__.py
 <a id="__codelineno-10-7" name="__codelineno-10-7"></a>│   └── page.py
 <a id="__codelineno-10-8" name="__codelineno-10-8"></a>├── templates/
 <a id="__codelineno-10-9" name="__codelineno-10-9"></a>│   └── vues/
