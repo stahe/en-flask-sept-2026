@@ -539,10 +539,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#711-the-wsgi-middleware-filtersjournalpy" class="md-nav__link">
+  <a href="#711-the-wsgi-middleware-filtersloggerpy" class="md-nav__link">
     <span class="md-ellipsis">
       
-        7.1.1. The WSGI middleware: filters/journal.py
+        7.1.1. The WSGI middleware: filters/logger.py
       
     </span>
   </a>
@@ -550,10 +550,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#712-the-converter-filtersentierpy" class="md-nav__link">
+  <a href="#712-the-converter-filtersintegerpy" class="md-nav__link">
     <span class="md-ellipsis">
       
-        7.1.2. The converter: filters/entier.py
+        7.1.2. The converter: filters/integer.py
       
     </span>
   </a>
@@ -561,10 +561,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#713-marked-actions-filtersmarquespy" class="md-nav__link">
+  <a href="#713-marked-actions-filtersmarkspy" class="md-nav__link">
     <span class="md-ellipsis">
       
-        7.1.3. Marked actions: filters/marques.py
+        7.1.3. Marked actions: filters/marks.py
       
     </span>
   </a>
@@ -572,10 +572,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#714-brackets-filterscrochetspy" class="md-nav__link">
+  <a href="#714-hooks-filtershookspy" class="md-nav__link">
     <span class="md-ellipsis">
       
-        7.1.4. Brackets: filters/crochets.py
+        7.1.4. Hooks: filters/hooks.py
       
     </span>
   </a>
@@ -583,10 +583,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#715-error-handling-filterserreurspy" class="md-nav__link">
+  <a href="#715-error-handling-filterserrorspy" class="md-nav__link">
     <span class="md-ellipsis">
       
-        7.1.5. Error handling: filters/erreurs.py
+        7.1.5. Error handling: filters/errors.py
       
     </span>
   </a>
@@ -846,24 +846,24 @@
 <span class="normal"><a href="#__codelineno-0-12">12</a></span>
 <span class="normal"><a href="#__codelineno-0-13">13</a></span>
 <span class="normal"><a href="#__codelineno-0-14">14</a></span>
-<span class="normal"><a href="#__codelineno-0-15">15</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>24-cycle-de-vie/
+<span class="normal"><a href="#__codelineno-0-15">15</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>24-lifecycle/
 <a id="__codelineno-0-2" name="__codelineno-0-2"></a>├── app.py
 <a id="__codelineno-0-3" name="__codelineno-0-3"></a>├── controllers/
-<a id="__codelineno-0-4" name="__codelineno-0-4"></a>│   └── calcul.py
-<a id="__codelineno-0-5" name="__codelineno-0-5"></a>├── filtres/
-<a id="__codelineno-0-6" name="__codelineno-0-6"></a>│   ├── crochets.py
-<a id="__codelineno-0-7" name="__codelineno-0-7"></a>│   ├── entier.py
-<a id="__codelineno-0-8" name="__codelineno-0-8"></a>│   ├── erreurs.py
-<a id="__codelineno-0-9" name="__codelineno-0-9"></a>│   ├── journal.py
-<a id="__codelineno-0-10" name="__codelineno-0-10"></a>│   └── marques.py
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>│   └── calc.py
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a>├── filters/
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a>│   ├── errors.py
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a>│   ├── hooks.py
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a>│   ├── integer.py
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a>│   ├── logger.py
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a>│   └── marks.py
 <a id="__codelineno-0-11" name="__codelineno-0-11"></a>└── templates/
-<a id="__codelineno-0-12" name="__codelineno-0-12"></a>    ├── calcul/
-<a id="__codelineno-0-13" name="__codelineno-0-13"></a>    │   └── resultat.html
-<a id="__codelineno-0-14" name="__codelineno-0-14"></a>    ├── erreur.html
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a>    ├── calc/
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a>    │   └── result.html
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a>    ├── error.html
 <a id="__codelineno-0-15" name="__codelineno-0-15"></a>    └── layout.html
 </code></pre></div></td></tr></table></div>
-<p>The application has only one action, which calculates the square of an integer: <strong><em>[/carre/7]</em></strong>. Depending on URL, it either succeeds or fails in various ways.</p>
-<h3 id="711-the-wsgi-middleware-filtersjournalpy">7.1.1. <span style="color: #1f4d78">The WSGI middleware: filters/journal.py</span></h3>
+<p>The application has only one action, which calculates the square of an integer: <strong><em>[/square/7]</em></strong>. Depending on URL, it either succeeds or fails in various ways.</p>
+<h3 id="711-the-wsgi-middleware-filtersloggerpy">7.1.1. <span style="color: #1f4d78">The WSGI middleware: filters/logger.py</span></h3>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
@@ -892,46 +892,46 @@
 <span class="normal"><a href="#__codelineno-1-26">26</a></span>
 <span class="normal"><a href="#__codelineno-1-27">27</a></span>
 <span class="normal"><a href="#__codelineno-1-28">28</a></span>
-<span class="normal"><a href="#__codelineno-1-29">29</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="c1"># filters/journal.py: a MIDDLEWARE WSGI. WSGI is the standard that connects a</span>
+<span class="normal"><a href="#__codelineno-1-29">29</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="c1"># filters/logger.py: a WSGI MIDDLEWARE. WSGI is the standard that connects a</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="c1"># Python web server to an application: the application is a callable object</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="c1">#`app` (environ, start_response). A middleware is such an object, which ENVELOPPE</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="c1"># the application: it sees every Flask request AVANT and every response APRÈS</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="k">class</span><span class="w"> </span><span class="nc">JournalMiddleware</span><span class="p">:</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="c1"># app(environ, start_response). A middleware is such an object, which WRAPS</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="c1"># the application: it sees each request go by BEFORE Flask, and the response AFTER</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="k">class</span><span class="w"> </span><span class="nc">LoggerMiddleware</span><span class="p">:</span>
 <a id="__codelineno-1-6" name="__codelineno-1-6"></a>
 <a id="__codelineno-1-7" name="__codelineno-1-7"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">application</span><span class="p">):</span>
-<a id="__codelineno-1-8" name="__codelineno-1-8"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">application</span> <span class="o">=</span> <span class="n">application</span>  <span class="c1"># from the wrapped application (Flask)</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">application</span> <span class="o">=</span> <span class="n">application</span>  <span class="c1"># the wrapped application (Flask)</span>
 <a id="__codelineno-1-9" name="__codelineno-1-9"></a>
 <a id="__codelineno-1-10" name="__codelineno-1-10"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
-<a id="__codelineno-1-11" name="__codelineno-1-11"></a>         <span class="c1"># about: a dictionary describing the request (method, path, etc.)</span>
-<a id="__codelineno-1-12" name="__codelineno-1-12"></a>        <span class="n">requete</span> <span class="o">=</span> <span class="n">environ</span><span class="p">[</span><span class="s2">"REQUEST_METHOD"</span><span class="p">]</span> <span class="o">+</span> <span class="s2">" "</span> <span class="o">+</span> <span class="n">environ</span><span class="p">[</span><span class="s2">"PATH_INFO"</span><span class="p">]</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11"></a>        <span class="c1"># environ: a dictionary that describes the request (method, path...)</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12"></a>        <span class="n">request</span> <span class="o">=</span> <span class="n">environ</span><span class="p">[</span><span class="s2">"REQUEST_METHOD"</span><span class="p">]</span> <span class="o">+</span> <span class="s2">" "</span> <span class="o">+</span> <span class="n">environ</span><span class="p">[</span><span class="s2">"PATH_INFO"</span><span class="p">]</span>
 <a id="__codelineno-1-13" name="__codelineno-1-13"></a>        <span class="k">if</span> <span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"QUERY_STRING"</span><span class="p">):</span>
-<a id="__codelineno-1-14" name="__codelineno-1-14"></a>            <span class="n">requete</span> <span class="o">+=</span> <span class="s2">"?"</span> <span class="o">+</span> <span class="n">environ</span><span class="p">[</span><span class="s2">"QUERY_STRING"</span><span class="p">]</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14"></a>            <span class="n">request</span> <span class="o">+=</span> <span class="s2">"?"</span> <span class="o">+</span> <span class="n">environ</span><span class="p">[</span><span class="s2">"QUERY_STRING"</span><span class="p">]</span>
 <a id="__codelineno-1-15" name="__codelineno-1-15"></a>        <span class="nb">print</span><span class="p">()</span>
-<a id="__codelineno-1-16" name="__codelineno-1-16"></a>        <span class="nb">print</span><span class="p">(</span><span class="s2">"---"</span><span class="p">,</span> <span class="n">requete</span><span class="p">)</span>
-<a id="__codelineno-1-17" name="__codelineno-1-17"></a>        <span class="nb">print</span><span class="p">(</span><span class="s2">"1. middleware (avant)"</span><span class="p">)</span>
-<a id="__codelineno-1-18" name="__codelineno-1-18"></a>        <span class="n">statut</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16"></a>        <span class="nb">print</span><span class="p">(</span><span class="s2">"---"</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17"></a>        <span class="nb">print</span><span class="p">(</span><span class="s2">"1. middleware (before)"</span><span class="p">)</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18"></a>        <span class="n">status</span> <span class="o">=</span> <span class="p">[]</span>
 <a id="__codelineno-1-19" name="__codelineno-1-19"></a>
-<a id="__codelineno-1-20" name="__codelineno-1-20"></a>         <span class="c1"># start_response: the function through which Flask returns the body and</span>
-<a id="__codelineno-1-21" name="__codelineno-1-21"></a>         <span class="c1"># response headers; it is wrapped to log the code in passing</span>
-<a id="__codelineno-1-22" name="__codelineno-1-22"></a>        <span class="k">def</span><span class="w"> </span><span class="nf">start_response_espion</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">headers</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<a id="__codelineno-1-23" name="__codelineno-1-23"></a>            <span class="n">statut</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
-<a id="__codelineno-1-24" name="__codelineno-1-24"></a>            <span class="k">return</span> <span class="n">start_response</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">headers</span><span class="p">,</span> <span class="n">exc_info</span><span class="p">)</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20"></a>        <span class="c1"># start_response: the function through which Flask announces the code and the</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21"></a>        <span class="c1"># headers of the response; we wrap it to note the code on the way</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22"></a>        <span class="k">def</span><span class="w"> </span><span class="nf">spy_start_response</span><span class="p">(</span><span class="n">status_line</span><span class="p">,</span> <span class="n">headers</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23"></a>            <span class="n">status</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">status_line</span><span class="p">)</span>
+<a id="__codelineno-1-24" name="__codelineno-1-24"></a>            <span class="k">return</span> <span class="n">start_response</span><span class="p">(</span><span class="n">status_line</span><span class="p">,</span> <span class="n">headers</span><span class="p">,</span> <span class="n">exc_info</span><span class="p">)</span>
 <a id="__codelineno-1-25" name="__codelineno-1-25"></a>
-<a id="__codelineno-1-26" name="__codelineno-1-26"></a>         <span class="c1"># Everything that follows: Flask, the action, the view</span>
-<a id="__codelineno-1-27" name="__codelineno-1-27"></a>        <span class="n">reponse</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">application</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response_espion</span><span class="p">)</span>
-<a id="__codelineno-1-28" name="__codelineno-1-28"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"8. middleware (après : code </span><span class="si">{</span><span class="n">statut</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">statut</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">'?'</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
-<a id="__codelineno-1-29" name="__codelineno-1-29"></a>        <span class="k">return</span> <span class="n">reponse</span>
+<a id="__codelineno-1-26" name="__codelineno-1-26"></a>        <span class="c1"># all the rest: Flask, the action, the view</span>
+<a id="__codelineno-1-27" name="__codelineno-1-27"></a>        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">application</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">spy_start_response</span><span class="p">)</span>
+<a id="__codelineno-1-28" name="__codelineno-1-28"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"8. middleware (after: code </span><span class="si">{</span><span class="n">status</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">'?'</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
+<a id="__codelineno-1-29" name="__codelineno-1-29"></a>        <span class="k">return</span> <span class="n">response</span>
 </code></pre></div></td></tr></table></div>
 <ul>
 <li>Line 7: The middleware receives the application it wraps;</li>
 <li>line 10: the special method <strong><em>[__call__]</em></strong> makes the object <strong>callable</strong>: <strong><em>[middleware(environ, start_response)]</em></strong> executes this method. This is the signature imposed by <em>[WSGI]</em>: <strong><em>[environ]</em></strong> is a dictionary that describes the request (the method in <strong><em>[REQUEST_METHOD]</em></strong>, the path in <strong><em>[PATH_INFO]</em></strong>, the parameters in <strong><em>[QUERY_STRING]</em></strong>, the headers, etc.) ; <strong><em>[start_response]</em></strong> is a function provided by the server, which the application calls to report the response code and headers;</li>
 <li>lines 12–17: the middleware displays the request. This is message #1: nothing has happened yet in <em>[Flask]</em>;</li>
-<li>lines 22–24: To determine the response code, the middleware passes one of its own functions to the application—instead of <strong><em>[start_response]</em></strong>—which records the code as it passes through, then calls the actual function. This is an <strong>internal function</strong> (defined within another function): it has access to the variables of the function that contains it, in this case the list <strong><em>[statut]</em></strong>;</li>
+<li>lines 22–24: To determine the response code, the middleware passes one of its own functions to the application—instead of <strong><em>[start_response]</em></strong>—which records the code as it passes through, then calls the actual function. This is an <strong>internal function</strong> (defined within another function): it has access to the variables of the function that contains it, in this case the list <strong><em>[status]</em></strong>;</li>
 <li>line 27: the call to the wrapped application: the rest of the processing takes place within this call;</li>
 <li>line 28: message No. 8, when <em>[Flask]</em> has finished.</li>
 </ul>
 <p>A middleware component operates at the level of <em>[WSGI]</em>: it is unaware of <strong><em>[request]</em></strong>, <strong><em>[g]</em></strong>, or the routes of <em>[Flask]</em>. It is used for processing that applies to all requests, regardless of the application: logging, compression, handling a proxy, etc. <em>[Werkzeug]</em> provides a few of these, such as <strong><em>[ProxyFix]</em></strong>, which corrects the client’s address when the application is located behind a proxy server (the case study discusses this in relation to the clients’ IP address).</p>
-<h3 id="712-the-converter-filtersentierpy">7.1.2. <span style="color: #1f4d78">The converter: filters/entier.py</span></h3>
+<h3 id="712-the-converter-filtersintegerpy">7.1.2. <span style="color: #1f4d78">The converter: filters/integer.py</span></h3>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
@@ -946,24 +946,24 @@
 <span class="normal"><a href="#__codelineno-2-12">12</a></span>
 <span class="normal"><a href="#__codelineno-2-13">13</a></span>
 <span class="normal"><a href="#__codelineno-2-14">14</a></span>
-<span class="normal"><a href="#__codelineno-2-15">15</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="c1"># filters/entier.py: the path variable &lt;integer:n&gt;, converted to an integer, or</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="c1"># None if it is not an integer (in which case the action decides)</span>
+<span class="normal"><a href="#__codelineno-2-15">15</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="c1"># filters/integer.py: the &lt;integer:n&gt; path variable, converted to an integer, or</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="c1"># None if it is not an integer (it is then the action that decides)</span>
 <a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">werkzeug.routing</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseConverter</span>
 <a id="__codelineno-2-4" name="__codelineno-2-4"></a>
 <a id="__codelineno-2-5" name="__codelineno-2-5"></a>
-<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="k">class</span><span class="w"> </span><span class="nc">EntierConverter</span><span class="p">(</span><span class="n">BaseConverter</span><span class="p">):</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7"></a>     <span class="c1"># any path segment (without a slash)</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="k">class</span><span class="w"> </span><span class="nc">IntegerConverter</span><span class="p">(</span><span class="n">BaseConverter</span><span class="p">):</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a>    <span class="c1"># any piece of path (without a slash)</span>
 <a id="__codelineno-2-8" name="__codelineno-2-8"></a>    <span class="n">regex</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">"[^/]+"</span>
 <a id="__codelineno-2-9" name="__codelineno-2-9"></a>
-<a id="__codelineno-2-10" name="__codelineno-2-10"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_python</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">valeur</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-<a id="__codelineno-2-11" name="__codelineno-2-11"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'2. conversion du paramètre (valeur reçue : "</span><span class="si">{</span><span class="n">valeur</span><span class="si">}</span><span class="s1">")'</span><span class="p">)</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_python</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'2. conversion of the parameter (received value: "</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s1">")'</span><span class="p">)</span>
 <a id="__codelineno-2-12" name="__codelineno-2-12"></a>        <span class="k">try</span><span class="p">:</span>
-<a id="__codelineno-2-13" name="__codelineno-2-13"></a>            <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">valeur</span><span class="p">)</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13"></a>            <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 <a id="__codelineno-2-14" name="__codelineno-2-14"></a>        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
 <a id="__codelineno-2-15" name="__codelineno-2-15"></a>            <span class="k">return</span> <span class="kc">None</span>
 </code></pre></div></td></tr></table></div>
-<p>A converter (example 12) that accepts any portion of a path (<strong><em>[[^/]+]</em></strong>: one or more characters other than <strong><em>[/]</em></strong>) and converts it in its entirety, or to <strong><em>[None]</em></strong> if it is not a valid path. Unlike <strong><em>[&lt;int:n&gt;]</em></strong>, which would return a 404 page for <strong><em>[/carre/abc]</em></strong>, here the action will determine the outcome. It displays message #2.</p>
-<h3 id="713-marked-actions-filtersmarquespy">7.1.3. <span style="color: #1f4d78">Marked actions: filters/marques.py</span></h3>
+<p>A converter (example 12) that accepts any portion of a path (<strong><em>[[^/]+]</em></strong>: one or more characters other than <strong><em>[/]</em></strong>) and converts it in its entirety, or to <strong><em>[None]</em></strong> if it is not a valid path. Unlike <strong><em>[&lt;int:n&gt;]</em></strong>, which would return a 404 page for <strong><em>[/square/abc]</em></strong>, here the action will determine the outcome. It displays message #2.</p>
+<h3 id="713-marked-actions-filtersmarkspy">7.1.3. <span style="color: #1f4d78">Marked actions: filters/marks.py</span></h3>
 <p>The <strong><em>[before_request]</em></strong> functions run before <strong>all</strong> actions. Often, a process applies only to certain actions. A simple way to specify them is to <strong>mark</strong> them:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
@@ -977,22 +977,22 @@
 <span class="normal"><a href="#__codelineno-3-10">10</a></span>
 <span class="normal"><a href="#__codelineno-3-11">11</a></span>
 <span class="normal"><a href="#__codelineno-3-12">12</a></span>
-<span class="normal"><a href="#__codelineno-3-13">13</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="c1"># filters/marques.py: two decorators that MARQUENT an action, without doing anything</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="c1"># change during execution: they add an attribute to it, which the functions</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="c1"># in filters/crochets.py look for</span>
+<span class="normal"><a href="#__codelineno-3-13">13</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="c1"># filters/marks.py: two decorators that MARK an action, without changing</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="c1"># anything in its execution: they add an attribute to it, which the functions</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="c1"># of filters/hooks.py look for</span>
 <a id="__codelineno-3-4" name="__codelineno-3-4"></a>
 <a id="__codelineno-3-5" name="__codelineno-3-5"></a>
-<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="k">def</span><span class="w"> </span><span class="nf">bloquer</span><span class="p">(</span><span class="n">action</span><span class="p">):</span>
-<a id="__codelineno-3-7" name="__codelineno-3-7"></a>    <span class="n">action</span><span class="o">.</span><span class="n">bloquer</span> <span class="o">=</span> <span class="kc">True</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="k">def</span><span class="w"> </span><span class="nf">block</span><span class="p">(</span><span class="n">action</span><span class="p">):</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a>    <span class="n">action</span><span class="o">.</span><span class="n">block</span> <span class="o">=</span> <span class="kc">True</span>
 <a id="__codelineno-3-8" name="__codelineno-3-8"></a>    <span class="k">return</span> <span class="n">action</span>
 <a id="__codelineno-3-9" name="__codelineno-3-9"></a>
 <a id="__codelineno-3-10" name="__codelineno-3-10"></a>
-<a id="__codelineno-3-11" name="__codelineno-3-11"></a><span class="k">def</span><span class="w"> </span><span class="nf">chrono</span><span class="p">(</span><span class="n">action</span><span class="p">):</span>
-<a id="__codelineno-3-12" name="__codelineno-3-12"></a>    <span class="n">action</span><span class="o">.</span><span class="n">chrono</span> <span class="o">=</span> <span class="kc">True</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a><span class="k">def</span><span class="w"> </span><span class="nf">timing</span><span class="p">(</span><span class="n">action</span><span class="p">):</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a>    <span class="n">action</span><span class="o">.</span><span class="n">timing</span> <span class="o">=</span> <span class="kc">True</span>
 <a id="__codelineno-3-13" name="__codelineno-3-13"></a>    <span class="k">return</span> <span class="n">action</span>
 </code></pre></div></td></tr></table></div>
 <p>These two decorators do not change the action itself: they add an attribute to it (in <em>[Python]</em>, a function is an object to which attributes can be added), and leave it unchanged. The <strong><em>[before_request]</em></strong> functions will search for these markers on the action targeted by the request.</p>
-<h3 id="714-brackets-filterscrochetspy">7.1.4. <span style="color: #1f4d78">Brackets: filters/crochets.py</span></h3>
+<h3 id="714-hooks-filtershookspy">7.1.4. <span style="color: #1f4d78">Hooks: filters/hooks.py</span></h3>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-4-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-4-3"> 3</a></span>
@@ -1044,69 +1044,69 @@
 <span class="normal"><a href="#__codelineno-4-49">49</a></span>
 <span class="normal"><a href="#__codelineno-4-50">50</a></span>
 <span class="normal"><a href="#__codelineno-4-51">51</a></span>
-<span class="normal"><a href="#__codelineno-4-52">52</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="c1"># filters/crochets.py: functions executed AVANT and APRÈS for each action</span>
+<span class="normal"><a href="#__codelineno-4-52">52</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="c1"># filters/hooks.py: functions executed BEFORE and AFTER each action</span>
 <a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
 <a id="__codelineno-4-3" name="__codelineno-4-3"></a>
 <a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">flask</span><span class="w"> </span><span class="kn">import</span> <span class="n">abort</span><span class="p">,</span> <span class="n">current_app</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">request</span>
 <a id="__codelineno-4-5" name="__codelineno-4-5"></a>
 <a id="__codelineno-4-6" name="__codelineno-4-6"></a>
 <a id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="c1"># the action that will handle the current request (None if no route matches).</span>
-<a id="__codelineno-4-8" name="__codelineno-4-8"></a><span class="c1"># request.endpoint: the name of the action ("calcul.carre"); view_functions:</span>
-<a id="__codelineno-4-9" name="__codelineno-4-9"></a><span class="c1"># the application’s name-to-function dictionary</span>
-<a id="__codelineno-4-10" name="__codelineno-4-10"></a><span class="k">def</span><span class="w"> </span><span class="nf">action_visee</span><span class="p">():</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8"></a><span class="c1"># request.endpoint: the name of the action ("calc.square"); view_functions:</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9"></a><span class="c1"># the name -&gt; function dictionary of the application</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10"></a><span class="k">def</span><span class="w"> </span><span class="nf">targeted_action</span><span class="p">():</span>
 <a id="__codelineno-4-11" name="__codelineno-4-11"></a>    <span class="k">return</span> <span class="n">current_app</span><span class="o">.</span><span class="n">view_functions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">endpoint</span><span class="p">)</span>
 <a id="__codelineno-4-12" name="__codelineno-4-12"></a>
 <a id="__codelineno-4-13" name="__codelineno-4-13"></a>
-<a id="__codelineno-4-14" name="__codelineno-4-14"></a><span class="c1">#: Is the tag [nom] (see marques.py) applied to the target action?</span>
-<a id="__codelineno-4-15" name="__codelineno-4-15"></a><span class="k">def</span><span class="w"> </span><span class="nf">marquee</span><span class="p">(</span><span class="n">nom</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<a id="__codelineno-4-16" name="__codelineno-4-16"></a>    <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">action_visee</span><span class="p">(),</span> <span class="n">nom</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14"></a><span class="c1"># is the [name] mark (see marks.py) placed on the targeted action?</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15"></a><span class="k">def</span><span class="w"> </span><span class="nf">marked</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16"></a>    <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">targeted_action</span><span class="p">(),</span> <span class="n">name</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
 <a id="__codelineno-4-17" name="__codelineno-4-17"></a>
 <a id="__codelineno-4-18" name="__codelineno-4-18"></a>
-<a id="__codelineno-4-19" name="__codelineno-4-19"></a><span class="k">def</span><span class="w"> </span><span class="nf">enregistrer</span><span class="p">(</span><span class="n">app</span><span class="p">):</span>
+<a id="__codelineno-4-19" name="__codelineno-4-19"></a><span class="k">def</span><span class="w"> </span><span class="nf">register</span><span class="p">(</span><span class="n">app</span><span class="p">):</span>
 <a id="__codelineno-4-20" name="__codelineno-4-20"></a>
-<a id="__codelineno-4-21" name="__codelineno-4-21"></a>     <span class="c1"># before_request: before the action. If the function returns a response (or throws</span>
-<a id="__codelineno-4-22" name="__codelineno-4-22"></a>     <span class="c1"># an exception), processing stops there: the action is not called</span>
+<a id="__codelineno-4-21" name="__codelineno-4-21"></a>    <span class="c1"># before_request: before the action. If the function returns a response (or raises</span>
+<a id="__codelineno-4-22" name="__codelineno-4-22"></a>    <span class="c1"># an exception), the processing stops there: the action is not called</span>
 <a id="__codelineno-4-23" name="__codelineno-4-23"></a>    <span class="nd">@app</span><span class="o">.</span><span class="n">before_request</span>
-<a id="__codelineno-4-24" name="__codelineno-4-24"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">bloquer</span><span class="p">():</span>
-<a id="__codelineno-4-25" name="__codelineno-4-25"></a>        <span class="k">if</span> <span class="n">marquee</span><span class="p">(</span><span class="s2">"bloquer"</span><span class="p">):</span>
-<a id="__codelineno-4-26" name="__codelineno-4-26"></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"3. before_request Bloquer (action visée : </span><span class="si">{</span><span class="n">request</span><span class="o">.</span><span class="n">endpoint</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
-<a id="__codelineno-4-27" name="__codelineno-4-27"></a>            <span class="k">if</span> <span class="s2">"bloquer"</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="p">:</span>
+<a id="__codelineno-4-24" name="__codelineno-4-24"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">block</span><span class="p">():</span>
+<a id="__codelineno-4-25" name="__codelineno-4-25"></a>        <span class="k">if</span> <span class="n">marked</span><span class="p">(</span><span class="s2">"block"</span><span class="p">):</span>
+<a id="__codelineno-4-26" name="__codelineno-4-26"></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"3. before_request Block (targeted action: </span><span class="si">{</span><span class="n">request</span><span class="o">.</span><span class="n">endpoint</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
+<a id="__codelineno-4-27" name="__codelineno-4-27"></a>            <span class="k">if</span> <span class="s2">"block"</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="p">:</span>
 <a id="__codelineno-4-28" name="__codelineno-4-28"></a>                <span class="n">abort</span><span class="p">(</span><span class="mi">403</span><span class="p">)</span>  <span class="c1"># a 403 error response (access denied)</span>
 <a id="__codelineno-4-29" name="__codelineno-4-29"></a>
 <a id="__codelineno-4-30" name="__codelineno-4-30"></a>    <span class="nd">@app</span><span class="o">.</span><span class="n">before_request</span>
-<a id="__codelineno-4-31" name="__codelineno-4-31"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">chrono_debut</span><span class="p">():</span>
-<a id="__codelineno-4-32" name="__codelineno-4-32"></a>        <span class="k">if</span> <span class="n">marquee</span><span class="p">(</span><span class="s2">"chrono"</span><span class="p">):</span>
-<a id="__codelineno-4-33" name="__codelineno-4-33"></a>            <span class="nb">print</span><span class="p">(</span><span class="s2">"4. before_request Chrono (avant)"</span><span class="p">)</span>
-<a id="__codelineno-4-34" name="__codelineno-4-34"></a>             <span class="c1"># the start time, stored in g (query scope)</span>
-<a id="__codelineno-4-35" name="__codelineno-4-35"></a>            <span class="n">g</span><span class="o">.</span><span class="n">debut</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+<a id="__codelineno-4-31" name="__codelineno-4-31"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">timing_start</span><span class="p">():</span>
+<a id="__codelineno-4-32" name="__codelineno-4-32"></a>        <span class="k">if</span> <span class="n">marked</span><span class="p">(</span><span class="s2">"timing"</span><span class="p">):</span>
+<a id="__codelineno-4-33" name="__codelineno-4-33"></a>            <span class="nb">print</span><span class="p">(</span><span class="s2">"4. before_request Timing (before)"</span><span class="p">)</span>
+<a id="__codelineno-4-34" name="__codelineno-4-34"></a>            <span class="c1"># the start time, stored in g (request scope)</span>
+<a id="__codelineno-4-35" name="__codelineno-4-35"></a>            <span class="n">g</span><span class="o">.</span><span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
 <a id="__codelineno-4-36" name="__codelineno-4-36"></a>
-<a id="__codelineno-4-37" name="__codelineno-4-37"></a>     <span class="c1"># after_request: after the action (and the view it generated), with the</span>
-<a id="__codelineno-4-38" name="__codelineno-4-38"></a>     <span class="c1"># response, which the function can modify; it must return it</span>
+<a id="__codelineno-4-37" name="__codelineno-4-37"></a>    <span class="c1"># after_request: after the action (and the view it built), with the</span>
+<a id="__codelineno-4-38" name="__codelineno-4-38"></a>    <span class="c1"># response, which the function can modify; it must return it</span>
 <a id="__codelineno-4-39" name="__codelineno-4-39"></a>    <span class="nd">@app</span><span class="o">.</span><span class="n">after_request</span>
-<a id="__codelineno-4-40" name="__codelineno-4-40"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">chrono_apres</span><span class="p">(</span><span class="n">reponse</span><span class="p">):</span>
-<a id="__codelineno-4-41" name="__codelineno-4-41"></a>        <span class="k">if</span> <span class="n">marquee</span><span class="p">(</span><span class="s2">"chrono"</span><span class="p">):</span>
-<a id="__codelineno-4-42" name="__codelineno-4-42"></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"6. after_request Chrono (code </span><span class="si">{</span><span class="n">reponse</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
-<a id="__codelineno-4-43" name="__codelineno-4-43"></a>        <span class="k">return</span> <span class="n">reponse</span>
+<a id="__codelineno-4-40" name="__codelineno-4-40"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">timing_after</span><span class="p">(</span><span class="n">response</span><span class="p">):</span>
+<a id="__codelineno-4-41" name="__codelineno-4-41"></a>        <span class="k">if</span> <span class="n">marked</span><span class="p">(</span><span class="s2">"timing"</span><span class="p">):</span>
+<a id="__codelineno-4-42" name="__codelineno-4-42"></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"6. after_request Timing (code </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
+<a id="__codelineno-4-43" name="__codelineno-4-43"></a>        <span class="k">return</span> <span class="n">response</span>
 <a id="__codelineno-4-44" name="__codelineno-4-44"></a>
-<a id="__codelineno-4-45" name="__codelineno-4-45"></a>     <span class="c1"># teardown_request: at the very end, always called, with the exception</span>
-<a id="__codelineno-4-46" name="__codelineno-4-46"></a>     <span class="c1"># possible (unhandled); it can no longer change the response</span>
+<a id="__codelineno-4-45" name="__codelineno-4-45"></a>    <span class="c1"># teardown_request: at the very end, always called, with the possible</span>
+<a id="__codelineno-4-46" name="__codelineno-4-46"></a>    <span class="c1"># (unhandled) exception; it can no longer change the response</span>
 <a id="__codelineno-4-47" name="__codelineno-4-47"></a>    <span class="nd">@app</span><span class="o">.</span><span class="n">teardown_request</span>
-<a id="__codelineno-4-48" name="__codelineno-4-48"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">chrono_fin</span><span class="p">(</span><span class="n">exception</span><span class="p">):</span>
-<a id="__codelineno-4-49" name="__codelineno-4-49"></a>        <span class="k">if</span> <span class="s2">"debut"</span> <span class="ow">in</span> <span class="n">g</span><span class="p">:</span>
-<a id="__codelineno-4-50" name="__codelineno-4-50"></a>            <span class="n">ms</span> <span class="o">=</span> <span class="nb">round</span><span class="p">((</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">g</span><span class="o">.</span><span class="n">debut</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
-<a id="__codelineno-4-51" name="__codelineno-4-51"></a>            <span class="n">issue</span> <span class="o">=</span> <span class="s2">""</span> <span class="k">if</span> <span class="n">exception</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">", exception </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">exception</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">"</span>
-<a id="__codelineno-4-52" name="__codelineno-4-52"></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"7. teardown_request Chrono (fin, </span><span class="si">{</span><span class="n">ms</span><span class="si">}</span><span class="s2"> ms</span><span class="si">{</span><span class="n">issue</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
+<a id="__codelineno-4-48" name="__codelineno-4-48"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">timing_end</span><span class="p">(</span><span class="n">exception</span><span class="p">):</span>
+<a id="__codelineno-4-49" name="__codelineno-4-49"></a>        <span class="k">if</span> <span class="s2">"start"</span> <span class="ow">in</span> <span class="n">g</span><span class="p">:</span>
+<a id="__codelineno-4-50" name="__codelineno-4-50"></a>            <span class="n">ms</span> <span class="o">=</span> <span class="nb">round</span><span class="p">((</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">g</span><span class="o">.</span><span class="n">start</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
+<a id="__codelineno-4-51" name="__codelineno-4-51"></a>            <span class="n">outcome</span> <span class="o">=</span> <span class="s2">""</span> <span class="k">if</span> <span class="n">exception</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">", exception </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">exception</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">"</span>
+<a id="__codelineno-4-52" name="__codelineno-4-52"></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"7. teardown_request Timing (end, </span><span class="si">{</span><span class="n">ms</span><span class="si">}</span><span class="s2"> ms</span><span class="si">{</span><span class="n">outcome</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
 <ul>
-<li>Lines 10–11: the action that will handle the request. After routing, <strong><em>[request.endpoint]</em></strong> contains the name of the selected route (<strong><em>[calcul.carre]</em></strong>: the blueprint name, a period, the function name); <strong><em>[current_app.view_functions]</em></strong> is the dictionary that maps each name to its corresponding function. If no route matches, <strong><em>[request.endpoint]</em></strong> is set to <strong><em>[None]</em></strong>, and the function returns <strong><em>[None]</em></strong>;</li>
-<li>lines 15–16: Is the flag set? <strong><em>[getattr(objet, nom, défaut)]</em></strong> returns the given name attribute, or the default value if it does not exist (or if the object is <strong><em>[None]</em></strong>);</li>
+<li>Lines 10–11: the action that will handle the request. After routing, <strong><em>[request.endpoint]</em></strong> contains the name of the selected route (<strong><em>[calc.square]</em></strong>: the blueprint name, a period, the function name); <strong><em>[current_app.view_functions]</em></strong> is the dictionary that maps each name to its corresponding function. If no route matches, <strong><em>[request.endpoint]</em></strong> is set to <strong><em>[None]</em></strong>, and the function returns <strong><em>[None]</em></strong>;</li>
+<li>lines 15–16: Is the flag set? <strong><em>[getattr(object, name, default)]</em></strong> returns the given name attribute, or the default value if it does not exist (or if the object is <strong><em>[None]</em></strong>);</li>
 <li>line 19: The callbacks are registered by a function called by <strong><em>[app.py]</em></strong>;</li>
-<li>lines 24–28: the first bracket, message #3: for an action marked <strong><em>[bloquer]</em></strong>, the parameter <strong><em>[?bloquer]</em></strong> of URL causes a 403 error (*Forbidden*, access denied): <strong><em>[abort]</em></strong> throws an exception, which interrupts processing;</li>
-<li>lines 31–35: the second block, message no. 4: for an action marked <strong><em>[chrono]</em></strong>, the start time is stored in <strong><em>[g]</em></strong>. <strong><em>[time.perf_counter()]</em></strong> is a precise clock designed to measure durations;</li>
-<li>lines 39–43: message #6. The function receives the response and must return it (possibly modified). <strong><em>[reponse.status_code]</em></strong> is the response code;</li>
-<li>lines 47–52: message #7, containing the elapsed time since hook #4. The <strong><em>[&quot;debut&quot; in g]</em></strong> test verifies that the measurement has started. The function receives the exception that interrupted processing, if there is one that has not been handled, and <strong><em>[None]</em></strong> otherwise.</li>
+<li>lines 24–28: the first hook, message #3: for an action marked [block], the parameter <strong><em>[?block]</em></strong> of URL causes a 403 error (*Forbidden*, access denied): <strong><em>[abort]</em></strong> throws an exception, which interrupts processing;</li>
+<li>lines 31–35: the second hook, message no. 4: for an action marked <strong><em>[timing]</em></strong>, the start time is stored in <strong><em>[g]</em></strong>. <strong><em>[time.perf_counter()]</em></strong> is a precise clock designed to measure durations;</li>
+<li>lines 39–43: message #6. The function receives the response and must return it (possibly modified). <strong><em>[response.status_code]</em></strong> is the response code;</li>
+<li>lines 47–52: message #7, containing the elapsed time since hook #4. The <strong><em>[&quot;start&quot; in g]</em></strong> test verifies that the measurement has started. The function receives the exception that interrupted processing, if there is one that has not been handled, and <strong><em>[None]</em></strong> otherwise.</li>
 </ul>
-<h3 id="715-error-handling-filterserreurspy">7.1.5. <span style="color: #1f4d78">Error handling: filters/erreurs.py</span></h3>
+<h3 id="715-error-handling-filterserrorspy">7.1.5. <span style="color: #1f4d78">Error handling: filters/errors.py</span></h3>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
@@ -1126,26 +1126,26 @@
 <span class="normal"><a href="#__codelineno-5-17">17</a></span>
 <span class="normal"><a href="#__codelineno-5-18">18</a></span>
 <span class="normal"><a href="#__codelineno-5-19">19</a></span>
-<span class="normal"><a href="#__codelineno-5-20">20</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="c1"># filters/erreurs.py: the application’s error handlers</span>
+<span class="normal"><a href="#__codelineno-5-20">20</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="c1"># filters/errors.py: the error handlers of the application</span>
 <a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">flask</span><span class="w"> </span><span class="kn">import</span> <span class="n">render_template</span>
 <a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">werkzeug.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">HTTPException</span>
 <a id="__codelineno-5-4" name="__codelineno-5-4"></a>
 <a id="__codelineno-5-5" name="__codelineno-5-5"></a>
-<a id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="k">def</span><span class="w"> </span><span class="nf">enregistrer</span><span class="p">(</span><span class="n">app</span><span class="p">):</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="k">def</span><span class="w"> </span><span class="nf">register</span><span class="p">(</span><span class="n">app</span><span class="p">):</span>
 <a id="__codelineno-5-7" name="__codelineno-5-7"></a>
-<a id="__codelineno-5-8" name="__codelineno-5-8"></a>     <span class="c1"># an “unexpected” exception of a given type: ValueError and its subclasses</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8"></a>    <span class="c1"># an "unexpected" exception of a given type: ValueError and its subclasses</span>
 <a id="__codelineno-5-9" name="__codelineno-5-9"></a>    <span class="nd">@app</span><span class="o">.</span><span class="n">errorhandler</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">)</span>
-<a id="__codelineno-5-10" name="__codelineno-5-10"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">erreur_valeur</span><span class="p">(</span><span class="n">e</span><span class="p">:</span> <span class="ne">ValueError</span><span class="p">):</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">value_error</span><span class="p">(</span><span class="n">e</span><span class="p">:</span> <span class="ne">ValueError</span><span class="p">):</span>
 <a id="__codelineno-5-11" name="__codelineno-5-11"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"x. errorhandler ValueError (</span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
-<a id="__codelineno-5-12" name="__codelineno-5-12"></a>         <span class="c1"># instead of the default error page, our view [erreur], with status code 500</span>
-<a id="__codelineno-5-13" name="__codelineno-5-13"></a>        <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s2">"erreur.html"</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="mi">500</span><span class="p">),</span> <span class="mi">500</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12"></a>        <span class="c1"># instead of the default error page, our [error] view, with the 500 code</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13"></a>        <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s2">"error.html"</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="mi">500</span><span class="p">),</span> <span class="mi">500</span>
 <a id="__codelineno-5-14" name="__codelineno-5-14"></a>
-<a id="__codelineno-5-15" name="__codelineno-5-15"></a>     <span class="c1"># errors of type HTTP (abort(400), abort(403), unknown page -&gt; 404...):</span>
-<a id="__codelineno-5-16" name="__codelineno-5-16"></a>     <span class="c1"># HTTPException is the parent class of all Werkzeug exceptions of type HTTP</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15"></a>    <span class="c1"># the HTTP errors (abort(400), abort(403), unknown page -&gt; 404...):</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16"></a>    <span class="c1"># HTTPException is the parent class of all the HTTP exceptions of Werkzeug</span>
 <a id="__codelineno-5-17" name="__codelineno-5-17"></a>    <span class="nd">@app</span><span class="o">.</span><span class="n">errorhandler</span><span class="p">(</span><span class="n">HTTPException</span><span class="p">)</span>
-<a id="__codelineno-5-18" name="__codelineno-5-18"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">erreur_http</span><span class="p">(</span><span class="n">e</span><span class="p">:</span> <span class="n">HTTPException</span><span class="p">):</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">http_error</span><span class="p">(</span><span class="n">e</span><span class="p">:</span> <span class="n">HTTPException</span><span class="p">):</span>
 <a id="__codelineno-5-19" name="__codelineno-5-19"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"e. errorhandler HTTPException (code </span><span class="si">{</span><span class="n">e</span><span class="o">.</span><span class="n">code</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
-<a id="__codelineno-5-20" name="__codelineno-5-20"></a>        <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s2">"erreur.html"</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="n">e</span><span class="o">.</span><span class="n">code</span><span class="p">),</span> <span class="n">e</span><span class="o">.</span><span class="n">code</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20"></a>        <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s2">"error.html"</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="n">e</span><span class="o">.</span><span class="n">code</span><span class="p">),</span> <span class="n">e</span><span class="o">.</span><span class="n">code</span>
 </code></pre></div></td></tr></table></div>
 <ul>
 <li>Lines 9–13: an exception handler for the <strong><em>[ValueError]</em></strong> class (and its subclasses): an “unexpected” error, converted into a “custom” error page with status code 500 (*Internal Server Error*). The exception message is displayed in the console, but not on the page: it may contain internal details that are not relevant to the user;</li>
@@ -1170,27 +1170,27 @@
 <span class="normal"><a href="#__codelineno-6-15">15</a></span>
 <span class="normal"><a href="#__codelineno-6-16">16</a></span>
 <span class="normal"><a href="#__codelineno-6-17">17</a></span>
-<span class="normal"><a href="#__codelineno-6-18">18</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="c1"># controllers/calcul.py: an action marked by two decorators</span>
+<span class="normal"><a href="#__codelineno-6-18">18</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="c1"># controllers/calc.py: an action marked by two decorators</span>
 <a id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">flask</span><span class="w"> </span><span class="kn">import</span> <span class="n">Blueprint</span><span class="p">,</span> <span class="n">abort</span><span class="p">,</span> <span class="n">render_template</span>
 <a id="__codelineno-6-3" name="__codelineno-6-3"></a>
-<a id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">filtres.marques</span><span class="w"> </span><span class="kn">import</span> <span class="n">bloquer</span><span class="p">,</span> <span class="n">chrono</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">filters.marks</span><span class="w"> </span><span class="kn">import</span> <span class="n">block</span><span class="p">,</span> <span class="n">timing</span>
 <a id="__codelineno-6-5" name="__codelineno-6-5"></a>
-<a id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="n">calcul</span> <span class="o">=</span> <span class="n">Blueprint</span><span class="p">(</span><span class="s2">"calcul"</span><span class="p">,</span> <span class="vm">__name__</span><span class="p">)</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="n">calc</span> <span class="o">=</span> <span class="n">Blueprint</span><span class="p">(</span><span class="s2">"calc"</span><span class="p">,</span> <span class="vm">__name__</span><span class="p">)</span>
 <a id="__codelineno-6-7" name="__codelineno-6-7"></a>
 <a id="__codelineno-6-8" name="__codelineno-6-8"></a>
-<a id="__codelineno-6-9" name="__codelineno-6-9"></a><span class="nd">@calcul</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"/carre/&lt;entier:n&gt;"</span><span class="p">)</span>
-<a id="__codelineno-6-10" name="__codelineno-6-10"></a><span class="nd">@bloquer</span>
-<a id="__codelineno-6-11" name="__codelineno-6-11"></a><span class="nd">@chrono</span>
-<a id="__codelineno-6-12" name="__codelineno-6-12"></a><span class="k">def</span><span class="w"> </span><span class="nf">carre</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">):</span>
-<a id="__codelineno-6-13" name="__codelineno-6-13"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"5. action carre(</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9"></a><span class="nd">@calc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"/square/&lt;integer:n&gt;"</span><span class="p">)</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10"></a><span class="nd">@block</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11"></a><span class="nd">@timing</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12"></a><span class="k">def</span><span class="w"> </span><span class="nf">square</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">):</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"5. action square(</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
 <a id="__codelineno-6-14" name="__codelineno-6-14"></a>    <span class="k">if</span> <span class="n">n</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-<a id="__codelineno-6-15" name="__codelineno-6-15"></a>        <span class="n">abort</span><span class="p">(</span><span class="mi">400</span><span class="p">)</span>  <span class="c1"># a 400 error: see filters/erreurs.py</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15"></a>        <span class="n">abort</span><span class="p">(</span><span class="mi">400</span><span class="p">)</span>  <span class="c1"># a 400 error: see filters/errors.py</span>
 <a id="__codelineno-6-16" name="__codelineno-6-16"></a>    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">13</span><span class="p">:</span>
-<a id="__codelineno-6-17" name="__codelineno-6-17"></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"13 porte malheur"</span><span class="p">)</span>  <span class="c1"># an “unexpected” error</span>
-<a id="__codelineno-6-18" name="__codelineno-6-18"></a>    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s2">"calcul/resultat.html"</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">carre</span><span class="o">=</span><span class="n">n</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span>
+<a id="__codelineno-6-17" name="__codelineno-6-17"></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"13 brings bad luck"</span><span class="p">)</span>  <span class="c1"># an "unexpected" error</span>
+<a id="__codelineno-6-18" name="__codelineno-6-18"></a>    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s2">"calc/result.html"</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">square</span><span class="o">=</span><span class="n">n</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
 <ul>
-<li>lines 9–11: the route uses the <strong><em>[entier]</em></strong> converter; the action bears both decorators. Order matters here as well (example 12): decorators are applied from bottom to top, and the route decorator must be the last one applied (the first one written) to register the decorated function;</li>
+<li>lines 9–11: the route uses the <strong><em>[integer]</em></strong> converter; the action bears both decorators. Order matters here as well (example 12): decorators are applied from bottom to top, and the route decorator must be the last one applied (the first one written) to register the decorated function;</li>
 <li>line 15: a parameter that is not an integer: error 400;</li>
 <li>line 17: the number 13 causes an “unexpected” error;</li>
 <li>line 18: the normal case.</li>
@@ -1210,16 +1210,16 @@
 <span class="normal"><a href="#__codelineno-7-13">13</a></span>
 <span class="normal"><a href="#__codelineno-7-14">14</a></span>
 <span class="normal"><a href="#__codelineno-7-15">15</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>{% extends "layout.html" %}
-<a id="__codelineno-7-2" name="__codelineno-7-2"></a>{# the error page; its template: error code #}
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a>{# the error page; its model: the error code #}
 <a id="__codelineno-7-3" name="__codelineno-7-3"></a>
-<a id="__codelineno-7-4" name="__codelineno-7-4"></a>{% block contenu %}
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a>{% block content %}
 <a id="__codelineno-7-5" name="__codelineno-7-5"></a>  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"alert alert-danger"</span><span class="p">&gt;</span>
-<a id="__codelineno-7-6" name="__codelineno-7-6"></a>    <span class="p">&lt;</span><span class="nt">h1</span> <span class="na">class</span><span class="o">=</span><span class="s">"h4"</span><span class="p">&gt;</span>Erreur {{ code }}<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6"></a>    <span class="p">&lt;</span><span class="nt">h1</span> <span class="na">class</span><span class="o">=</span><span class="s">"h4"</span><span class="p">&gt;</span>Error {{ code }}<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
 <a id="__codelineno-7-7" name="__codelineno-7-7"></a>    <span class="p">&lt;</span><span class="nt">p</span> <span class="na">class</span><span class="o">=</span><span class="s">"mb-0"</span><span class="p">&gt;</span>
-<a id="__codelineno-7-8" name="__codelineno-7-8"></a>      {% if code == 400 %}Requête incorrecte.
-<a id="__codelineno-7-9" name="__codelineno-7-9"></a>      {% elif code == 403 %}Accès refusé.
-<a id="__codelineno-7-10" name="__codelineno-7-10"></a>      {% elif code == 404 %}Page introuvable.
-<a id="__codelineno-7-11" name="__codelineno-7-11"></a>      {% else %}Erreur interne du serveur.
+<a id="__codelineno-7-8" name="__codelineno-7-8"></a>      {% if code == 400 %}Bad request.
+<a id="__codelineno-7-9" name="__codelineno-7-9"></a>      {% elif code == 403 %}Access denied.
+<a id="__codelineno-7-10" name="__codelineno-7-10"></a>      {% elif code == 404 %}Page not found.
+<a id="__codelineno-7-11" name="__codelineno-7-11"></a>      {% else %}Internal server error.
 <a id="__codelineno-7-12" name="__codelineno-7-12"></a>      {% endif %}
 <a id="__codelineno-7-13" name="__codelineno-7-13"></a>    <span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
 <a id="__codelineno-7-14" name="__codelineno-7-14"></a>  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
@@ -1260,17 +1260,17 @@
 <span class="normal"><a href="#__codelineno-8-31">31</a></span>
 <span class="normal"><a href="#__codelineno-8-32">32</a></span>
 <span class="normal"><a href="#__codelineno-8-33">33</a></span>
-<span class="normal"><a href="#__codelineno-8-34">34</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="c1"># app.py: the application from Example 24</span>
+<span class="normal"><a href="#__codelineno-8-34">34</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="c1"># app.py: the application of example 24</span>
 <a id="__codelineno-8-2" name="__codelineno-8-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 <a id="__codelineno-8-3" name="__codelineno-8-3"></a>
 <a id="__codelineno-8-4" name="__codelineno-8-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">flask</span><span class="w"> </span><span class="kn">import</span> <span class="n">Blueprint</span><span class="p">,</span> <span class="n">Flask</span>
 <a id="__codelineno-8-5" name="__codelineno-8-5"></a>
-<a id="__codelineno-8-6" name="__codelineno-8-6"></a><span class="kn">from</span><span class="w"> </span><span class="nn">controllers.calcul</span><span class="w"> </span><span class="kn">import</span> <span class="n">calcul</span>
-<a id="__codelineno-8-7" name="__codelineno-8-7"></a><span class="kn">from</span><span class="w"> </span><span class="nn">filtres</span><span class="w"> </span><span class="kn">import</span> <span class="n">crochets</span><span class="p">,</span> <span class="n">erreurs</span>
-<a id="__codelineno-8-8" name="__codelineno-8-8"></a><span class="kn">from</span><span class="w"> </span><span class="nn">filtres.entier</span><span class="w"> </span><span class="kn">import</span> <span class="n">EntierConverter</span>
-<a id="__codelineno-8-9" name="__codelineno-8-9"></a><span class="kn">from</span><span class="w"> </span><span class="nn">filtres.journal</span><span class="w"> </span><span class="kn">import</span> <span class="n">JournalMiddleware</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6"></a><span class="kn">from</span><span class="w"> </span><span class="nn">controllers.calc</span><span class="w"> </span><span class="kn">import</span> <span class="n">calc</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7"></a><span class="kn">from</span><span class="w"> </span><span class="nn">filters</span><span class="w"> </span><span class="kn">import</span> <span class="n">hooks</span><span class="p">,</span> <span class="n">errors</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8"></a><span class="kn">from</span><span class="w"> </span><span class="nn">filters.integer</span><span class="w"> </span><span class="kn">import</span> <span class="n">IntegerConverter</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9"></a><span class="kn">from</span><span class="w"> </span><span class="nn">filters.logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">LoggerMiddleware</span>
 <a id="__codelineno-8-10" name="__codelineno-8-10"></a>
-<a id="__codelineno-8-11" name="__codelineno-8-11"></a><span class="n">BOOTSTRAP</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">"commun"</span> <span class="o">/</span> <span class="s2">"bootstrap"</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11"></a><span class="n">BOOTSTRAP</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">"common"</span> <span class="o">/</span> <span class="s2">"bootstrap"</span>
 <a id="__codelineno-8-12" name="__codelineno-8-12"></a>
 <a id="__codelineno-8-13" name="__codelineno-8-13"></a>
 <a id="__codelineno-8-14" name="__codelineno-8-14"></a><span class="k">def</span><span class="w"> </span><span class="nf">create_app</span><span class="p">():</span>
@@ -1279,16 +1279,16 @@
 <a id="__codelineno-8-17" name="__codelineno-8-17"></a>    <span class="n">app</span><span class="o">.</span><span class="n">jinja_env</span><span class="o">.</span><span class="n">lstrip_blocks</span> <span class="o">=</span> <span class="kc">True</span>
 <a id="__codelineno-8-18" name="__codelineno-8-18"></a>    <span class="n">app</span><span class="o">.</span><span class="n">register_blueprint</span><span class="p">(</span><span class="n">Blueprint</span><span class="p">(</span><span class="s2">"bootstrap"</span><span class="p">,</span> <span class="vm">__name__</span><span class="p">,</span> <span class="n">static_folder</span><span class="o">=</span><span class="n">BOOTSTRAP</span><span class="p">,</span>
 <a id="__codelineno-8-19" name="__codelineno-8-19"></a>                                     <span class="n">static_url_path</span><span class="o">=</span><span class="s2">"/bootstrap"</span><span class="p">))</span>
-<a id="__codelineno-8-20" name="__codelineno-8-20"></a>     <span class="c1"># the &lt;integer:...&gt; variable converter</span>
-<a id="__codelineno-8-21" name="__codelineno-8-21"></a>    <span class="n">app</span><span class="o">.</span><span class="n">url_map</span><span class="o">.</span><span class="n">converters</span><span class="p">[</span><span class="s2">"entier"</span><span class="p">]</span> <span class="o">=</span> <span class="n">EntierConverter</span>
-<a id="__codelineno-8-22" name="__codelineno-8-22"></a>    <span class="n">app</span><span class="o">.</span><span class="n">register_blueprint</span><span class="p">(</span><span class="n">calcul</span><span class="p">)</span>
-<a id="__codelineno-8-23" name="__codelineno-8-23"></a>     <span class="c1"># the functions executed before and after each action, in order</span>
-<a id="__codelineno-8-24" name="__codelineno-8-24"></a>     <span class="c1"># where they are stored</span>
-<a id="__codelineno-8-25" name="__codelineno-8-25"></a>    <span class="n">crochets</span><span class="o">.</span><span class="n">enregistrer</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
-<a id="__codelineno-8-26" name="__codelineno-8-26"></a>     <span class="c1"># error handlers</span>
-<a id="__codelineno-8-27" name="__codelineno-8-27"></a>    <span class="n">erreurs</span><span class="o">.</span><span class="n">enregistrer</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
-<a id="__codelineno-8-28" name="__codelineno-8-28"></a>     <span class="c1"># the WSGI middleware: it ENVELOPPE the entire Flask application</span>
-<a id="__codelineno-8-29" name="__codelineno-8-29"></a>    <span class="n">app</span><span class="o">.</span><span class="n">wsgi_app</span> <span class="o">=</span> <span class="n">JournalMiddleware</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">wsgi_app</span><span class="p">)</span>
+<a id="__codelineno-8-20" name="__codelineno-8-20"></a>    <span class="c1"># the converter of the &lt;integer:...&gt; variables</span>
+<a id="__codelineno-8-21" name="__codelineno-8-21"></a>    <span class="n">app</span><span class="o">.</span><span class="n">url_map</span><span class="o">.</span><span class="n">converters</span><span class="p">[</span><span class="s2">"integer"</span><span class="p">]</span> <span class="o">=</span> <span class="n">IntegerConverter</span>
+<a id="__codelineno-8-22" name="__codelineno-8-22"></a>    <span class="n">app</span><span class="o">.</span><span class="n">register_blueprint</span><span class="p">(</span><span class="n">calc</span><span class="p">)</span>
+<a id="__codelineno-8-23" name="__codelineno-8-23"></a>    <span class="c1"># the functions executed before and after each action, in the order</span>
+<a id="__codelineno-8-24" name="__codelineno-8-24"></a>    <span class="c1"># in which they are registered</span>
+<a id="__codelineno-8-25" name="__codelineno-8-25"></a>    <span class="n">hooks</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+<a id="__codelineno-8-26" name="__codelineno-8-26"></a>    <span class="c1"># the error handlers</span>
+<a id="__codelineno-8-27" name="__codelineno-8-27"></a>    <span class="n">errors</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+<a id="__codelineno-8-28" name="__codelineno-8-28"></a>    <span class="c1"># the WSGI middleware: it WRAPS the whole Flask application</span>
+<a id="__codelineno-8-29" name="__codelineno-8-29"></a>    <span class="n">app</span><span class="o">.</span><span class="n">wsgi_app</span> <span class="o">=</span> <span class="n">LoggerMiddleware</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">wsgi_app</span><span class="p">)</span>
 <a id="__codelineno-8-30" name="__codelineno-8-30"></a>    <span class="k">return</span> <span class="n">app</span>
 <a id="__codelineno-8-31" name="__codelineno-8-31"></a>
 <a id="__codelineno-8-32" name="__codelineno-8-32"></a>
@@ -1301,7 +1301,7 @@
 <li>line 29: the middleware. <strong><em>[app.wsgi_app]</em></strong> is the method by which the server calls the <em>[Flask]</em> application; it is replaced by the middleware, which will call the old one. We wrap <strong><em>[app.wsgi_app]</em></strong> rather than <strong><em>[app]</em></strong> itself so that the variable <strong><em>[app]</em></strong> remains the object <em>[Flask]</em>, with its methods (<strong><em>[run]</em></strong>, <strong><em>[route]</em></strong>...).</li>
 </ul>
 <h3 id="718-execution">7.1.8. <span style="color: #1f4d78">Execution</span></h3>
-<p>The normal case, <strong><em>[/carre/7]</em></strong>:</p>
+<p>The normal case, <strong><em>[/square/7]</em></strong>:</p>
 <p><img src="images/10000000000002BE0000006DD7CE2EE0.png" width="428" height="66" style="width:11.322cm;height:1.759cm;" alt="Image" class="odt-zoomable" data-zoom-src="images/10000000000002BE0000006DD7CE2EE0.png" /></p>
 <p>The server console displays the eight steps, in order:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1"> 1</a></span>
@@ -1313,18 +1313,18 @@
 <span class="normal"><a href="#__codelineno-9-7"> 7</a></span>
 <span class="normal"><a href="#__codelineno-9-8"> 8</a></span>
 <span class="normal"><a href="#__codelineno-9-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-9-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a>--- GET /carre/7
-<a id="__codelineno-9-2" name="__codelineno-9-2"></a>1. middleware (avant)
-<a id="__codelineno-9-3" name="__codelineno-9-3"></a>2. conversion du paramètre (valeur reçue : "7")
-<a id="__codelineno-9-4" name="__codelineno-9-4"></a>3. before_request Bloquer (action visée : calcul.carre)
-<a id="__codelineno-9-5" name="__codelineno-9-5"></a>4. before_request Chrono (avant)
-<a id="__codelineno-9-6" name="__codelineno-9-6"></a>5. action carre(7)
-<a id="__codelineno-9-7" name="__codelineno-9-7"></a>6. after_request Chrono (code 200)
-<a id="__codelineno-9-8" name="__codelineno-9-8"></a>7. teardown_request Chrono (fin, 1 ms)
-<a id="__codelineno-9-9" name="__codelineno-9-9"></a>8. middleware (après : code 200 OK)
-<a id="__codelineno-9-10" name="__codelineno-9-10"></a>127.0.0.1 - - [26/Sep/2026 15:39:00] "GET /carre/7 HTTP/1.1" 200 -
+<span class="normal"><a href="#__codelineno-9-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a>--- GET /square/7
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a>1. middleware (before)
+<a id="__codelineno-9-3" name="__codelineno-9-3"></a>2. conversion of the parameter (received value: "7")
+<a id="__codelineno-9-4" name="__codelineno-9-4"></a>3. before_request Block (targeted action: calc.square)
+<a id="__codelineno-9-5" name="__codelineno-9-5"></a>4. before_request Timing (before)
+<a id="__codelineno-9-6" name="__codelineno-9-6"></a>5. action square(7)
+<a id="__codelineno-9-7" name="__codelineno-9-7"></a>6. after_request Timing (code 200)
+<a id="__codelineno-9-8" name="__codelineno-9-8"></a>7. teardown_request Timing (end, 1 ms)
+<a id="__codelineno-9-9" name="__codelineno-9-9"></a>8. middleware (after: code 200 OK)
+<a id="__codelineno-9-10" name="__codelineno-9-10"></a>127.0.0.1 - - [26/Sep/2026 15:39:00] "GET /square/7 HTTP/1.1" 200 -
 </code></pre></div></td></tr></table></div>
-<p>The last line is the development server log entry for <em>[Werkzeug]</em>, written after the response was sent. A blocked access, <strong><em>[/carre/7?bloquer]</em></strong>:</p>
+<p>The last line is the development server log entry for <em>[Werkzeug]</em>, written after the response was sent. A blocked access, <strong><em>[/square/7?block]</em></strong>:</p>
 <p><img src="images/10000000000002BE000000B7E0E42CBB.png" width="428" height="112" style="width:11.322cm;height:2.953cm;" alt="Image" class="odt-zoomable" data-zoom-src="images/10000000000002BE000000B7E0E42CBB.png" /></p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span>
 <span class="normal"><a href="#__codelineno-10-2">2</a></span>
@@ -1332,15 +1332,15 @@
 <span class="normal"><a href="#__codelineno-10-4">4</a></span>
 <span class="normal"><a href="#__codelineno-10-5">5</a></span>
 <span class="normal"><a href="#__codelineno-10-6">6</a></span>
-<span class="normal"><a href="#__codelineno-10-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a>--- GET /carre/7?bloquer
-<a id="__codelineno-10-2" name="__codelineno-10-2"></a>1. middleware (avant)
-<a id="__codelineno-10-3" name="__codelineno-10-3"></a>2. conversion du paramètre (valeur reçue : "7")
-<a id="__codelineno-10-4" name="__codelineno-10-4"></a>3. before_request Bloquer (action visée : calcul.carre)
+<span class="normal"><a href="#__codelineno-10-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a>--- GET /square/7?block
+<a id="__codelineno-10-2" name="__codelineno-10-2"></a>1. middleware (before)
+<a id="__codelineno-10-3" name="__codelineno-10-3"></a>2. conversion of the parameter (received value: "7")
+<a id="__codelineno-10-4" name="__codelineno-10-4"></a>3. before_request Block (targeted action: calc.square)
 <a id="__codelineno-10-5" name="__codelineno-10-5"></a>e. errorhandler HTTPException (code 403)
-<a id="__codelineno-10-6" name="__codelineno-10-6"></a>6. after_request Chrono (code 403)
-<a id="__codelineno-10-7" name="__codelineno-10-7"></a>8. middleware (après : code 403 FORBIDDEN)
+<a id="__codelineno-10-6" name="__codelineno-10-6"></a>6. after_request Timing (code 403)
+<a id="__codelineno-10-7" name="__codelineno-10-7"></a>8. middleware (after: code 403 FORBIDDEN)
 </code></pre></div></td></tr></table></div>
-<p>The first call raised an exception: the second call and the action were not executed. The error response, generated by the handler, passes through <strong><em>[after_request]</em></strong>; <strong><em>[teardown_request]</em></strong> was called but did not display anything, as the operation did not begin. A parameter that is not an integer, <strong><em>[/carre/abc]</em></strong>:</p>
+<p>The first call raised an exception: the second call and the action were not executed. The error response, generated by the handler, passes through <strong><em>[after_request]</em></strong>; <strong><em>[teardown_request]</em></strong> was called but did not display anything, as the operation did not begin. A parameter that is not an integer, <strong><em>[/square/abc]</em></strong>:</p>
 <p><img src="images/10000000000002BE000000B713AD3FBA.png" width="428" height="112" style="width:11.322cm;height:2.953cm;" alt="Image" class="odt-zoomable" data-zoom-src="images/10000000000002BE000000B713AD3FBA.png" /></p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-11-2"> 2</a></span>
@@ -1351,18 +1351,18 @@
 <span class="normal"><a href="#__codelineno-11-7"> 7</a></span>
 <span class="normal"><a href="#__codelineno-11-8"> 8</a></span>
 <span class="normal"><a href="#__codelineno-11-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-11-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a>--- GET /carre/abc
-<a id="__codelineno-11-2" name="__codelineno-11-2"></a>1. middleware (avant)
-<a id="__codelineno-11-3" name="__codelineno-11-3"></a>2. conversion du paramètre (valeur reçue : "abc")
-<a id="__codelineno-11-4" name="__codelineno-11-4"></a>3. before_request Bloquer (action visée : calcul.carre)
-<a id="__codelineno-11-5" name="__codelineno-11-5"></a>4. before_request Chrono (avant)
-<a id="__codelineno-11-6" name="__codelineno-11-6"></a>5. action carre(None)
+<span class="normal"><a href="#__codelineno-11-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a>--- GET /square/abc
+<a id="__codelineno-11-2" name="__codelineno-11-2"></a>1. middleware (before)
+<a id="__codelineno-11-3" name="__codelineno-11-3"></a>2. conversion of the parameter (received value: "abc")
+<a id="__codelineno-11-4" name="__codelineno-11-4"></a>3. before_request Block (targeted action: calc.square)
+<a id="__codelineno-11-5" name="__codelineno-11-5"></a>4. before_request Timing (before)
+<a id="__codelineno-11-6" name="__codelineno-11-6"></a>5. action square(None)
 <a id="__codelineno-11-7" name="__codelineno-11-7"></a>e. errorhandler HTTPException (code 400)
-<a id="__codelineno-11-8" name="__codelineno-11-8"></a>6. after_request Chrono (code 400)
-<a id="__codelineno-11-9" name="__codelineno-11-9"></a>7. teardown_request Chrono (fin, 0 ms)
-<a id="__codelineno-11-10" name="__codelineno-11-10"></a>8. middleware (après : code 400 BAD REQUEST)
+<a id="__codelineno-11-8" name="__codelineno-11-8"></a>6. after_request Timing (code 400)
+<a id="__codelineno-11-9" name="__codelineno-11-9"></a>7. teardown_request Timing (end, 0 ms)
+<a id="__codelineno-11-10" name="__codelineno-11-10"></a>8. middleware (after: code 400 BAD REQUEST)
 </code></pre></div></td></tr></table></div>
-<p>This time, the action was called—<strong><em>[None]</em></strong>—and it raised error 400. An “unexpected” error, <strong><em>[/carre/13]</em></strong>:</p>
+<p>This time, the action was called—<strong><em>[None]</em></strong>—and it raised error 400. An “unexpected” error, <strong><em>[/square/13]</em></strong>:</p>
 <p><img src="images/10000000000002BE000000B71A1427BF.png" width="428" height="112" style="width:11.322cm;height:2.953cm;" alt="Image" class="odt-zoomable" data-zoom-src="images/10000000000002BE000000B71A1427BF.png" /></p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-12-2"> 2</a></span>
@@ -1373,25 +1373,25 @@
 <span class="normal"><a href="#__codelineno-12-7"> 7</a></span>
 <span class="normal"><a href="#__codelineno-12-8"> 8</a></span>
 <span class="normal"><a href="#__codelineno-12-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-12-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a>--- GET /carre/13
-<a id="__codelineno-12-2" name="__codelineno-12-2"></a>1. middleware (avant)
-<a id="__codelineno-12-3" name="__codelineno-12-3"></a>2. conversion du paramètre (valeur reçue : "13")
-<a id="__codelineno-12-4" name="__codelineno-12-4"></a>3. before_request Bloquer (action visée : calcul.carre)
-<a id="__codelineno-12-5" name="__codelineno-12-5"></a>4. before_request Chrono (avant)
-<a id="__codelineno-12-6" name="__codelineno-12-6"></a>5. action carre(13)
-<a id="__codelineno-12-7" name="__codelineno-12-7"></a>x. errorhandler ValueError (13 porte malheur)
-<a id="__codelineno-12-8" name="__codelineno-12-8"></a>6. after_request Chrono (code 500)
-<a id="__codelineno-12-9" name="__codelineno-12-9"></a>7. teardown_request Chrono (fin, 0 ms)
-<a id="__codelineno-12-10" name="__codelineno-12-10"></a>8. middleware (après : code 500 INTERNAL SERVER ERROR)
+<span class="normal"><a href="#__codelineno-12-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a>--- GET /square/13
+<a id="__codelineno-12-2" name="__codelineno-12-2"></a>1. middleware (before)
+<a id="__codelineno-12-3" name="__codelineno-12-3"></a>2. conversion of the parameter (received value: "13")
+<a id="__codelineno-12-4" name="__codelineno-12-4"></a>3. before_request Block (targeted action: calc.square)
+<a id="__codelineno-12-5" name="__codelineno-12-5"></a>4. before_request Timing (before)
+<a id="__codelineno-12-6" name="__codelineno-12-6"></a>5. action square(13)
+<a id="__codelineno-12-7" name="__codelineno-12-7"></a>x. errorhandler ValueError (13 brings bad luck)
+<a id="__codelineno-12-8" name="__codelineno-12-8"></a>6. after_request Timing (code 500)
+<a id="__codelineno-12-9" name="__codelineno-12-9"></a>7. teardown_request Timing (end, 0 ms)
+<a id="__codelineno-12-10" name="__codelineno-12-10"></a>8. middleware (after: code 500 INTERNAL SERVER ERROR)
 </code></pre></div></td></tr></table></div>
-<p>The exception was handled by its handler: the user sees the “custom” error page, not the debug page, even though debug mode is enabled. Finally, a URL that does not correspond to any route, <strong><em>[/inconnu]</em></strong>:</p>
+<p>The exception was handled by its handler: the user sees the “custom” error page, not the debug page, even though debug mode is enabled. Finally, a URL that does not correspond to any route, <strong><em>[/unknown]</em></strong>:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span>
 <span class="normal"><a href="#__codelineno-13-2">2</a></span>
 <span class="normal"><a href="#__codelineno-13-3">3</a></span>
-<span class="normal"><a href="#__codelineno-13-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a>--- GET /inconnu
-<a id="__codelineno-13-2" name="__codelineno-13-2"></a>1. middleware (avant)
+<span class="normal"><a href="#__codelineno-13-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a>--- GET /unknown
+<a id="__codelineno-13-2" name="__codelineno-13-2"></a>1. middleware (before)
 <a id="__codelineno-13-3" name="__codelineno-13-3"></a>e. errorhandler HTTPException (code 404)
-<a id="__codelineno-13-4" name="__codelineno-13-4"></a>8. middleware (après : code 404 NOT FOUND)
+<a id="__codelineno-13-4" name="__codelineno-13-4"></a>8. middleware (after: code 404 NOT FOUND)
 </code></pre></div></td></tr></table></div>
 <p>Routing failed: no route, no converter, no action. The callbacks were executed, but nothing was displayed because they could not find a target action. The 404 page is ours:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a>curl -i http://localhost:5000/unknown
@@ -1408,12 +1408,12 @@
 <span class="normal"><a href="#__codelineno-15-10">10</a></span>
 <span class="normal"><a href="#__codelineno-15-11">11</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a>HTTP/1.1 404 NOT FOUND
 <a id="__codelineno-15-2" name="__codelineno-15-2"></a>Content-Type: text/html; charset=utf-8
-<a id="__codelineno-15-3" name="__codelineno-15-3"></a>Content-Length: 381
+<a id="__codelineno-15-3" name="__codelineno-15-3"></a>Content-Length: 375
 <a id="__codelineno-15-4" name="__codelineno-15-4"></a>...
 <a id="__codelineno-15-5" name="__codelineno-15-5"></a>  &lt;div class="alert alert-danger"&gt;
-<a id="__codelineno-15-6" name="__codelineno-15-6"></a>    &lt;h1 class="h4"&gt;Erreur 404&lt;/h1&gt;
+<a id="__codelineno-15-6" name="__codelineno-15-6"></a>    &lt;h1 class="h4"&gt;Error 404&lt;/h1&gt;
 <a id="__codelineno-15-7" name="__codelineno-15-7"></a>    &lt;p class="mb-0"&gt;
-<a id="__codelineno-15-8" name="__codelineno-15-8"></a>Page introuvable.
+<a id="__codelineno-15-8" name="__codelineno-15-8"></a>Page not found.
 <a id="__codelineno-15-9" name="__codelineno-15-9"></a>    &lt;/p&gt;
 <a id="__codelineno-15-10" name="__codelineno-15-10"></a>  &lt;/div&gt;
 <a id="__codelineno-15-11" name="__codelineno-15-11"></a>...

@@ -496,10 +496,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#512-the-translation-service-translationtraducteurpy" class="md-nav__link">
+  <a href="#512-the-translation-service-translationtranslatorpy" class="md-nav__link">
     <span class="md-ellipsis">
       
-        5.1.2. The translation service: translation/traducteur.py
+        5.1.2. The translation service: translation/translator.py
       
     </span>
   </a>
@@ -529,10 +529,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#515-language-selection-controllerslanguepy" class="md-nav__link">
+  <a href="#515-language-selection-controllerslanguagepy" class="md-nav__link">
     <span class="md-ellipsis">
       
-        5.1.5. Language selection: controllers/langue.py
+        5.1.5. Language selection: controllers/language.py
       
     </span>
   </a>
@@ -819,7 +819,7 @@
 
 
 <h1 id="5-internationalization">5. <span style="color: #2e74b5">Internationalization</span></h1>
-<p>An internationalized application displays its text in the user&#x27;s language. The case study is in French and English. The principle is simple: the views no longer contain text, but rather <strong>keys</strong> (<strong><em>[MENU.ACCUEIL]</em></strong>), and a <strong>dictionary</strong> for each language associates a text with each key. The selected language is stored in a cookie.</p>
+<p>An internationalized application displays its text in the user&#x27;s language. The case study is in French and English. The principle is simple: the views no longer contain text, but rather <strong>keys</strong> (<strong><em>[MENU.HOME]</em></strong>), and a <strong>dictionary</strong> for each language associates a text with each key. The selected language is stored in a cookie.</p>
 <p>The <em>[Flask]</em> ecosystem offers an extension for this purpose, <em>[Flask-Babel]</em>, which relies on the standard translation system <strong><em>[gettext]</em></strong>: texts are extracted from the code by a tool, translated into <strong><em>[.po]</em></strong> files, and then compiled into <strong><em>[.mo]</em></strong> files. It is a powerful system, but it requires specific tools and a compilation step. Instead, we’ll write a small class that reads JSON dictionaries: These are the same files as the <em>[ASP.NET Core MVC]</em>, <em>[NestJS],</em> and <em>[Spring MVC]</em> versions from the case study, and their format can be read and written without any special tools. The <em>[Babel]</em> library, on the other hand, is still used for formatting dates and amounts (Example 16).</p>
 <h2 id="51-example-22-a-bilingual-application">5.1. <span style="color: #2e74b5">Example 22: A Bilingual Application</span></h2>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
@@ -844,7 +844,7 @@
 <span class="normal"><a href="#__codelineno-0-20">20</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>22-i18n/
 <a id="__codelineno-0-2" name="__codelineno-0-2"></a>├── app.py
 <a id="__codelineno-0-3" name="__codelineno-0-3"></a>├── controllers/
-<a id="__codelineno-0-4" name="__codelineno-0-4"></a>│   ├── langue.py
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>│   ├── language.py
 <a id="__codelineno-0-5" name="__codelineno-0-5"></a>│   └── pages.py
 <a id="__codelineno-0-6" name="__codelineno-0-6"></a>├── i18n/
 <a id="__codelineno-0-7" name="__codelineno-0-7"></a>│   ├── en.json
@@ -856,11 +856,11 @@
 <a id="__codelineno-0-13" name="__codelineno-0-13"></a>│   │   └── navbar.html
 <a id="__codelineno-0-14" name="__codelineno-0-14"></a>│   ├── layout.html
 <a id="__codelineno-0-15" name="__codelineno-0-15"></a>│   └── pages/
-<a id="__codelineno-0-16" name="__codelineno-0-16"></a>│       ├── accueil.html
-<a id="__codelineno-0-17" name="__codelineno-0-17"></a>│       └── produits.html
-<a id="__codelineno-0-18" name="__codelineno-0-18"></a>└── traduction/
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a>│       ├── home.html
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a>│       └── products.html
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a>└── translation/
 <a id="__codelineno-0-19" name="__codelineno-0-19"></a>    ├── formats.py
-<a id="__codelineno-0-20" name="__codelineno-0-20"></a>    └── traducteur.py
+<a id="__codelineno-0-20" name="__codelineno-0-20"></a>    └── translator.py
 </code></pre></div></td></tr></table></div>
 <h3 id="511-dictionaries">5.1.1. <span style="color: #1f4d78">Dictionaries</span></h3>
 <p>The <strong><em>[i18n/fr.json]</em></strong> file:</p>
@@ -882,23 +882,23 @@
 <span class="normal"><a href="#__codelineno-1-16">16</a></span>
 <span class="normal"><a href="#__codelineno-1-17">17</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="p">{</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="w">  </span><span class="nt">"MENU"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="w">    </span><span class="nt">"ACCUEIL"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Accueil"</span><span class="p">,</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="w">    </span><span class="nt">"PRODUITS"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Produits"</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="w">    </span><span class="nt">"HOME"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Accueil"</span><span class="p">,</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="w">    </span><span class="nt">"PRODUCTS"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Produits"</span>
 <a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="w">  </span><span class="p">},</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="w">  </span><span class="nt">"ACCUEIL"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="w">    </span><span class="nt">"TITRE"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bienvenue"</span><span class="p">,</span>
-<a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="w">    </span><span class="nt">"BONJOUR"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bonjour {nom} !"</span><span class="p">,</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="w">  </span><span class="nt">"HOME"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="w">    </span><span class="nt">"TITLE"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bienvenue"</span><span class="p">,</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="w">    </span><span class="nt">"HELLO"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bonjour {name} !"</span><span class="p">,</span>
 <a id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="w">    </span><span class="nt">"DATE"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Nous sommes le {date}."</span>
 <a id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="w">  </span><span class="p">},</span>
-<a id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="w">  </span><span class="nt">"PRODUITS"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="w">    </span><span class="nt">"TITRE"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Nos produits"</span><span class="p">,</span>
-<a id="__codelineno-1-13" name="__codelineno-1-13"></a><span class="w">    </span><span class="nt">"NOM"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Produit"</span><span class="p">,</span>
-<a id="__codelineno-1-14" name="__codelineno-1-14"></a><span class="w">    </span><span class="nt">"PRIX"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Prix"</span><span class="p">,</span>
-<a id="__codelineno-1-15" name="__codelineno-1-15"></a><span class="w">    </span><span class="nt">"NOMBRE"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{n} produit(s) au catalogue."</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="w">  </span><span class="nt">"PRODUCTS"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="w">    </span><span class="nt">"TITLE"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Nos produits"</span><span class="p">,</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13"></a><span class="w">    </span><span class="nt">"NAME"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Produit"</span><span class="p">,</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14"></a><span class="w">    </span><span class="nt">"PRICE"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Prix"</span><span class="p">,</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15"></a><span class="w">    </span><span class="nt">"COUNT"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{n} produit(s) au catalogue."</span>
 <a id="__codelineno-1-16" name="__codelineno-1-16"></a><span class="w">  </span><span class="p">}</span>
 <a id="__codelineno-1-17" name="__codelineno-1-17"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
-<p>The keys are grouped by theme within nested JSON objects: the menu text “Home” has the full key <strong><em>[MENU.ACCUEIL]</em></strong>. A text string may contain <strong>placeholders</strong>, written as <strong><em>[{nom}]</em></strong>, which are replaced during translation. The file <strong><em>[i18n/en.json]</em></strong> has exactly the same keys:</p>
+<p>The keys are grouped by theme within nested JSON objects: the menu text “Home” has the full key <strong><em>[MENU.HOME]</em></strong>. A text string may contain <strong>placeholders</strong>, written as <strong><em>[{name}]</em></strong>, which are replaced during translation. The file <strong><em>[i18n/en.json]</em></strong> has exactly the same keys:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
@@ -917,23 +917,23 @@
 <span class="normal"><a href="#__codelineno-2-16">16</a></span>
 <span class="normal"><a href="#__codelineno-2-17">17</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="p">{</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="w">  </span><span class="nt">"MENU"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="w">    </span><span class="nt">"ACCUEIL"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Home"</span><span class="p">,</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">    </span><span class="nt">"PRODUITS"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Products"</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="w">    </span><span class="nt">"HOME"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Home"</span><span class="p">,</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">    </span><span class="nt">"PRODUCTS"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Products"</span>
 <a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="w">  </span><span class="p">},</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="w">  </span><span class="nt">"ACCUEIL"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="w">    </span><span class="nt">"TITRE"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Welcome"</span><span class="p">,</span>
-<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="w">    </span><span class="nt">"BONJOUR"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hello {nom}!"</span><span class="p">,</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="w">  </span><span class="nt">"HOME"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="w">    </span><span class="nt">"TITLE"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Welcome"</span><span class="p">,</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="w">    </span><span class="nt">"HELLO"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hello {name}!"</span><span class="p">,</span>
 <a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="w">    </span><span class="nt">"DATE"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Today is {date}."</span>
 <a id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="w">  </span><span class="p">},</span>
-<a id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="w">  </span><span class="nt">"PRODUITS"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-2-12" name="__codelineno-2-12"></a><span class="w">    </span><span class="nt">"TITRE"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Our products"</span><span class="p">,</span>
-<a id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="w">    </span><span class="nt">"NOM"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Product"</span><span class="p">,</span>
-<a id="__codelineno-2-14" name="__codelineno-2-14"></a><span class="w">    </span><span class="nt">"PRIX"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Price"</span><span class="p">,</span>
-<a id="__codelineno-2-15" name="__codelineno-2-15"></a><span class="w">    </span><span class="nt">"NOMBRE"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{n} product(s) in the catalogue."</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="w">  </span><span class="nt">"PRODUCTS"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12"></a><span class="w">    </span><span class="nt">"TITLE"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Our products"</span><span class="p">,</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="w">    </span><span class="nt">"NAME"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Product"</span><span class="p">,</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14"></a><span class="w">    </span><span class="nt">"PRICE"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Price"</span><span class="p">,</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15"></a><span class="w">    </span><span class="nt">"COUNT"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{n} product(s) in the catalogue."</span>
 <a id="__codelineno-2-16" name="__codelineno-2-16"></a><span class="w">  </span><span class="p">}</span>
 <a id="__codelineno-2-17" name="__codelineno-2-17"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
-<h3 id="512-the-translation-service-translationtraducteurpy">5.1.2. <span style="color: #1f4d78">The translation service: translation/traducteur.py</span></h3>
+<h3 id="512-the-translation-service-translationtranslatorpy">5.1.2. <span style="color: #1f4d78">The translation service: translation/translator.py</span></h3>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
@@ -981,7 +981,7 @@
 <span class="normal"><a href="#__codelineno-3-45">45</a></span>
 <span class="normal"><a href="#__codelineno-3-46">46</a></span>
 <span class="normal"><a href="#__codelineno-3-47">47</a></span>
-<span class="normal"><a href="#__codelineno-3-48">48</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="c1"># translation/traducteur.py: the translation service</span>
+<span class="normal"><a href="#__codelineno-3-48">48</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="c1"># translation/translator.py: the translation service</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
 <a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
 <a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
@@ -989,54 +989,54 @@
 <a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="kn">from</span><span class="w"> </span><span class="nn">flask</span><span class="w"> </span><span class="kn">import</span> <span class="n">g</span>
 <a id="__codelineno-3-7" name="__codelineno-3-7"></a>
 <a id="__codelineno-3-8" name="__codelineno-3-8"></a>
-<a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="k">class</span><span class="w"> </span><span class="nc">Traducteur</span><span class="p">:</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="k">class</span><span class="w"> </span><span class="nc">Translator</span><span class="p">:</span>
 <a id="__codelineno-3-10" name="__codelineno-3-10"></a>
-<a id="__codelineno-3-11" name="__codelineno-3-11"></a>    <span class="n">LANGUES</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"fr"</span><span class="p">,</span> <span class="s2">"en"</span><span class="p">)</span>
-<a id="__codelineno-3-12" name="__codelineno-3-12"></a>    <span class="n">LANGUE_PAR_DEFAUT</span> <span class="o">=</span> <span class="s2">"fr"</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a>    <span class="n">LANGUAGES</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"fr"</span><span class="p">,</span> <span class="s2">"en"</span><span class="p">)</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a>    <span class="n">DEFAULT_LANGUAGE</span> <span class="o">=</span> <span class="s2">"en"</span>
 <a id="__codelineno-3-13" name="__codelineno-3-13"></a>
-<a id="__codelineno-3-14" name="__codelineno-3-14"></a>     <span class="c1"># {name}: a parameter in a text</span>
-<a id="__codelineno-3-15" name="__codelineno-3-15"></a>    <span class="n">PARAMETRE</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">"\{(\w+)\}"</span><span class="p">)</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14"></a>    <span class="c1"># {name}: a parameter in a text</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15"></a>    <span class="n">PARAMETER</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">"\{(\w+)\}"</span><span class="p">)</span>
 <a id="__codelineno-3-16" name="__codelineno-3-16"></a>
-<a id="__codelineno-3-17" name="__codelineno-3-17"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dossier</span><span class="p">:</span> <span class="n">Path</span><span class="p">):</span>
-<a id="__codelineno-3-18" name="__codelineno-3-18"></a>         <span class="c1"># language -&gt; (full key "ACCUEIL.BONJOUR" -&gt; text)</span>
-<a id="__codelineno-3-19" name="__codelineno-3-19"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_dictionnaires</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
-<a id="__codelineno-3-20" name="__codelineno-3-20"></a>        <span class="k">for</span> <span class="n">langue</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">LANGUES</span><span class="p">:</span>
-<a id="__codelineno-3-21" name="__codelineno-3-21"></a>            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">dossier</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">langue</span><span class="si">}</span><span class="s2">.json"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">)</span> <span class="k">as</span> <span class="n">fichier</span><span class="p">:</span>
-<a id="__codelineno-3-22" name="__codelineno-3-22"></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_dictionnaires</span><span class="p">[</span><span class="n">langue</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_aplatir</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fichier</span><span class="p">))</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">folder</span><span class="p">:</span> <span class="n">Path</span><span class="p">):</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18"></a>        <span class="c1"># language -&gt; (full key "HOME.HELLO" -&gt; text)</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_dictionaries</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20"></a>        <span class="k">for</span> <span class="n">language</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">LANGUAGES</span><span class="p">:</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21"></a>            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">folder</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">language</span><span class="si">}</span><span class="s2">.json"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+<a id="__codelineno-3-22" name="__codelineno-3-22"></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_dictionaries</span><span class="p">[</span><span class="n">language</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_flatten</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">))</span>
 <a id="__codelineno-3-23" name="__codelineno-3-23"></a>
-<a id="__codelineno-3-24" name="__codelineno-3-24"></a>     <span class="c1"># the supported language corresponding to [code]: "en" -&gt; "en"; "de" or None -&gt; "fr"</span>
+<a id="__codelineno-3-24" name="__codelineno-3-24"></a>    <span class="c1"># the supported language that matches [code]: "fr" -&gt; "fr"; "de" or None -&gt; "en"</span>
 <a id="__codelineno-3-25" name="__codelineno-3-25"></a>    <span class="nd">@classmethod</span>
-<a id="__codelineno-3-26" name="__codelineno-3-26"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">langue</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">code</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<a id="__codelineno-3-27" name="__codelineno-3-27"></a>        <span class="k">return</span> <span class="n">code</span> <span class="k">if</span> <span class="n">code</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">LANGUES</span> <span class="k">else</span> <span class="bp">cls</span><span class="o">.</span><span class="n">LANGUE_PAR_DEFAUT</span>
+<a id="__codelineno-3-26" name="__codelineno-3-26"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">language</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">code</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<a id="__codelineno-3-27" name="__codelineno-3-27"></a>        <span class="k">return</span> <span class="n">code</span> <span class="k">if</span> <span class="n">code</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">LANGUAGES</span> <span class="k">else</span> <span class="bp">cls</span><span class="o">.</span><span class="n">DEFAULT_LANGUAGE</span>
 <a id="__codelineno-3-28" name="__codelineno-3-28"></a>
-<a id="__codelineno-3-29" name="__codelineno-3-29"></a>     <span class="c1"># translate("ACCUEIL.BONJOUR", name="Marie") -&gt; "Hello Marie!", in the</span>
-<a id="__codelineno-3-30" name="__codelineno-3-30"></a>     <span class="c1"># language of the current request (g.langue, see app.py)</span>
-<a id="__codelineno-3-31" name="__codelineno-3-31"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">traduire</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cle</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">parametres</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<a id="__codelineno-3-32" name="__codelineno-3-32"></a>         <span class="c1"># If a key is missing, the key itself is displayed: an omission is visible on the screen</span>
-<a id="__codelineno-3-33" name="__codelineno-3-33"></a>        <span class="n">texte</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictionnaires</span><span class="p">[</span><span class="n">g</span><span class="o">.</span><span class="n">langue</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cle</span><span class="p">,</span> <span class="n">cle</span><span class="p">)</span>
-<a id="__codelineno-3-34" name="__codelineno-3-34"></a>         <span class="c1"># Each {name} is replaced by the value of the parameter with the same name</span>
-<a id="__codelineno-3-35" name="__codelineno-3-35"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">PARAMETRE</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span>
-<a id="__codelineno-3-36" name="__codelineno-3-36"></a>            <span class="k">lambda</span> <span class="n">m</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">parametres</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">))),</span> <span class="n">texte</span><span class="p">)</span>
+<a id="__codelineno-3-29" name="__codelineno-3-29"></a>    <span class="c1"># translate("HOME.HELLO", name="Marie") -&gt; "Hello Marie!", in the</span>
+<a id="__codelineno-3-30" name="__codelineno-3-30"></a>    <span class="c1"># language of the current request (g.language, see app.py)</span>
+<a id="__codelineno-3-31" name="__codelineno-3-31"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">translate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<a id="__codelineno-3-32" name="__codelineno-3-32"></a>        <span class="c1"># a missing key displays the key itself: an oversight is visible on screen</span>
+<a id="__codelineno-3-33" name="__codelineno-3-33"></a>        <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictionaries</span><span class="p">[</span><span class="n">g</span><span class="o">.</span><span class="n">language</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+<a id="__codelineno-3-34" name="__codelineno-3-34"></a>        <span class="c1"># each {name} is replaced by the value of the parameter of the same name</span>
+<a id="__codelineno-3-35" name="__codelineno-3-35"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">PARAMETER</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span>
+<a id="__codelineno-3-36" name="__codelineno-3-36"></a>            <span class="k">lambda</span> <span class="n">m</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">parameters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">))),</span> <span class="n">text</span><span class="p">)</span>
 <a id="__codelineno-3-37" name="__codelineno-3-37"></a>
-<a id="__codelineno-3-38" name="__codelineno-3-38"></a>     <span class="c1"># { "MENU": { "ACCUEIL": "Home" } } -&gt; { "MENU.ACCUEIL": "Home" }</span>
+<a id="__codelineno-3-38" name="__codelineno-3-38"></a>    <span class="c1"># { "MENU": { "HOME": "Home" } } -&gt; { "MENU.HOME": "Home" }</span>
 <a id="__codelineno-3-39" name="__codelineno-3-39"></a>    <span class="nd">@classmethod</span>
-<a id="__codelineno-3-40" name="__codelineno-3-40"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_aplatir</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">noeud</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">prefixe</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">""</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
-<a id="__codelineno-3-41" name="__codelineno-3-41"></a>        <span class="n">resultat</span> <span class="o">=</span> <span class="p">{}</span>
-<a id="__codelineno-3-42" name="__codelineno-3-42"></a>        <span class="k">for</span> <span class="n">cle</span><span class="p">,</span> <span class="n">valeur</span> <span class="ow">in</span> <span class="n">noeud</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-<a id="__codelineno-3-43" name="__codelineno-3-43"></a>            <span class="n">cle_complete</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">prefixe</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">cle</span><span class="si">}</span><span class="s2">"</span> <span class="k">if</span> <span class="n">prefixe</span> <span class="k">else</span> <span class="n">cle</span>
-<a id="__codelineno-3-44" name="__codelineno-3-44"></a>            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">valeur</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
-<a id="__codelineno-3-45" name="__codelineno-3-45"></a>                <span class="n">resultat</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">_aplatir</span><span class="p">(</span><span class="n">valeur</span><span class="p">,</span> <span class="n">cle_complete</span><span class="p">))</span>
+<a id="__codelineno-3-40" name="__codelineno-3-40"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_flatten</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">""</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<a id="__codelineno-3-41" name="__codelineno-3-41"></a>        <span class="n">result</span> <span class="o">=</span> <span class="p">{}</span>
+<a id="__codelineno-3-42" name="__codelineno-3-42"></a>        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<a id="__codelineno-3-43" name="__codelineno-3-43"></a>            <span class="n">full_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">"</span> <span class="k">if</span> <span class="n">prefix</span> <span class="k">else</span> <span class="n">key</span>
+<a id="__codelineno-3-44" name="__codelineno-3-44"></a>            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+<a id="__codelineno-3-45" name="__codelineno-3-45"></a>                <span class="n">result</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">_flatten</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">full_key</span><span class="p">))</span>
 <a id="__codelineno-3-46" name="__codelineno-3-46"></a>            <span class="k">else</span><span class="p">:</span>
-<a id="__codelineno-3-47" name="__codelineno-3-47"></a>                <span class="n">resultat</span><span class="p">[</span><span class="n">cle_complete</span><span class="p">]</span> <span class="o">=</span> <span class="n">valeur</span>
-<a id="__codelineno-3-48" name="__codelineno-3-48"></a>        <span class="k">return</span> <span class="n">resultat</span>
+<a id="__codelineno-3-47" name="__codelineno-3-47"></a>                <span class="n">result</span><span class="p">[</span><span class="n">full_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+<a id="__codelineno-3-48" name="__codelineno-3-48"></a>        <span class="k">return</span> <span class="n">result</span>
 </code></pre></div></td></tr></table></div>
 <ul>
-<li>lines 11–12: supported languages and the default language—<strong>class attributes</strong> shared by all objects of the class and accessible without an object (<strong><em>[Traducteur.LANGUES]</em></strong>);</li>
+<li>lines 11–12: supported languages and the default language—<strong>class attributes</strong> shared by all objects of the class and accessible without an object (<strong><em>[Translator.LANGUAGES]</em></strong>);</li>
 <li>line 15: the regular expression for a parameter: a curly brace (<strong><em>[\{]</em></strong>, preceded by a <strong><em>[\]</em></strong> because the curly brace has a specific meaning in regular expressions), one or more word characters (<strong><em>[\w+]</em></strong>), and a closing curly brace. The parentheses <strong>capture</strong> the parameter name. <strong><em>[re.compile]</em></strong> parses the expression once and for all;</li>
-<li>lines 17–22: the constructor reads the dictionaries once, when the service is created. <strong><em>[json.load]</em></strong> converts the contents of a JSON file into <em>[Python]</em> objects (nested dictionaries). <strong><em>[with open(...) as fichier]</em></strong> opens the file and ensures it is closed at the end of the block; <strong><em>[encoding=&quot;utf-8&quot;]</em></strong> is essential, because the default encoding depends on the system (under <em>[Windows]</em>, it is not always <em>[UTF-8]</em>);</li>
-<li>Lines 25–27: A <strong>class method</strong> (<strong><em>[@classmethod]</em></strong> decorator) takes the class (<strong><em>[cls]</em></strong>) instead of an object; it is called on the class: <strong><em>[Traducteur.langue(&quot;en&quot;)]</em></strong>. It returns the supported language corresponding to a code, or the default language if the code is unknown or missing;</li>
-<li>lines 31–36: the translation of a key, in the language of the current query, read from <strong><em>[g.langue]</em></strong> (see Example 16). A key missing from the dictionary is displayed as-is: an omission is immediately visible on the screen. The parameters are received as named parameters (<strong><em>[**parametres]</em></strong>); the regular expression method <strong><em>[sub]</em></strong> replaces each parameter found in the text with the result of a function—in this case, an <strong>anonymous function</strong> (<strong><em>[lambda m: ...]</em></strong>)—which receives the match found (<strong><em>[m]</em></strong>): <strong><em>[m.group(1)]</em></strong> is the captured name, <strong><em>[m.group(0)] is</em></strong> the full text <strong><em>[{nom}]</em></strong>, which is retained if the parameter was not provided;</li>
-<li>Lines 40–48: The nested JSON objects are “flattened” into a single dictionary, whose keys are the full keys: <strong><em>[{&quot;MENU&quot;: {&quot;ACCUEIL&quot;: &quot;Accueil&quot;}}]</em></strong> becomes <strong><em>[{&quot;MENU.ACCUEIL&quot;: &quot;Accueil&quot;}]</em></strong>. The method is <strong>recursive</strong>: it calls itself for each nested object, using the current key as a prefix.</li>
+<li>lines 17–22: the constructor reads the dictionaries once, when the service is created. <strong><em>[json.load]</em></strong> converts the contents of a JSON file into <em>[Python]</em> objects (nested dictionaries). <strong><em>[with open(...) as file]</em></strong> opens the file and ensures it is closed at the end of the block; <strong><em>[encoding=&quot;utf-8&quot;]</em></strong> is essential, because the default encoding depends on the system (under <em>[Windows]</em>, it is not always <em>[UTF-8]</em>);</li>
+<li>Lines 25–27: A <strong>class method</strong> (<strong><em>[@classmethod]</em></strong> decorator) takes the class (<strong><em>[cls]</em></strong>) instead of an object; it is called on the class: <strong><em>[Translator.language(&quot;en&quot;)]</em></strong>. It returns the supported language corresponding to a code, or the default language if the code is unknown or missing;</li>
+<li>lines 31–36: the translation of a key, in the language of the current query, read from <strong><em>[g.language]</em></strong> (see Example 16). A key missing from the dictionary is displayed as-is: an omission is immediately visible on the screen. The parameters are received as named parameters (<strong><em>[**parameters]</em></strong>); the regular expression method <strong><em>[sub]</em></strong> replaces each parameter found in the text with the result of a function—in this case, an <strong>anonymous function</strong> (<strong><em>[lambda m: ...]</em></strong>)—which receives the match found (<strong><em>[m]</em></strong>): <strong><em>[m.group(1)]</em></strong> is the captured name, <strong><em>[m.group(0)] is</em></strong> the full text <strong><em>[{name}]</em></strong>, which is retained if the parameter was not provided;</li>
+<li>Lines 40–48: The nested JSON objects are “flattened” into a single dictionary, whose keys are the full keys: <strong><em>[{&quot;MENU&quot;: {&quot;HOME&quot;: &quot;Home&quot;}}]</em></strong> becomes <strong><em>[{&quot;MENU.HOME&quot;: &quot;Home&quot;}]</em></strong>. The method is <strong>recursive</strong>: it calls itself for each nested object, using the current key as a prefix.</li>
 </ul>
 <h3 id="513-format-in-the-query-language-translationformatspy">5.1.3. <span style="color: #1f4d78">Format in the query language: translation/formats.py</span></h3>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
@@ -1055,7 +1055,7 @@
 <span class="normal"><a href="#__codelineno-4-14">14</a></span>
 <span class="normal"><a href="#__codelineno-4-15">15</a></span>
 <span class="normal"><a href="#__codelineno-4-16">16</a></span>
-<span class="normal"><a href="#__codelineno-4-17">17</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="c1"># translation/formats.py: dates and amounts, formatted in the language of the request (see Example 16)</span>
+<span class="normal"><a href="#__codelineno-4-17">17</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="c1"># translation/formats.py: dates and amounts, formatted in the language of the request (see example 16)</span>
 <a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">date</span>
 <a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">decimal</span><span class="w"> </span><span class="kn">import</span> <span class="n">Decimal</span>
 <a id="__codelineno-4-4" name="__codelineno-4-4"></a>
@@ -1064,16 +1064,16 @@
 <a id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="kn">from</span><span class="w"> </span><span class="nn">flask</span><span class="w"> </span><span class="kn">import</span> <span class="n">g</span>
 <a id="__codelineno-4-8" name="__codelineno-4-8"></a>
 <a id="__codelineno-4-9" name="__codelineno-4-9"></a>
-<a id="__codelineno-4-10" name="__codelineno-4-10"></a><span class="c1"># a date written out in full</span>
-<a id="__codelineno-4-11" name="__codelineno-4-11"></a><span class="k">def</span><span class="w"> </span><span class="nf">date_longue</span><span class="p">(</span><span class="n">jour</span><span class="p">:</span> <span class="n">date</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<a id="__codelineno-4-12" name="__codelineno-4-12"></a>    <span class="k">return</span> <span class="n">format_date</span><span class="p">(</span><span class="n">jour</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">"full"</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="n">g</span><span class="o">.</span><span class="n">langue</span><span class="p">)</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10"></a><span class="c1"># a date in full words</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11"></a><span class="k">def</span><span class="w"> </span><span class="nf">long_date</span><span class="p">(</span><span class="n">day</span><span class="p">:</span> <span class="n">date</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12"></a>    <span class="k">return</span> <span class="n">format_date</span><span class="p">(</span><span class="n">day</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">"full"</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="n">g</span><span class="o">.</span><span class="n">language</span><span class="p">)</span>
 <a id="__codelineno-4-13" name="__codelineno-4-13"></a>
 <a id="__codelineno-4-14" name="__codelineno-4-14"></a>
 <a id="__codelineno-4-15" name="__codelineno-4-15"></a><span class="c1"># an amount in euros</span>
-<a id="__codelineno-4-16" name="__codelineno-4-16"></a><span class="k">def</span><span class="w"> </span><span class="nf">monnaie</span><span class="p">(</span><span class="n">montant</span><span class="p">:</span> <span class="n">Decimal</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<a id="__codelineno-4-17" name="__codelineno-4-17"></a>    <span class="k">return</span> <span class="n">format_currency</span><span class="p">(</span><span class="n">montant</span><span class="p">,</span> <span class="s2">"EUR"</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="n">g</span><span class="o">.</span><span class="n">langue</span><span class="p">)</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16"></a><span class="k">def</span><span class="w"> </span><span class="nf">money</span><span class="p">(</span><span class="n">amount</span><span class="p">:</span> <span class="n">Decimal</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17"></a>    <span class="k">return</span> <span class="n">format_currency</span><span class="p">(</span><span class="n">amount</span><span class="p">,</span> <span class="s2">"EUR"</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="n">g</span><span class="o">.</span><span class="n">language</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-<p>The filters in Example 16, which this time use <strong><em>[g.langue]</em></strong>. <em>[Babel]</em> accepts a single language (<strong><em>[fr]</em></strong>, <strong><em>[en]</em></strong>) as well as a language and a country (<strong><em>[fr_FR]</em></strong>); for <strong><em>[en]</em></strong>, it applies U.S. conventions.</p>
+<p>The filters in Example 16, which this time use <strong><em>[g.language]</em></strong>. <em>[Babel]</em> accepts a single language (<strong><em>[fr]</em></strong>, <strong><em>[en]</em></strong>) as well as a language and a country (<strong><em>[fr_FR]</em></strong>); for <strong><em>[en]</em></strong>, it applies U.S. conventions.</p>
 <h3 id="514-configuration-apppy">5.1.4. <span style="color: #1f4d78">Configuration: app.py</span></h3>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
@@ -1114,41 +1114,41 @@
 <span class="normal"><a href="#__codelineno-5-37">37</a></span>
 <span class="normal"><a href="#__codelineno-5-38">38</a></span>
 <span class="normal"><a href="#__codelineno-5-39">39</a></span>
-<span class="normal"><a href="#__codelineno-5-40">40</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="c1"># app.py: the application from Example 22</span>
+<span class="normal"><a href="#__codelineno-5-40">40</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="c1"># app.py: the application of example 22</span>
 <a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 <a id="__codelineno-5-3" name="__codelineno-5-3"></a>
 <a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">flask</span><span class="w"> </span><span class="kn">import</span> <span class="n">Blueprint</span><span class="p">,</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">request</span>
 <a id="__codelineno-5-5" name="__codelineno-5-5"></a>
-<a id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="kn">from</span><span class="w"> </span><span class="nn">controllers.langue</span><span class="w"> </span><span class="kn">import</span> <span class="n">COOKIE_LANGUE</span><span class="p">,</span> <span class="n">langue</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="kn">from</span><span class="w"> </span><span class="nn">controllers.language</span><span class="w"> </span><span class="kn">import</span> <span class="n">LANGUAGE_COOKIE</span><span class="p">,</span> <span class="n">language</span>
 <a id="__codelineno-5-7" name="__codelineno-5-7"></a><span class="kn">from</span><span class="w"> </span><span class="nn">controllers.pages</span><span class="w"> </span><span class="kn">import</span> <span class="n">pages</span>
-<a id="__codelineno-5-8" name="__codelineno-5-8"></a><span class="kn">from</span><span class="w"> </span><span class="nn">traduction</span><span class="w"> </span><span class="kn">import</span> <span class="n">formats</span>
-<a id="__codelineno-5-9" name="__codelineno-5-9"></a><span class="kn">from</span><span class="w"> </span><span class="nn">traduction.traducteur</span><span class="w"> </span><span class="kn">import</span> <span class="n">Traducteur</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8"></a><span class="kn">from</span><span class="w"> </span><span class="nn">translation</span><span class="w"> </span><span class="kn">import</span> <span class="n">formats</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9"></a><span class="kn">from</span><span class="w"> </span><span class="nn">translation.translator</span><span class="w"> </span><span class="kn">import</span> <span class="n">Translator</span>
 <a id="__codelineno-5-10" name="__codelineno-5-10"></a>
-<a id="__codelineno-5-11" name="__codelineno-5-11"></a><span class="c1"># Bootstrap, used across the examples (see Example 15)</span>
-<a id="__codelineno-5-12" name="__codelineno-5-12"></a><span class="n">BOOTSTRAP</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">"commun"</span> <span class="o">/</span> <span class="s2">"bootstrap"</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11"></a><span class="c1"># Bootstrap, shared by the examples (see example 15)</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12"></a><span class="n">BOOTSTRAP</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">"common"</span> <span class="o">/</span> <span class="s2">"bootstrap"</span>
 <a id="__codelineno-5-13" name="__codelineno-5-13"></a>
 <a id="__codelineno-5-14" name="__codelineno-5-14"></a>
 <a id="__codelineno-5-15" name="__codelineno-5-15"></a><span class="k">def</span><span class="w"> </span><span class="nf">create_app</span><span class="p">():</span>
 <a id="__codelineno-5-16" name="__codelineno-5-16"></a>    <span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 <a id="__codelineno-5-17" name="__codelineno-5-17"></a>    <span class="n">app</span><span class="o">.</span><span class="n">jinja_env</span><span class="o">.</span><span class="n">trim_blocks</span> <span class="o">=</span> <span class="kc">True</span>
 <a id="__codelineno-5-18" name="__codelineno-5-18"></a>    <span class="n">app</span><span class="o">.</span><span class="n">jinja_env</span><span class="o">.</span><span class="n">lstrip_blocks</span> <span class="o">=</span> <span class="kc">True</span>
-<a id="__codelineno-5-19" name="__codelineno-5-19"></a>     <span class="c1"># the translation service: the dictionaries, read UNE times at startup</span>
-<a id="__codelineno-5-20" name="__codelineno-5-20"></a>    <span class="n">traducteur</span> <span class="o">=</span> <span class="n">Traducteur</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">root_path</span><span class="p">)</span> <span class="o">/</span> <span class="s2">"i18n"</span><span class="p">)</span>
-<a id="__codelineno-5-21" name="__codelineno-5-21"></a>    <span class="n">app</span><span class="o">.</span><span class="n">extensions</span><span class="p">[</span><span class="s2">"traducteur"</span><span class="p">]</span> <span class="o">=</span> <span class="n">traducteur</span>
+<a id="__codelineno-5-19" name="__codelineno-5-19"></a>    <span class="c1"># the translation service: the dictionaries, read ONCE, at startup</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20"></a>    <span class="n">translator</span> <span class="o">=</span> <span class="n">Translator</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">root_path</span><span class="p">)</span> <span class="o">/</span> <span class="s2">"i18n"</span><span class="p">)</span>
+<a id="__codelineno-5-21" name="__codelineno-5-21"></a>    <span class="n">app</span><span class="o">.</span><span class="n">extensions</span><span class="p">[</span><span class="s2">"translator"</span><span class="p">]</span> <span class="o">=</span> <span class="n">translator</span>
 <a id="__codelineno-5-22" name="__codelineno-5-22"></a>    <span class="n">app</span><span class="o">.</span><span class="n">register_blueprint</span><span class="p">(</span><span class="n">Blueprint</span><span class="p">(</span><span class="s2">"bootstrap"</span><span class="p">,</span> <span class="vm">__name__</span><span class="p">,</span> <span class="n">static_folder</span><span class="o">=</span><span class="n">BOOTSTRAP</span><span class="p">,</span>
 <a id="__codelineno-5-23" name="__codelineno-5-23"></a>                                     <span class="n">static_url_path</span><span class="o">=</span><span class="s2">"/bootstrap"</span><span class="p">))</span>
-<a id="__codelineno-5-24" name="__codelineno-5-24"></a>    <span class="n">app</span><span class="o">.</span><span class="n">register_blueprint</span><span class="p">(</span><span class="n">langue</span><span class="p">)</span>
+<a id="__codelineno-5-24" name="__codelineno-5-24"></a>    <span class="n">app</span><span class="o">.</span><span class="n">register_blueprint</span><span class="p">(</span><span class="n">language</span><span class="p">)</span>
 <a id="__codelineno-5-25" name="__codelineno-5-25"></a>    <span class="n">app</span><span class="o">.</span><span class="n">register_blueprint</span><span class="p">(</span><span class="n">pages</span><span class="p">)</span>
 <a id="__codelineno-5-26" name="__codelineno-5-26"></a>
-<a id="__codelineno-5-27" name="__codelineno-5-27"></a>     <span class="c1"># The language of each request: the language specified in the [langue] cookie, or French otherwise</span>
+<a id="__codelineno-5-27" name="__codelineno-5-27"></a>    <span class="c1"># the language of each request: that of the [language] cookie, English otherwise</span>
 <a id="__codelineno-5-28" name="__codelineno-5-28"></a>    <span class="nd">@app</span><span class="o">.</span><span class="n">before_request</span>
-<a id="__codelineno-5-29" name="__codelineno-5-29"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">fixer_langue</span><span class="p">():</span>
-<a id="__codelineno-5-30" name="__codelineno-5-30"></a>        <span class="n">g</span><span class="o">.</span><span class="n">langue</span> <span class="o">=</span> <span class="n">Traducteur</span><span class="o">.</span><span class="n">langue</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">cookies</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">COOKIE_LANGUE</span><span class="p">))</span>
+<a id="__codelineno-5-29" name="__codelineno-5-29"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">set_language</span><span class="p">():</span>
+<a id="__codelineno-5-30" name="__codelineno-5-30"></a>        <span class="n">g</span><span class="o">.</span><span class="n">language</span> <span class="o">=</span> <span class="n">Translator</span><span class="o">.</span><span class="n">language</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">cookies</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">LANGUAGE_COOKIE</span><span class="p">))</span>
 <a id="__codelineno-5-31" name="__codelineno-5-31"></a>
-<a id="__codelineno-5-32" name="__codelineno-5-32"></a>     <span class="c1"># in views: {{ t('CLE') }}, {{ day | date_longue }}, {{ price | currency }}</span>
-<a id="__codelineno-5-33" name="__codelineno-5-33"></a>    <span class="n">app</span><span class="o">.</span><span class="n">add_template_global</span><span class="p">(</span><span class="n">traducteur</span><span class="o">.</span><span class="n">traduire</span><span class="p">,</span> <span class="s2">"t"</span><span class="p">)</span>
-<a id="__codelineno-5-34" name="__codelineno-5-34"></a>    <span class="n">app</span><span class="o">.</span><span class="n">add_template_filter</span><span class="p">(</span><span class="n">formats</span><span class="o">.</span><span class="n">date_longue</span><span class="p">)</span>
-<a id="__codelineno-5-35" name="__codelineno-5-35"></a>    <span class="n">app</span><span class="o">.</span><span class="n">add_template_filter</span><span class="p">(</span><span class="n">formats</span><span class="o">.</span><span class="n">monnaie</span><span class="p">)</span>
+<a id="__codelineno-5-32" name="__codelineno-5-32"></a>    <span class="c1"># in the views: {{ t('KEY') }}, {{ day | long_date }}, {{ price | money }}</span>
+<a id="__codelineno-5-33" name="__codelineno-5-33"></a>    <span class="n">app</span><span class="o">.</span><span class="n">add_template_global</span><span class="p">(</span><span class="n">translator</span><span class="o">.</span><span class="n">translate</span><span class="p">,</span> <span class="s2">"t"</span><span class="p">)</span>
+<a id="__codelineno-5-34" name="__codelineno-5-34"></a>    <span class="n">app</span><span class="o">.</span><span class="n">add_template_filter</span><span class="p">(</span><span class="n">formats</span><span class="o">.</span><span class="n">long_date</span><span class="p">)</span>
+<a id="__codelineno-5-35" name="__codelineno-5-35"></a>    <span class="n">app</span><span class="o">.</span><span class="n">add_template_filter</span><span class="p">(</span><span class="n">formats</span><span class="o">.</span><span class="n">money</span><span class="p">)</span>
 <a id="__codelineno-5-36" name="__codelineno-5-36"></a>    <span class="k">return</span> <span class="n">app</span>
 <a id="__codelineno-5-37" name="__codelineno-5-37"></a>
 <a id="__codelineno-5-38" name="__codelineno-5-38"></a>
@@ -1157,10 +1157,10 @@
 </code></pre></div></td></tr></table></div>
 <ul>
 <li>lines 20–21: the service, created once at startup. <strong><em>[app.root_path]</em></strong> is the application folder (that of <strong><em>[app.py]</em></strong>);</li>
-<li>Lines 28–30: Before each action, the request language is set to the language of the <strong><em>[langue]</em></strong> cookie if one exists and is supported; otherwise, it defaults to French. <strong><em>[request.cookies]</em></strong> is the dictionary of cookies sent by the browser;</li>
-<li>line 33: the service’s <strong><em>[traduire]</em></strong> method is made available to views as a global function under a short name, <strong><em>[t]</em></strong> (the second parameter of <strong><em>[add_template_global]</em></strong>). An object method is used like a function: <strong><em>[traducteur.traduire]</em></strong> is a method <strong>associated</strong> with the object <strong><em>[traducteur]</em></strong>.</li>
+<li>Lines 28–30: Before each action, the request language is set to the language of the [language] cookie if one exists and is supported; otherwise, it defaults to English. <strong><em>[request.cookies]</em></strong> is the dictionary of cookies sent by the browser;</li>
+<li>line 33: the service’s [translate] method is made available to views as a global function under a short name, <strong><em>[t]</em></strong> (the second parameter of <strong><em>[add_template_global]</em></strong>). An object method is used like a function: <strong><em>[translator.translate] is a method associated with the object [translator]</em></strong>.</li>
 </ul>
-<h3 id="515-language-selection-controllerslanguepy">5.1.5. <span style="color: #1f4d78">Language selection: controllers/langue.py</span></h3>
+<h3 id="515-language-selection-controllerslanguagepy">5.1.5. <span style="color: #1f4d78">Language selection: controllers/language.py</span></h3>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-6-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-6-3"> 3</a></span>
@@ -1196,42 +1196,42 @@
 <span class="normal"><a href="#__codelineno-6-33">33</a></span>
 <span class="normal"><a href="#__codelineno-6-34">34</a></span>
 <span class="normal"><a href="#__codelineno-6-35">35</a></span>
-<span class="normal"><a href="#__codelineno-6-36">36</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="c1"># controllers/langue.py: language selection</span>
+<span class="normal"><a href="#__codelineno-6-36">36</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="c1"># controllers/language.py: the choice of the language</span>
 <a id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">urllib.parse</span><span class="w"> </span><span class="kn">import</span> <span class="n">urlsplit</span>
 <a id="__codelineno-6-3" name="__codelineno-6-3"></a>
 <a id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">flask</span><span class="w"> </span><span class="kn">import</span> <span class="n">Blueprint</span><span class="p">,</span> <span class="n">abort</span><span class="p">,</span> <span class="n">redirect</span><span class="p">,</span> <span class="n">request</span>
 <a id="__codelineno-6-5" name="__codelineno-6-5"></a>
-<a id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="kn">from</span><span class="w"> </span><span class="nn">traduction.traducteur</span><span class="w"> </span><span class="kn">import</span> <span class="n">Traducteur</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="kn">from</span><span class="w"> </span><span class="nn">translation.translator</span><span class="w"> </span><span class="kn">import</span> <span class="n">Translator</span>
 <a id="__codelineno-6-7" name="__codelineno-6-7"></a>
-<a id="__codelineno-6-8" name="__codelineno-6-8"></a><span class="n">langue</span> <span class="o">=</span> <span class="n">Blueprint</span><span class="p">(</span><span class="s2">"langue"</span><span class="p">,</span> <span class="vm">__name__</span><span class="p">)</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8"></a><span class="n">language</span> <span class="o">=</span> <span class="n">Blueprint</span><span class="p">(</span><span class="s2">"language"</span><span class="p">,</span> <span class="vm">__name__</span><span class="p">)</span>
 <a id="__codelineno-6-9" name="__codelineno-6-9"></a>
-<a id="__codelineno-6-10" name="__codelineno-6-10"></a><span class="n">COOKIE_LANGUE</span> <span class="o">=</span> <span class="s2">"langue"</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10"></a><span class="n">LANGUAGE_COOKIE</span> <span class="o">=</span> <span class="s2">"language"</span>
 <a id="__codelineno-6-11" name="__codelineno-6-11"></a>
 <a id="__codelineno-6-12" name="__codelineno-6-12"></a>
-<a id="__codelineno-6-13" name="__codelineno-6-13"></a><span class="c1"># GET /language/en: stores the selection in a cookie, then returns to the previous page</span>
-<a id="__codelineno-6-14" name="__codelineno-6-14"></a><span class="nd">@langue</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"/langue/&lt;code&gt;"</span><span class="p">)</span>
-<a id="__codelineno-6-15" name="__codelineno-6-15"></a><span class="k">def</span><span class="w"> </span><span class="nf">changer</span><span class="p">(</span><span class="n">code</span><span class="p">):</span>
-<a id="__codelineno-6-16" name="__codelineno-6-16"></a>    <span class="k">if</span> <span class="n">code</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">Traducteur</span><span class="o">.</span><span class="n">LANGUES</span><span class="p">:</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13"></a><span class="c1"># GET /language/fr: stores the choice in a cookie, then goes back to the previous page</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14"></a><span class="nd">@language</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"/language/&lt;code&gt;"</span><span class="p">)</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15"></a><span class="k">def</span><span class="w"> </span><span class="nf">change</span><span class="p">(</span><span class="n">code</span><span class="p">):</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16"></a>    <span class="k">if</span> <span class="n">code</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">Translator</span><span class="o">.</span><span class="n">LANGUAGES</span><span class="p">:</span>
 <a id="__codelineno-6-17" name="__codelineno-6-17"></a>        <span class="n">abort</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
-<a id="__codelineno-6-18" name="__codelineno-6-18"></a>    <span class="n">reponse</span> <span class="o">=</span> <span class="n">redirect</span><span class="p">(</span><span class="n">page_d_origine</span><span class="p">())</span>
-<a id="__codelineno-6-19" name="__codelineno-6-19"></a>     <span class="c1"># the cookie: valid for one year, unreadable by the JavaScript on the page (httponly),</span>
-<a id="__codelineno-6-20" name="__codelineno-6-20"></a>     <span class="c1"># never sent with a POST request originating from another site (same-site)</span>
-<a id="__codelineno-6-21" name="__codelineno-6-21"></a>    <span class="n">reponse</span><span class="o">.</span><span class="n">set_cookie</span><span class="p">(</span><span class="n">COOKIE_LANGUE</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">max_age</span><span class="o">=</span><span class="mi">365</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">*</span> <span class="mi">3600</span><span class="p">,</span> <span class="n">httponly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-<a id="__codelineno-6-22" name="__codelineno-6-22"></a>                       <span class="n">samesite</span><span class="o">=</span><span class="s2">"Lax"</span><span class="p">)</span>
-<a id="__codelineno-6-23" name="__codelineno-6-23"></a>    <span class="k">return</span> <span class="n">reponse</span>
+<a id="__codelineno-6-18" name="__codelineno-6-18"></a>    <span class="n">response</span> <span class="o">=</span> <span class="n">redirect</span><span class="p">(</span><span class="n">origin_page</span><span class="p">())</span>
+<a id="__codelineno-6-19" name="__codelineno-6-19"></a>    <span class="c1"># the cookie: one year of life, unreadable by the JavaScript of the page (httponly),</span>
+<a id="__codelineno-6-20" name="__codelineno-6-20"></a>    <span class="c1"># never sent with a POST request coming from another site (samesite)</span>
+<a id="__codelineno-6-21" name="__codelineno-6-21"></a>    <span class="n">response</span><span class="o">.</span><span class="n">set_cookie</span><span class="p">(</span><span class="n">LANGUAGE_COOKIE</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">max_age</span><span class="o">=</span><span class="mi">365</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">*</span> <span class="mi">3600</span><span class="p">,</span> <span class="n">httponly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<a id="__codelineno-6-22" name="__codelineno-6-22"></a>                        <span class="n">samesite</span><span class="o">=</span><span class="s2">"Lax"</span><span class="p">)</span>
+<a id="__codelineno-6-23" name="__codelineno-6-23"></a>    <span class="k">return</span> <span class="n">response</span>
 <a id="__codelineno-6-24" name="__codelineno-6-24"></a>
 <a id="__codelineno-6-25" name="__codelineno-6-25"></a>
-<a id="__codelineno-6-26" name="__codelineno-6-26"></a><span class="c1"># the page from which the user came (Referer header), of which only the path is retained:</span>
-<a id="__codelineno-6-27" name="__codelineno-6-27"></a><span class="c1"># redirecting to a full URL from the request would allow</span>
-<a id="__codelineno-6-28" name="__codelineno-6-28"></a><span class="c1"># to redirect the user to another site ("open redirect" vulnerability)</span>
-<a id="__codelineno-6-29" name="__codelineno-6-29"></a><span class="k">def</span><span class="w"> </span><span class="nf">page_d_origine</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<a id="__codelineno-6-26" name="__codelineno-6-26"></a><span class="c1"># the page we come from (Referer header), of which we keep only the path:</span>
+<a id="__codelineno-6-27" name="__codelineno-6-27"></a><span class="c1"># redirecting to a complete address coming from the request would allow</span>
+<a id="__codelineno-6-28" name="__codelineno-6-28"></a><span class="c1"># sending the user to another site ("open redirect" flaw)</span>
+<a id="__codelineno-6-29" name="__codelineno-6-29"></a><span class="k">def</span><span class="w"> </span><span class="nf">origin_page</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <a id="__codelineno-6-30" name="__codelineno-6-30"></a>    <span class="n">url</span> <span class="o">=</span> <span class="n">urlsplit</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"Referer"</span><span class="p">,</span> <span class="s2">""</span><span class="p">))</span>
-<a id="__codelineno-6-31" name="__codelineno-6-31"></a>    <span class="n">chemin</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="n">path</span>
-<a id="__codelineno-6-32" name="__codelineno-6-32"></a>     <span class="c1"># "//site.com/..." would be interpreted by the browser as a URL</span>
-<a id="__codelineno-6-33" name="__codelineno-6-33"></a>     <span class="c1"># to a AUTRE site: also rejected</span>
-<a id="__codelineno-6-34" name="__codelineno-6-34"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">chemin</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"/"</span><span class="p">)</span> <span class="ow">or</span> <span class="n">chemin</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"//"</span><span class="p">):</span>
+<a id="__codelineno-6-31" name="__codelineno-6-31"></a>    <span class="n">path</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="n">path</span>
+<a id="__codelineno-6-32" name="__codelineno-6-32"></a>    <span class="c1"># "//site.com/..." would be understood by the browser as an address</span>
+<a id="__codelineno-6-33" name="__codelineno-6-33"></a>    <span class="c1"># on ANOTHER site: rejected too</span>
+<a id="__codelineno-6-34" name="__codelineno-6-34"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"/"</span><span class="p">)</span> <span class="ow">or</span> <span class="n">path</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"//"</span><span class="p">):</span>
 <a id="__codelineno-6-35" name="__codelineno-6-35"></a>        <span class="k">return</span> <span class="s2">"/"</span>
-<a id="__codelineno-6-36" name="__codelineno-6-36"></a>    <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">chemin</span><span class="si">}</span><span class="s2">?</span><span class="si">{</span><span class="n">url</span><span class="o">.</span><span class="n">query</span><span class="si">}</span><span class="s2">"</span> <span class="k">if</span> <span class="n">url</span><span class="o">.</span><span class="n">query</span> <span class="k">else</span> <span class="n">chemin</span>
+<a id="__codelineno-6-36" name="__codelineno-6-36"></a>    <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">?</span><span class="si">{</span><span class="n">url</span><span class="o">.</span><span class="n">query</span><span class="si">}</span><span class="s2">"</span> <span class="k">if</span> <span class="n">url</span><span class="o">.</span><span class="n">query</span> <span class="k">else</span> <span class="n">path</span>
 </code></pre></div></td></tr></table></div>
 <ul>
 <li>line 16: an unknown language code: 404;</li>
@@ -1268,8 +1268,8 @@
 <span class="normal"><a href="#__codelineno-7-26">26</a></span>
 <span class="normal"><a href="#__codelineno-7-27">27</a></span>
 <span class="normal"><a href="#__codelineno-7-28">28</a></span>
-<span class="normal"><a href="#__codelineno-7-29">29</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="c1"># controllers/pages.py: the actions are not language-aware; they</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="c1"># provide data; the views translate and format it</span>
+<span class="normal"><a href="#__codelineno-7-29">29</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="c1"># controllers/pages.py: the actions know nothing about the language: they</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="c1"># provide data, the views translate and format them</span>
 <a id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
 <a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">date</span>
 <a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">decimal</span><span class="w"> </span><span class="kn">import</span> <span class="n">Decimal</span>
@@ -1280,22 +1280,22 @@
 <a id="__codelineno-7-10" name="__codelineno-7-10"></a>
 <a id="__codelineno-7-11" name="__codelineno-7-11"></a>
 <a id="__codelineno-7-12" name="__codelineno-7-12"></a><span class="nd">@dataclass</span>
-<a id="__codelineno-7-13" name="__codelineno-7-13"></a><span class="k">class</span><span class="w"> </span><span class="nc">Produit</span><span class="p">:</span>
-<a id="__codelineno-7-14" name="__codelineno-7-14"></a>    <span class="n">nom</span><span class="p">:</span> <span class="nb">str</span>
-<a id="__codelineno-7-15" name="__codelineno-7-15"></a>    <span class="n">prix</span><span class="p">:</span> <span class="n">Decimal</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13"></a><span class="k">class</span><span class="w"> </span><span class="nc">Product</span><span class="p">:</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14"></a>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15"></a>    <span class="n">price</span><span class="p">:</span> <span class="n">Decimal</span>
 <a id="__codelineno-7-16" name="__codelineno-7-16"></a>
 <a id="__codelineno-7-17" name="__codelineno-7-17"></a>
 <a id="__codelineno-7-18" name="__codelineno-7-18"></a><span class="nd">@pages</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"/"</span><span class="p">)</span>
-<a id="__codelineno-7-19" name="__codelineno-7-19"></a><span class="k">def</span><span class="w"> </span><span class="nf">accueil</span><span class="p">():</span>
-<a id="__codelineno-7-20" name="__codelineno-7-20"></a>    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s2">"pages/accueil.html"</span><span class="p">,</span> <span class="n">nom</span><span class="o">=</span><span class="s2">"Marie"</span><span class="p">,</span> <span class="n">aujourdhui</span><span class="o">=</span><span class="n">date</span><span class="p">(</span><span class="mi">2026</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">23</span><span class="p">))</span>
+<a id="__codelineno-7-19" name="__codelineno-7-19"></a><span class="k">def</span><span class="w"> </span><span class="nf">home</span><span class="p">():</span>
+<a id="__codelineno-7-20" name="__codelineno-7-20"></a>    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s2">"pages/home.html"</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"Marie"</span><span class="p">,</span> <span class="n">today</span><span class="o">=</span><span class="n">date</span><span class="p">(</span><span class="mi">2026</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">23</span><span class="p">))</span>
 <a id="__codelineno-7-21" name="__codelineno-7-21"></a>
 <a id="__codelineno-7-22" name="__codelineno-7-22"></a>
-<a id="__codelineno-7-23" name="__codelineno-7-23"></a><span class="nd">@pages</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"/produits"</span><span class="p">)</span>
-<a id="__codelineno-7-24" name="__codelineno-7-24"></a><span class="k">def</span><span class="w"> </span><span class="nf">produits</span><span class="p">():</span>
-<a id="__codelineno-7-25" name="__codelineno-7-25"></a>    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s2">"pages/produits.html"</span><span class="p">,</span> <span class="n">produits</span><span class="o">=</span><span class="p">[</span>
-<a id="__codelineno-7-26" name="__codelineno-7-26"></a>        <span class="n">Produit</span><span class="p">(</span><span class="s2">"Clavier"</span><span class="p">,</span> <span class="n">Decimal</span><span class="p">(</span><span class="s2">"25"</span><span class="p">)),</span>
-<a id="__codelineno-7-27" name="__codelineno-7-27"></a>        <span class="n">Produit</span><span class="p">(</span><span class="s2">"Souris"</span><span class="p">,</span> <span class="n">Decimal</span><span class="p">(</span><span class="s2">"12.5"</span><span class="p">)),</span>
-<a id="__codelineno-7-28" name="__codelineno-7-28"></a>        <span class="n">Produit</span><span class="p">(</span><span class="s2">"Écran"</span><span class="p">,</span> <span class="n">Decimal</span><span class="p">(</span><span class="s2">"1149"</span><span class="p">)),</span>
+<a id="__codelineno-7-23" name="__codelineno-7-23"></a><span class="nd">@pages</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"/products"</span><span class="p">)</span>
+<a id="__codelineno-7-24" name="__codelineno-7-24"></a><span class="k">def</span><span class="w"> </span><span class="nf">products</span><span class="p">():</span>
+<a id="__codelineno-7-25" name="__codelineno-7-25"></a>    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s2">"pages/products.html"</span><span class="p">,</span> <span class="n">products</span><span class="o">=</span><span class="p">[</span>
+<a id="__codelineno-7-26" name="__codelineno-7-26"></a>        <span class="n">Product</span><span class="p">(</span><span class="s2">"Keyboard"</span><span class="p">,</span> <span class="n">Decimal</span><span class="p">(</span><span class="s2">"25"</span><span class="p">)),</span>
+<a id="__codelineno-7-27" name="__codelineno-7-27"></a>        <span class="n">Product</span><span class="p">(</span><span class="s2">"Mouse"</span><span class="p">,</span> <span class="n">Decimal</span><span class="p">(</span><span class="s2">"12.5"</span><span class="p">)),</span>
+<a id="__codelineno-7-28" name="__codelineno-7-28"></a>        <span class="n">Product</span><span class="p">(</span><span class="s2">"Screen"</span><span class="p">,</span> <span class="n">Decimal</span><span class="p">(</span><span class="s2">"1149"</span><span class="p">)),</span>
 <a id="__codelineno-7-29" name="__codelineno-7-29"></a>    <span class="p">])</span>
 </code></pre></div></td></tr></table></div>
 <p>Actions are language-agnostic: they provide raw data (a name, a date, amounts). Translation and formatting are handled by the views.</p>
@@ -1319,12 +1319,12 @@
 <span class="normal"><a href="#__codelineno-8-17">17</a></span>
 <span class="normal"><a href="#__codelineno-8-18">18</a></span>
 <span class="normal"><a href="#__codelineno-8-19">19</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="cp">&lt;!doctype html&gt;</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2"></a>{# g.langue: the request language, "fr" or "en" #}
-<a id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">"{{ g.langue }}"</span><span class="p">&gt;</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a>{# g.language: the language of the request, "fr" or "en" #}
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">"{{ g.language }}"</span><span class="p">&gt;</span>
 <a id="__codelineno-8-4" name="__codelineno-8-4"></a><span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
 <a id="__codelineno-8-5" name="__codelineno-8-5"></a>  <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">"utf-8"</span><span class="p">&gt;</span>
-<a id="__codelineno-8-6" name="__codelineno-8-6"></a>  {# the title is a CLÉ, provided by the page (variable cle_titre), translated by the template #}
-<a id="__codelineno-8-7" name="__codelineno-8-7"></a>  <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>{{ t(cle_titre) }}<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6"></a>  {# the title is a KEY, provided by the page (title_key variable), translated by the layout #}
+<a id="__codelineno-8-7" name="__codelineno-8-7"></a>  <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>{{ t(title_key) }}<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
 <a id="__codelineno-8-8" name="__codelineno-8-8"></a>  <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">"stylesheet"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{{ url_for('bootstrap.static', filename='css/bootstrap.min.css') }}"</span><span class="p">&gt;</span>
 <a id="__codelineno-8-9" name="__codelineno-8-9"></a>  <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">"stylesheet"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{{ url_for('static', filename='css/styles.css') }}"</span><span class="p">&gt;</span>
 <a id="__codelineno-8-10" name="__codelineno-8-10"></a><span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
@@ -1332,7 +1332,7 @@
 <a id="__codelineno-8-12" name="__codelineno-8-12"></a>  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"container py-3"</span><span class="p">&gt;</span>
 <a id="__codelineno-8-13" name="__codelineno-8-13"></a>    {% include "fragments/navbar.html" %}
 <a id="__codelineno-8-14" name="__codelineno-8-14"></a>    <span class="p">&lt;</span><span class="nt">main</span><span class="p">&gt;</span>
-<a id="__codelineno-8-15" name="__codelineno-8-15"></a>      {% block contenu %}{% endblock %}
+<a id="__codelineno-8-15" name="__codelineno-8-15"></a>      {% block content %}{% endblock %}
 <a id="__codelineno-8-16" name="__codelineno-8-16"></a>    <span class="p">&lt;/</span><span class="nt">main</span><span class="p">&gt;</span>
 <a id="__codelineno-8-17" name="__codelineno-8-17"></a>  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 <a id="__codelineno-8-18" name="__codelineno-8-18"></a><span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
@@ -1340,7 +1340,7 @@
 </code></pre></div></td></tr></table></div>
 <ul>
 <li>Line 3: The page’s <strong><em>[lang]</em></strong> attribute indicates its language to browsers, search engines, and screen readers;</li>
-<li>line 7: The page title is different for each page, but it is translated by the template. Each page provides the <strong>key</strong> for its title in a variable, <strong><em>[cle_titre]</em></strong>.</li>
+<li>line 7: The page title is different for each page, but it is translated by the template. Each page provides the <strong>key</strong> for its title in a variable, <strong><em>[title_key]</em></strong>.</li>
 </ul>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-9-2"> 2</a></span>
@@ -1357,22 +1357,22 @@
 <span class="normal"><a href="#__codelineno-9-13">13</a></span>
 <span class="normal"><a href="#__codelineno-9-14">14</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="p">&lt;</span><span class="nt">nav</span> <span class="na">class</span><span class="o">=</span><span class="s">"navbar navbar-expand bg-light rounded mb-3 px-3"</span><span class="p">&gt;</span>
 <a id="__codelineno-9-2" name="__codelineno-9-2"></a>  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"navbar-nav me-auto"</span><span class="p">&gt;</span>
-<a id="__codelineno-9-3" name="__codelineno-9-3"></a>    {# t('CLE'): the translation of a key, in the request language #}
-<a id="__codelineno-9-4" name="__codelineno-9-4"></a>    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">"nav-link"</span> <span class="na">href</span><span class="o">=</span><span class="s">"/"</span><span class="p">&gt;</span>{{ t("MENU.ACCUEIL") }}<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-<a id="__codelineno-9-5" name="__codelineno-9-5"></a>    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">"nav-link"</span> <span class="na">href</span><span class="o">=</span><span class="s">"/produits"</span><span class="p">&gt;</span>{{ t("MENU.PRODUITS") }}<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3"></a>    {# t('KEY'): the translation of a key, in the language of the request #}
+<a id="__codelineno-9-4" name="__codelineno-9-4"></a>    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">"nav-link"</span> <span class="na">href</span><span class="o">=</span><span class="s">"/"</span><span class="p">&gt;</span>{{ t("MENU.HOME") }}<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5"></a>    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">"nav-link"</span> <span class="na">href</span><span class="o">=</span><span class="s">"/products"</span><span class="p">&gt;</span>{{ t("MENU.PRODUCTS") }}<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
 <a id="__codelineno-9-6" name="__codelineno-9-6"></a>  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 <a id="__codelineno-9-7" name="__codelineno-9-7"></a>  {# the current language is highlighted #}
 <a id="__codelineno-9-8" name="__codelineno-9-8"></a>  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn-group btn-group-sm"</span><span class="p">&gt;</span>
 <a id="__codelineno-9-9" name="__codelineno-9-9"></a>    {% for code in ["fr", "en"] %}
-<a id="__codelineno-9-10" name="__codelineno-9-10"></a>    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn {{ 'btn-primary' if g.langue == code else 'btn-outline-primary' }}"</span>
-<a id="__codelineno-9-11" name="__codelineno-9-11"></a>       <span class="na">href</span><span class="o">=</span><span class="s">"/langue/{{ code }}"</span><span class="p">&gt;</span>{{ code | upper }}<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10"></a>    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn {{ 'btn-primary' if g.language == code else 'btn-outline-primary' }}"</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11"></a>       <span class="na">href</span><span class="o">=</span><span class="s">"/language/{{ code }}"</span><span class="p">&gt;</span>{{ code | upper }}<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
 <a id="__codelineno-9-12" name="__codelineno-9-12"></a>    {% endfor %}
 <a id="__codelineno-9-13" name="__codelineno-9-13"></a>  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 <a id="__codelineno-9-14" name="__codelineno-9-14"></a><span class="p">&lt;/</span><span class="nt">nav</span><span class="p">&gt;</span>
 </code></pre></div></td></tr></table></div>
 <ul>
 <li>lines 4–5: the menu texts, translated;</li>
-<li>lines 9–12: one button per language, which leads to the action <strong><em>[/langue/&lt;code&gt;]</em></strong>. The current language is highlighted (<strong><em>[btn-primary]</em></strong>, solid button).</li>
+<li>lines 9–12: one button per language, which leads to the action <strong><em>[/language/&lt;code&gt;]</em></strong>. The current language is highlighted (<strong><em>[btn-primary]</em></strong>, solid button).</li>
 </ul>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-10-2"> 2</a></span>
@@ -1385,15 +1385,15 @@
 <span class="normal"><a href="#__codelineno-10-9"> 9</a></span>
 <span class="normal"><a href="#__codelineno-10-10">10</a></span>
 <span class="normal"><a href="#__codelineno-10-11">11</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a>{% extends "layout.html" %}
-<a id="__codelineno-10-2" name="__codelineno-10-2"></a>{# a variable defined in blocks (HORS) is visible in the template #}
-<a id="__codelineno-10-3" name="__codelineno-10-3"></a>{% set cle_titre = "ACCUEIL.TITRE" %}
+<a id="__codelineno-10-2" name="__codelineno-10-2"></a>{# a variable defined OUTSIDE the blocks is visible to the layout #}
+<a id="__codelineno-10-3" name="__codelineno-10-3"></a>{% set title_key = "HOME.TITLE" %}
 <a id="__codelineno-10-4" name="__codelineno-10-4"></a>
-<a id="__codelineno-10-5" name="__codelineno-10-5"></a>{% block contenu %}
-<a id="__codelineno-10-6" name="__codelineno-10-6"></a>  <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>{{ t("ACCUEIL.TITRE") }}<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-<a id="__codelineno-10-7" name="__codelineno-10-7"></a>  {# a parameter: a named parameter of function t #}
-<a id="__codelineno-10-8" name="__codelineno-10-8"></a>  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>{{ t("ACCUEIL.BONJOUR", nom=nom) }}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-<a id="__codelineno-10-9" name="__codelineno-10-9"></a>  {# the date, first formatted, then passed as a parameter [date] #}
-<a id="__codelineno-10-10" name="__codelineno-10-10"></a>  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>{{ t("ACCUEIL.DATE", date=aujourdhui | date_longue) }}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5"></a>{% block content %}
+<a id="__codelineno-10-6" name="__codelineno-10-6"></a>  <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>{{ t("HOME.TITLE") }}<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7"></a>  {# a parameter: a keyword parameter of the t function #}
+<a id="__codelineno-10-8" name="__codelineno-10-8"></a>  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>{{ t("HOME.HELLO", name=name) }}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9"></a>  {# the date, formatted first, then passed as the [date] parameter #}
+<a id="__codelineno-10-10" name="__codelineno-10-10"></a>  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>{{ t("HOME.DATE", date=today | long_date) }}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
 <a id="__codelineno-10-11" name="__codelineno-10-11"></a>{% endblock %}
 </code></pre></div></td></tr></table></div>
 <ul>
@@ -1419,36 +1419,36 @@
 <span class="normal"><a href="#__codelineno-11-16">16</a></span>
 <span class="normal"><a href="#__codelineno-11-17">17</a></span>
 <span class="normal"><a href="#__codelineno-11-18">18</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a>{% extends "layout.html" %}
-<a id="__codelineno-11-2" name="__codelineno-11-2"></a>{% set cle_titre = "PRODUITS.TITRE" %}
+<a id="__codelineno-11-2" name="__codelineno-11-2"></a>{% set title_key = "PRODUCTS.TITLE" %}
 <a id="__codelineno-11-3" name="__codelineno-11-3"></a>
-<a id="__codelineno-11-4" name="__codelineno-11-4"></a>{% block contenu %}
-<a id="__codelineno-11-5" name="__codelineno-11-5"></a>  <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>{{ t("PRODUITS.TITRE") }}<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4"></a>{% block content %}
+<a id="__codelineno-11-5" name="__codelineno-11-5"></a>  <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>{{ t("PRODUCTS.TITLE") }}<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
 <a id="__codelineno-11-6" name="__codelineno-11-6"></a>  <span class="p">&lt;</span><span class="nt">table</span> <span class="na">class</span><span class="o">=</span><span class="s">"table table-sm w-auto"</span><span class="p">&gt;</span>
-<a id="__codelineno-11-7" name="__codelineno-11-7"></a>    <span class="p">&lt;</span><span class="nt">thead</span><span class="p">&gt;&lt;</span><span class="nt">tr</span><span class="p">&gt;&lt;</span><span class="nt">th</span><span class="p">&gt;</span>{{ t("PRODUITS.NOM") }}<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;&lt;</span><span class="nt">th</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-end"</span><span class="p">&gt;</span>{{ t("PRODUITS.PRIX") }}<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;&lt;/</span><span class="nt">tr</span><span class="p">&gt;&lt;/</span><span class="nt">thead</span><span class="p">&gt;</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7"></a>    <span class="p">&lt;</span><span class="nt">thead</span><span class="p">&gt;&lt;</span><span class="nt">tr</span><span class="p">&gt;&lt;</span><span class="nt">th</span><span class="p">&gt;</span>{{ t("PRODUCTS.NAME") }}<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;&lt;</span><span class="nt">th</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-end"</span><span class="p">&gt;</span>{{ t("PRODUCTS.PRICE") }}<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;&lt;/</span><span class="nt">tr</span><span class="p">&gt;&lt;/</span><span class="nt">thead</span><span class="p">&gt;</span>
 <a id="__codelineno-11-8" name="__codelineno-11-8"></a>    <span class="p">&lt;</span><span class="nt">tbody</span><span class="p">&gt;</span>
-<a id="__codelineno-11-9" name="__codelineno-11-9"></a>      {% for produit in produits %}
+<a id="__codelineno-11-9" name="__codelineno-11-9"></a>      {% for product in products %}
 <a id="__codelineno-11-10" name="__codelineno-11-10"></a>      <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
-<a id="__codelineno-11-11" name="__codelineno-11-11"></a>        <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ produit.nom }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
-<a id="__codelineno-11-12" name="__codelineno-11-12"></a>        <span class="p">&lt;</span><span class="nt">td</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-end"</span><span class="p">&gt;</span>{{ produit.prix | monnaie }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+<a id="__codelineno-11-11" name="__codelineno-11-11"></a>        <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ product.name }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+<a id="__codelineno-11-12" name="__codelineno-11-12"></a>        <span class="p">&lt;</span><span class="nt">td</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-end"</span><span class="p">&gt;</span>{{ product.price | money }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
 <a id="__codelineno-11-13" name="__codelineno-11-13"></a>      <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
 <a id="__codelineno-11-14" name="__codelineno-11-14"></a>      {% endfor %}
 <a id="__codelineno-11-15" name="__codelineno-11-15"></a>    <span class="p">&lt;/</span><span class="nt">tbody</span><span class="p">&gt;</span>
 <a id="__codelineno-11-16" name="__codelineno-11-16"></a>  <span class="p">&lt;/</span><span class="nt">table</span><span class="p">&gt;</span>
-<a id="__codelineno-11-17" name="__codelineno-11-17"></a>  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>{{ t("PRODUITS.NOMBRE", n=produits | length) }}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<a id="__codelineno-11-17" name="__codelineno-11-17"></a>  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>{{ t("PRODUCTS.COUNT", n=products | length) }}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
 <a id="__codelineno-11-18" name="__codelineno-11-18"></a>{% endblock %}
 </code></pre></div></td></tr></table></div>
 <ul>
 <li>Line 17: a calculated parameter. The product names, however, are not translated: they are <strong>data</strong> that, in a real application, would come from a database.</li>
 </ul>
 <h3 id="518-execution">5.1.8. <span style="color: #1f4d78">Execution</span></h3>
-<p>The home page, in French (the default language), then in English after clicking the “EN” button:</p>
+<p>The home page, in English (the default language), then in French after clicking the “FR” button:</p>
 <p><img src="images/10000000000002BE00000111143C2F0B.png" width="428" height="166" style="width:11.322cm;height:4.403cm;" alt="Image" class="odt-zoomable" data-zoom-src="images/10000000000002BE00000111143C2F0B.png" /></p>
 <p><img src="images/10000000000002BE000001119D863981.png" width="428" height="166" style="width:11.322cm;height:4.403cm;" alt="Image" class="odt-zoomable" data-zoom-src="images/10000000000002BE000001119D863981.png" /></p>
 <p>The products page, in both languages. The amounts follow the conventions of each language:</p>
 <p><img src="images/10000000000002BE0000017D7D07205F.png" width="428" height="232" style="width:11.322cm;height:6.145cm;" alt="Image" class="odt-zoomable" data-zoom-src="images/10000000000002BE0000017D7D07205F.png" /></p>
 <p><img src="images/10000000000002BE0000017DDF8D9F88.png" width="428" height="232" style="width:11.322cm;height:6.145cm;" alt="Image" class="odt-zoomable" data-zoom-src="images/10000000000002BE0000017DDF8D9F88.png" /></p>
 <p>The language switch, as seen with <em>[curl]</em>. The option <strong><em>[-H]</em></strong> provides the header <strong><em>[Referer]</em></strong> that the browser would send:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a>curl -i -H "Referer: http://localhost:5000/produits" http://localhost:5000/language/en
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a>curl -i -H "Referer: http://localhost:5000/products" http://localhost:5000/language/en
 </code></pre></div></td></tr></table></div>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span>
 <span class="normal"><a href="#__codelineno-13-2">2</a></span>
@@ -1458,13 +1458,13 @@
 <span class="normal"><a href="#__codelineno-13-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a>HTTP/1.1 302 FOUND
 <a id="__codelineno-13-2" name="__codelineno-13-2"></a>Content-Type: text/html; charset=utf-8
 <a id="__codelineno-13-3" name="__codelineno-13-3"></a>Content-Length: 205
-<a id="__codelineno-13-4" name="__codelineno-13-4"></a>Location: /produits
-<a id="__codelineno-13-5" name="__codelineno-13-5"></a>Set-Cookie: langue=en; Expires=Sun, 26 Sep 2027 13:37:04 GMT; Max-Age=31536000; HttpOnly; Path=/; SameSite=Lax
+<a id="__codelineno-13-4" name="__codelineno-13-4"></a>Location: /products
+<a id="__codelineno-13-5" name="__codelineno-13-5"></a>Set-Cookie: language=en; Expires=Sun, 26 Sep 2027 13:37:04 GMT; Max-Age=31536000; HttpOnly; Path=/; SameSite=Lax
 <a id="__codelineno-13-6" name="__codelineno-13-6"></a>...
 </code></pre></div></td></tr></table></div>
 <p>The redirect takes you back to the original page, and the cookie is set for one year. A <strong><em>[Referer]</em></strong> that points to another site does not redirect you there: only its path is retained.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span>
-<span class="normal"><a href="#__codelineno-14-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a>curl -i -H "Referer: https://pirate.example/piege" http://localhost:5000/language/en
+<span class="normal"><a href="#__codelineno-14-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a>curl -i -H "Referer: https://pirate.example/trap" http://localhost:5000/language/en
 <a id="__codelineno-14-2" name="__codelineno-14-2"></a>curl -i -H "Referer: http://localhost:5000//pirate.example/x" http://localhost:5000/language/fr
 </code></pre></div></td></tr></table></div>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1">1</a></span>
@@ -1474,13 +1474,13 @@
 <span class="normal"><a href="#__codelineno-15-5">5</a></span>
 <span class="normal"><a href="#__codelineno-15-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a>HTTP/1.1 302 FOUND
 <a id="__codelineno-15-2" name="__codelineno-15-2"></a>...
-<a id="__codelineno-15-3" name="__codelineno-15-3"></a>Location: /piege
+<a id="__codelineno-15-3" name="__codelineno-15-3"></a>Location: /trap
 <a id="__codelineno-15-4" name="__codelineno-15-4"></a>HTTP/1.1 302 FOUND
 <a id="__codelineno-15-5" name="__codelineno-15-5"></a>...
 <a id="__codelineno-15-6" name="__codelineno-15-6"></a>Location: /
 </code></pre></div></td></tr></table></div>
-<p>The page <strong><em>[/piege]</em></strong> does not exist on our site: the user will receive a 404 error but will remain on our site. Finally, the home page, requested with the cookie <strong><em>[langue=en]</em></strong> (option <strong><em>[-b]</em></strong> of <em>[curl]</em>):</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1"></a>curl -b "langue=en" http://localhost:5000/
+<p>The page <strong><em>[/trap]</em></strong> does not exist on our site: the user will receive a 404 error but will remain on our site. Finally, the home page, requested with the cookie <strong><em>[language=en]</em></strong> (option <strong><em>[-b]</em></strong> of <em>[curl]</em>):</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1"></a>curl -b "language=en" http://localhost:5000/
 </code></pre></div></td></tr></table></div>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-17-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-17-2"> 2</a></span>
@@ -1501,14 +1501,14 @@
 <a id="__codelineno-17-5" name="__codelineno-17-5"></a>  <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Welcome<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
 <a id="__codelineno-17-6" name="__codelineno-17-6"></a>  ...
 <a id="__codelineno-17-7" name="__codelineno-17-7"></a>    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">"nav-link"</span> <span class="na">href</span><span class="o">=</span><span class="s">"/"</span><span class="p">&gt;</span>Home<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-<a id="__codelineno-17-8" name="__codelineno-17-8"></a>    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">"nav-link"</span> <span class="na">href</span><span class="o">=</span><span class="s">"/produits"</span><span class="p">&gt;</span>Products<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<a id="__codelineno-17-8" name="__codelineno-17-8"></a>    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">"nav-link"</span> <span class="na">href</span><span class="o">=</span><span class="s">"/products"</span><span class="p">&gt;</span>Products<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
 <a id="__codelineno-17-9" name="__codelineno-17-9"></a>  ...
 <a id="__codelineno-17-10" name="__codelineno-17-10"></a>  <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Welcome<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
 <a id="__codelineno-17-11" name="__codelineno-17-11"></a>  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Hello Marie!<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
 <a id="__codelineno-17-12" name="__codelineno-17-12"></a>  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Today is Wednesday, September 23, 2026.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
 <a id="__codelineno-17-13" name="__codelineno-17-13"></a>...
 </code></pre></div></td></tr></table></div>
-<p>Another way to select the language would have been to read the browser’s <strong><em>[Accept-Language]</em></strong> header (Example 12). The two are often combined: the browser’s language on the first visit, followed by the language the user has selected. This case study focuses on the cookie, with French as the default.</p>
+<p>Another way to select the language would have been to read the browser’s <strong><em>[Accept-Language]</em></strong> header (Example 12). The two are often combined: the browser’s language on the first visit, followed by the language the user has selected. This case study focuses on the cookie, with English as the default.</p>
 
 
 
